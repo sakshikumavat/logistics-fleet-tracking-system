@@ -1,0 +1,51 @@
+{
+  "totalRegisteredDrivers": 62,
+  "activeOnDuty": 38,
+  "restingHours": 18,
+  "licenseRenewalDue": 6,
+  "safetyAverageRating": 4.82,
+  "drivers": [
+    {
+      "driverId": "DRV-101",
+      "fullName": "Ramesh Patel",
+      "licenseNumber": "MH-12-2014-0098231",
+      "licenseClass": "Heavy Goods Vehicle (Trans)",
+      "badgeNumber": "BG-8842",
+      "experienceYears": 12,
+      "safetyScore": 98,
+      "status": "ON_DUTY",
+      "currentVehicle": "MH12AB1234",
+      "medicalFitnessValidUntil": "2027-04-15",
+      "hazmatEndorsement": true,
+      "shiftHoursToday": 5.2
+    },
+    {
+      "driverId": "DRV-102",
+      "fullName": "Amit Shinde",
+      "licenseNumber": "MH-14-2016-0044192",
+      "licenseClass": "Heavy Commercial Transport",
+      "badgeNumber": "BG-8849",
+      "experienceYears": 9,
+      "safetyScore": 95,
+      "status": "ON_DUTY",
+      "currentVehicle": "MH14DE5678",
+      "medicalFitnessValidUntil": "2026-11-20",
+      "hazmatEndorsement": true,
+      "shiftHoursToday": 4.5
+    },
+    {
+      "driverId": "DRV-103",
+      "fullName": "Vikram Rao",
+      "licenseNumber": "MH-04-2012-0071190",
+      "licenseClass": "Heavy Articulated Trailer",
+      "badgeNumber": "BG-8811",
+      "experienceYears": 14,
+      "safetyScore": 92,
+      "status": "REST_BREAK",
+      "currentVehicle": "MH04FK9012",
+      "medicalFitnessValidUntil": "2027-01-10",
+      "hazmatEndorsement": false,
+      "shiftHoursToday": 3.8
+    }
+  ]
+}

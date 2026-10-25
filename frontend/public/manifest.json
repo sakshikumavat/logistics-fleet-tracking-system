@@ -1,0 +1,16 @@
+{
+  "name": "FleetTrack Logistics OS",
+  "short_name": "FleetTrack",
+  "description": "Smart Logistics & Fleet Telematics Operations Engine",
+  "start_url": "/login.html",
+  "display": "standalone",
+  "background_color": "#090d16",
+  "theme_color": "#004ac6",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

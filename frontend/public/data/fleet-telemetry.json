@@ -1,0 +1,149 @@
+{
+  "protocol": "AIS-140/OBD-II",
+  "generatedAt": "2026-10-25T11:00:00Z",
+  "gatewayStatus": "ONLINE",
+  "totalAssetsTracked": 48,
+  "activeTelemetryUnits": [
+    {
+      "vehicleId": "VEH-1042",
+      "plateNumber": "MH12AB1234",
+      "makeModel": "Tata Prima 4028.S (Heavy Commercial)",
+      "telematicsImei": "864293049102845",
+      "firmwareVersion": "v4.2.1-prod",
+      "driver": {
+        "id": "DRV-001",
+        "name": "Ramesh Patel",
+        "phone": "+91 98220 11420",
+        "rating": 4.9
+      },
+      "telemetry": {
+        "gps": {
+          "latitude": 18.7537,
+          "longitude": 73.4063,
+          "altitudeMeters": 580,
+          "headingDegrees": 312,
+          "satellitesLocked": 14,
+          "signalQuality": "Excellent"
+        },
+        "diagnostics": {
+          "speedKmph": 68.4,
+          "engineRpm": 1650,
+          "fuelLevelPct": 76.5,
+          "coolantTempCelsius": 88,
+          "batteryVoltage": 24.2,
+          "tirePressurePsi": [112, 114, 110, 112, 115, 115],
+          "odometerKm": 142850
+        },
+        "flags": {
+          "ignitionOn": true,
+          "panicButtonTriggered": false,
+          "harshBrakingDetected": false,
+          "overspeedWarning": false,
+          "tamperSensor": "Normal"
+        }
+      },
+      "dispatch": {
+        "consignmentId": "CN-88420-IN",
+        "origin": "Pune Origin Depot (MIDC)",
+        "destination": "Mumbai Port (JNPT)",
+        "cargo": "Automotive Engine Assemblies (22.4 Tons)",
+        "eta": "16:30 IST",
+        "slaStatus": "ON_TRACK"
+      }
+    },
+    {
+      "vehicleId": "VEH-1055",
+      "plateNumber": "MH14DE5678",
+      "makeModel": "BharatBenz 3523R (Multi-Axle Truck)",
+      "telematicsImei": "864293049109931",
+      "firmwareVersion": "v4.2.1-prod",
+      "driver": {
+        "id": "DRV-002",
+        "name": "Amit Shinde",
+        "phone": "+91 98220 33819",
+        "rating": 4.8
+      },
+      "telemetry": {
+        "gps": {
+          "latitude": 18.8924,
+          "longitude": 73.1782,
+          "altitudeMeters": 420,
+          "headingDegrees": 290,
+          "satellitesLocked": 12,
+          "signalQuality": "Good"
+        },
+        "diagnostics": {
+          "speedKmph": 72.1,
+          "engineRpm": 1780,
+          "fuelLevelPct": 61.2,
+          "coolantTempCelsius": 91,
+          "batteryVoltage": 24.1,
+          "tirePressurePsi": [110, 112, 111, 110],
+          "odometerKm": 98420
+        },
+        "flags": {
+          "ignitionOn": true,
+          "panicButtonTriggered": false,
+          "harshBrakingDetected": false,
+          "overspeedWarning": false,
+          "tamperSensor": "Normal"
+        }
+      },
+      "dispatch": {
+        "consignmentId": "CN-88435-IN",
+        "origin": "Pune Chakan Hub",
+        "destination": "Panvel Logistics Depot",
+        "cargo": "Pharmaceutical Cold-Chain Excipients (14.2 Tons)",
+        "eta": "15:45 IST",
+        "slaStatus": "ON_TRACK"
+      }
+    },
+    {
+      "vehicleId": "VEH-1089",
+      "plateNumber": "MH04FK9012",
+      "makeModel": "Ashok Leyland 2820 (Haulage Rig)",
+      "telematicsImei": "864293049107712",
+      "firmwareVersion": "v4.2.0-prod",
+      "driver": {
+        "id": "DRV-003",
+        "name": "Vikram Rao",
+        "phone": "+91 98220 55431",
+        "rating": 4.7
+      },
+      "telemetry": {
+        "gps": {
+          "latitude": 18.6322,
+          "longitude": 73.7431,
+          "altitudeMeters": 560,
+          "headingDegrees": 0,
+          "satellitesLocked": 15,
+          "signalQuality": "Excellent"
+        },
+        "diagnostics": {
+          "speedKmph": 0,
+          "engineRpm": 650,
+          "fuelLevelPct": 88.0,
+          "coolantTempCelsius": 74,
+          "batteryVoltage": 24.4,
+          "tirePressurePsi": [114, 114, 112, 114],
+          "odometerKm": 218900
+        },
+        "flags": {
+          "ignitionOn": true,
+          "panicButtonTriggered": false,
+          "harshBrakingDetected": false,
+          "overspeedWarning": false,
+          "tamperSensor": "Normal"
+        }
+      },
+      "dispatch": {
+        "consignmentId": "CN-88490-IN",
+        "origin": "Dehu Express Yard",
+        "destination": "Nashik MIDC Terminal",
+        "cargo": "FMCG Consumer Packaged Goods (18.6 Tons)",
+        "eta": "19:15 IST",
+        "slaStatus": "SCHEDULED_STOP"
+      }
+    }
+  ]
+}

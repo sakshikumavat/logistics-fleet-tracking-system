@@ -1,0 +1,1056 @@
+<!DOCTYPE html><html lang="en"><head><script>if (localStorage.getItem('fleettrack_logged_in') !== 'true') { window.location.replace('login.html'); }</script><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"error":"#ba1a1a","surface-variant":"#d3e4fe","outline":"#737686","tertiary":"#006242","secondary-fixed":"#dae2fd","on-primary-container":"#eeefff","tertiary-container":"#007d55","surface-container-high":"#dce9ff","on-secondary-container":"#5c647a","surface-dim":"#cbdbf5","surface-tint":"#0053db","on-tertiary-container":"#bdffdb","error-container":"#ffdad6","on-error":"#ffffff","on-tertiary-fixed-variant":"#005236","on-primary-fixed":"#00174b","on-secondary-fixed-variant":"#3f465c","primary-container":"#2563eb","on-tertiary-fixed":"#002113","surface-container-low":"#eff4ff","primary-fixed-dim":"#b4c5ff","on-surface":"#0b1c30","on-surface-variant":"#434655","inverse-surface":"#213145","surface-bright":"#f8f9ff","outline-variant":"#c3c6d7","primary-fixed":"#dbe1ff","on-error-container":"#93000a","secondary-fixed-dim":"#bec6e0","surface-container-lowest":"#ffffff","on-background":"#0b1c30","surface-container-highest":"#d3e4fe","on-primary-fixed-variant":"#003ea8","on-secondary-fixed":"#131b2e","on-tertiary":"#ffffff","inverse-primary":"#b4c5ff","on-secondary":"#ffffff","on-primary":"#ffffff","surface":"#f8f9ff","tertiary-fixed":"#6ffbbe","primary":"#004ac6","secondary-container":"#dae2fd","background":"#f8f9ff","inverse-on-surface":"#eaf1ff","surface-container":"#e5eeff","secondary":"#565e74","tertiary-fixed-dim":"#4edea3"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xs":"0.25rem","space-md":"1rem","space-xl":"2rem","margin":"1.5rem","space-sm":"0.5rem","gutter":"1.25rem","space-lg":"1.5rem"},"fontFamily":{"headline-md":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"stat-counter":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"]},"fontSize":{"headline-md":["20px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-md":["13px",{"lineHeight":"18px","fontWeight":"600"}],"headline-sm":["16px",{"lineHeight":"24px","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"stat-counter":["28px",{"lineHeight":"34px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.02em","fontWeight":"600"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-64 bg-inverse-surface text-inverse-on-surface z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.06)]"><div class="flex flex-col"><a href="index.html" class="h-16 px-space-md flex items-center gap-space-sm bg-inverse-surface hover:opacity-95 transition-opacity"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[22px]">local_shipping</span></div><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm tracking-tight text-white leading-tight truncate">FleetTrack</span><span class="font-label-sm text-label-sm text-outline-variant truncate leading-none mt-0.5">Logistics &amp; Fleet Engine</span></div></a><nav class="flex flex-col gap-1 px-space-sm mt-space-md" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm rounded-lg shadow-sm"><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-outline-variant hover:bg-surface-variant/10 hover:text-white transition-all" data-path="dashboard" href="index.html"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label-md text-label-md">Dashboard</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-outline-variant hover:bg-surface-variant/10 hover:text-white transition-all" data-path="fleet" href="fleet.html"><span class="material-symbols-outlined text-[20px]">directions_car</span><span class="font-label-md text-label-md">Fleet</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-outline-variant hover:bg-surface-variant/10 hover:text-white transition-all" data-path="drivers" href="drivers.html"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-label-md text-label-md">Drivers</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-2.5 transition-all bg-primary-container text-on-primary-container font-headline-sm rounded-lg shadow-sm" data-path="shipments" href="shipments.html"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span class="font-label-md text-label-md">Shipments</span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded-lg text-outline-variant hover:bg-surface-variant/10 hover:text-white transition-all" data-path="live-tracking" href="live-tracking.html"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">near_me</span><span class="font-label-md text-label-md">Live Tracking</span></div><span class="bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm px-2 py-0.5 rounded-full flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed animate-pulse"></span>Live</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-outline-variant hover:bg-surface-variant/10 hover:text-white transition-all" data-path="reports-analytics" href="reports.html"><span class="material-symbols-outlined text-[20px]">analytics</span><span class="font-label-md text-label-md">Reports &amp; Analytics</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-outline-variant hover:bg-surface-variant/10 hover:text-white transition-all" data-path="settings" href="settings.html"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-label-md text-label-md">Settings</span></a></nav></div><div class="p-space-md m-space-sm rounded-lg bg-surface-variant/5 flex flex-col gap-2"><div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary-fixed opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary-container"></span></span><span class="font-label-sm text-label-sm text-outline-variant uppercase tracking-wider">System Online</span></div><span class="font-label-sm text-label-sm text-secondary-fixed-dim">v2.4</span></div><button onclick="localStorage.removeItem('fleettrack_logged_in'); window.location.href='login.html';" class="mt-1 flex items-center gap-2 text-outline-variant hover:text-red-400 font-label-sm text-xs transition-colors py-1"><span class="material-symbols-outlined text-[16px]">logout</span><span>Sign Out / Exit</span></button></div></aside><div class="pl-64 min-h-screen flex flex-col bg-background"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.03)] z-40 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md flex-1 max-w-xl"><div class="relative w-full flex items-center"><span class="material-symbols-outlined absolute left-3 text-secondary text-[20px] pointer-events-none">search</span><input class="w-full h-10 pl-10 pr-14 bg-surface-container-low font-body-sm text-body-sm text-on-surface rounded-lg placeholder-outline focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search telemetry, vehicles, drivers, consignments..." type="text"><div class="absolute right-2.5 flex items-center pointer-events-none"><kbd class="h-5 px-1.5 flex items-center font-label-sm text-[10px] text-secondary bg-surface-container rounded">⌘K</kbd></div></div><div class="hidden xl:flex items-center gap-1.5 px-space-sm py-1.5 bg-surface-container-low rounded-lg shrink-0"><span class="material-symbols-outlined text-secondary text-[18px]">calendar_today</span><span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Today: Live Shift</span><span class="material-symbols-outlined text-secondary text-[16px]">expand_more</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-1"><button aria-label="Notifications" class="relative w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-error ring-2 ring-surface-container-lowest"></span></button><button aria-label="Help Documentation" class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">help</span></button></div><div class="h-6 w-[1px] bg-outline-variant/30"></div><div class="relative"><div id="userProfileBtn" class="flex items-center gap-space-sm cursor-pointer hover:opacity-80 transition-opacity"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden md:flex flex-col text-left"><div class="flex items-center gap-1"><span class="font-label-md text-label-md text-on-surface leading-none">Sakshi Kumavat</span><span class="material-symbols-outlined text-secondary text-[14px]">expand_more</span></div><span class="font-label-sm text-label-sm text-on-surface-variant leading-none mt-1">System Admin</span></div></div><div id="userDropdownMenu" class="hidden absolute right-0 mt-2 w-48 bg-surface-container-lowest rounded-xl shadow-xl border border-outline-variant/20 py-1.5 z-50"><a href="settings.html" class="flex items-center gap-2.5 px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-[18px] text-secondary">manage_accounts</span><span>System Settings</span></a><a href="live-tracking.html" class="flex items-center gap-2.5 px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-[18px] text-secondary">near_me</span><span>Live Fleet Map</span></a><a href="create-shipment.html" class="flex items-center gap-2.5 px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-[18px] text-secondary">add_circle</span><span>Create Shipment</span></a><div class="my-1 border-t border-outline-variant/15"></div><button onclick="localStorage.removeItem('fleettrack_logged_in'); window.location.href='login.html';" class="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-error hover:bg-error-container/20 transition-colors text-left"><span class="material-symbols-outlined text-[18px]">logout</span><span>Sign Out</span></button></div></div></div></header><main class="flex-1 pt-16 w-full px-space-lg py-space-lg bg-background"><div class="flex flex-col w-full gap-space-lg">
+<!-- Top Control Header & Quick Actions -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs text-secondary font-label-sm uppercase tracking-wider mb-1">
+<span class="">Logistics Engine</span>
+<span class="">/</span>
+<span class="text-primary font-bold">Consignments</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Shipments</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-0.5">Track freight movements, dispatch schedules, and delivery verification across corridors</p>
+</div>
+<!-- Right Controls: Telemetry Mode & Primary Action -->
+<div class="flex items-center gap-space-sm flex-wrap sm:flex-nowrap">
+<div class="flex items-center bg-surface-container px-3 py-1.5 rounded-lg shadow-sm">
+<span class="flex h-2 w-2 relative mr-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary-fixed opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span>
+</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Corridor GPS Synced</span>
+</div>
+<button class="h-10 px-4 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center gap-2 transition-all shadow-sm" id="exportCsvBtn" type="button">
+<span class="material-symbols-outlined text-[18px]">file_download</span>
+<span class="">Export Manifest</span>
+</button>
+<button class="h-10 px-4 rounded-lg bg-primary-container hover:bg-primary text-on-primary-container hover:text-on-primary font-label-md text-label-md flex items-center gap-2 transition-all shadow-md" id="createShipmentBtn" onclick="window.location.href='create-shipment.html'" style="cursor:pointer;" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="">+ Create Shipment</span>
+</button>
+</div>
+</div>
+<!-- Key Metrics Bento Row -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex items-start justify-between relative overflow-hidden">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase font-semibold">Active Consignments</span>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-stat-counter text-stat-counter text-on-surface">25</span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold flex items-center">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>+12%
+          </span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Across 8 major hubs</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">local_shipping</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex items-start justify-between relative overflow-hidden">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase font-semibold">Transit On-Time</span>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-stat-counter text-stat-counter text-on-surface">94.2%</span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold flex items-center">
+<span class="material-symbols-outlined text-[14px]">arrow_drop_up</span>+2.1%
+          </span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Target threshold: 92%</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[22px]">timer</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex items-start justify-between relative overflow-hidden">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase font-semibold">High Priority Escorts</span>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-stat-counter text-stat-counter text-on-surface">5</span>
+<span class="font-label-sm text-label-sm text-primary font-bold">Cold-Chain</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Temperature tracked active</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[22px]">ac_unit</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex items-start justify-between relative overflow-hidden">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase font-semibold">Delayed / Alerted</span>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="font-stat-counter text-stat-counter text-error">2</span>
+<span class="font-label-sm text-label-sm text-error font-bold flex items-center">
+<span class="material-symbols-outlined text-[14px]">warning</span>Ghat Pass
+          </span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Bypass routing recommended</span>
+</div>
+<div class="w-10 h-10 rounded-lg bg-error-container/30 flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[22px]">crisis_alert</span>
+</div>
+</div>
+</div>
+<!-- Operational Card / Table Shell -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<!-- Filter Tabs & Real-time Search Toolbar -->
+<div class="p-space-md flex flex-col xl:flex-row xl:items-center justify-between gap-space-md bg-surface-container-lowest">
+<!-- Tabs -->
+<div class="flex items-center gap-1.5 overflow-x-auto pb-1 xl:pb-0" id="filterTabs">
+<button class="filter-tab active-tab px-3.5 py-1.5 rounded-full font-label-md text-label-md flex items-center gap-2 transition-all bg-primary-container text-on-primary-container font-semibold shadow-sm" data-status="all" type="button">
+<span class="">All Shipments</span>
+<span class="bg-white/20 text-on-primary-container px-1.5 py-0.2 rounded-full font-label-sm text-[11px]">25</span>
+</button>
+<button class="filter-tab px-3.5 py-1.5 rounded-full font-label-md text-label-md flex items-center gap-2 transition-all text-secondary hover:bg-surface-container font-medium" data-status="In Transit" type="button">
+<span class="">In Transit</span>
+<span class="bg-surface-container-high text-on-surface px-1.5 py-0.2 rounded-full font-label-sm text-[11px]">5</span>
+</button>
+<button class="filter-tab px-3.5 py-1.5 rounded-full font-label-md text-label-md flex items-center gap-2 transition-all text-secondary hover:bg-surface-container font-medium" data-status="Pending" type="button">
+<span class="">Pending</span>
+<span class="bg-surface-container-high text-on-surface px-1.5 py-0.2 rounded-full font-label-sm text-[11px]">3</span>
+</button>
+<button class="filter-tab px-3.5 py-1.5 rounded-full font-label-md text-label-md flex items-center gap-2 transition-all text-secondary hover:bg-surface-container font-medium" data-status="Delivered" type="button">
+<span class="">Delivered</span>
+<span class="bg-surface-container-high text-on-surface px-1.5 py-0.2 rounded-full font-label-sm text-[11px]">15</span>
+</button>
+<button class="filter-tab px-3.5 py-1.5 rounded-full font-label-md text-label-md flex items-center gap-2 transition-all text-secondary hover:bg-surface-container font-medium" data-status="Delayed" type="button">
+<span class="">Delayed</span>
+<span class="bg-error-container text-on-error-container px-1.5 py-0.2 rounded-full font-label-sm text-[11px]">2</span>
+</button>
+</div>
+<!-- Live Search & Corridor Filter Input -->
+<div class="flex items-center gap-space-sm w-full xl:w-auto">
+<div class="relative flex-1 xl:w-80">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-secondary text-[18px]">search</span>
+<input class="w-full h-10 pl-9 pr-3 rounded-lg bg-surface-container-low font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all" id="shipmentSearchInput" placeholder="Filter by ID, City, Hub, Vehicle..." type="text">
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<button class="h-10 px-3 bg-surface-container-low hover:bg-surface-container text-on-surface-variant rounded-lg flex items-center gap-1.5 font-label-sm text-label-sm transition-colors" title="Corridor Selector" type="button">
+<span class="material-symbols-outlined text-[18px]">alt_route</span>
+<span class="hidden sm:inline">Corridor</span>
+</button>
+<button class="h-10 px-3 bg-surface-container-low hover:bg-surface-container text-on-surface-variant rounded-lg flex items-center gap-1.5 font-label-sm text-label-sm transition-colors" title="Date Range" type="button">
+<span class="material-symbols-outlined text-[18px]">date_range</span>
+<span class="hidden sm:inline">Oct 2024</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Telemetry Table Responsive Wrapper -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left" id="shipmentsTable">
+<thead>
+<tr class="bg-surface-container-low text-secondary font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-space-md font-semibold">Shipment ID</th>
+<th class="py-3 px-space-md font-semibold">Pickup Hub</th>
+<th class="py-3 px-space-md font-semibold">Destination Port/Park</th>
+<th class="py-3 px-space-md font-semibold">Assigned Vehicle &amp; Driver</th>
+<th class="py-3 px-space-md font-semibold">Corridor Status</th>
+<th class="py-3 px-space-md font-semibold">ETA / Delivered</th>
+<th class="py-3 px-space-md font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 text-on-surface font-body-sm text-body-sm" id="shipmentTableBody">
+<!-- Row 1: SHP001 -->
+<tr class="shipment-row hover:bg-surface-container-low/60 transition-colors group" data-id="SHP001" data-search="shp001 pune central mumbai sea port mh12ab1234 r. patel" data-status="Delivered">
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-tertiary">check_circle</span>
+<span class="font-headline-sm text-[13px] font-bold text-on-surface tracking-tight">SHP001</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+<span class="font-medium text-on-surface">Pune Central</span>
+</div>
+<span class="text-[11px] text-secondary font-label-sm">Dock #4 • Bay G</span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary shrink-0"></span>
+<span class="font-medium text-on-surface">Mumbai Sea Port</span>
+</div>
+<span class="text-[11px] text-secondary font-label-sm">Berth 12 Container Yard</span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">MH12AB1234</span>
+<span class="text-[12px] text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">badge</span>
+                  R. Patel (Grade A)
+                </span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-tertiary-container/20 text-tertiary font-semibold gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Delivered
+              </span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">20 Oct, 14:30</span>
+<span class="text-[11px] text-tertiary font-medium">POD Verified</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="view-details-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-eta="20 Oct, 14:30" data-id="SHP001" data-route="Pune Central ➔ Mumbai Sea Port" data-status="Delivered" data-vehicle="MH12AB1234 • R. Patel" title="View Details" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="track-live-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-id="SHP001" title="Track Live Telematics" type="button">
+<span class="material-symbols-outlined text-[18px]">near_me</span>
+</button>
+<button class="download-waybill-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-id="SHP001" title="Download e-Waybill" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: SHP002 -->
+<tr class="shipment-row hover:bg-surface-container-low/60 transition-colors group" data-id="SHP002" data-search="shp002 nashik depot pune midc mh12cd5678 a. sharma" data-status="In Transit">
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">local_shipping</span>
+<span class="font-headline-sm text-[13px] font-bold text-on-surface tracking-tight">SHP002</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+<span class="font-medium text-on-surface">Nashik Depot</span>
+</div>
+<span class="text-[11px] text-secondary font-label-sm">NH60 Freight Gateway</span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary shrink-0"></span>
+<span class="font-medium text-on-surface">Pune MIDC</span>
+</div>
+<span class="text-[11px] text-secondary font-label-sm">Chakan Auto Cluster</span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">MH14DE8821</span>
+<span class="text-[12px] text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">badge</span>
+                  A. Sharma (Heavy Haul)
+                </span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-primary-container/15 text-primary-container font-semibold gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+                In Transit
+              </span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">21 Oct, 18:45</span>
+<span class="text-[11px] text-primary font-medium">62 km remaining</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="view-details-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-eta="21 Oct, 18:45" data-id="SHP002" data-route="Nashik Depot ➔ Pune MIDC" data-status="In Transit" data-vehicle="MH14DE8821 • A. Sharma" title="View Details" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="track-live-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-id="SHP002" title="Track Live Telematics" type="button">
+<span class="material-symbols-outlined text-[18px]">near_me</span>
+</button>
+<button class="download-waybill-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-id="SHP002" title="Download e-Waybill" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: SHP003 -->
+<tr class="shipment-row hover:bg-surface-container-low/60 transition-colors group" data-id="SHP003" data-search="shp003 aurangabad hub nagpur logistics park mh20fg9940 s. jadhav" data-status="Pending">
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">schedule</span>
+<span class="font-headline-sm text-[13px] font-bold text-on-surface tracking-tight">SHP003</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+<span class="font-medium text-on-surface">Aurangabad Hub</span>
+</div>
+<span class="text-[11px] text-secondary font-label-sm">Shendra DMIC Terminal</span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary shrink-0"></span>
+<span class="font-medium text-on-surface">Nagpur Logistics Park</span>
+</div>
+<span class="text-[11px] text-secondary font-label-sm">MIHAN Multimodal Sector</span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">MH20FG9940</span>
+<span class="text-[12px] text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">badge</span>
+                  S. Jadhav (Dock Check)
+                </span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant font-semibold gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                Pending
+              </span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">22 Oct, 11:00</span>
+<span class="text-[11px] text-secondary">Loading Stage</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="view-details-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-eta="22 Oct, 11:00" data-id="SHP003" data-route="Aurangabad Hub ➔ Nagpur Logistics Park" data-status="Pending" data-vehicle="MH20FG9940 • S. Jadhav" title="View Details" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="track-live-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-id="SHP003" title="Track Live Telematics" type="button">
+<span class="material-symbols-outlined text-[18px]">near_me</span>
+</button>
+<button class="download-waybill-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-id="SHP003" title="Download e-Waybill" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: SHP004 -->
+<tr class="shipment-row hover:bg-surface-container-low/60 transition-colors group" data-id="SHP004" data-search="shp004 mumbai jnpt nashik central mh04kl3321 v. deshmukh" data-status="Delayed">
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-error">error_outline</span>
+<span class="font-headline-sm text-[13px] font-bold text-on-surface tracking-tight">SHP004</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+<span class="font-medium text-on-surface">Mumbai JNPT</span>
+</div>
+<span class="text-[11px] text-secondary font-label-sm">Customs Clearance Zone</span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary shrink-0"></span>
+<span class="font-medium text-on-surface">Nashik Central</span>
+</div>
+<span class="text-[11px] text-secondary font-label-sm">Satpur Industrial Estate</span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">MH04KL3321</span>
+<span class="text-[12px] text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">badge</span>
+                  V. Deshmukh
+                </span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-error-container text-on-error-container font-semibold gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                Delayed
+              </span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-error">23 Oct, 21:15</span>
+<span class="text-[11px] text-error font-medium">+3.5 hrs (Kasara Ghat)</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="view-details-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-eta="23 Oct, 21:15" data-id="SHP004" data-route="Mumbai JNPT ➔ Nashik Central" data-status="Delayed" data-vehicle="MH04KL3321 • V. Deshmukh" title="View Details" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="track-live-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-id="SHP004" title="Track Live Telematics" type="button">
+<span class="material-symbols-outlined text-[18px]">near_me</span>
+</button>
+<button class="download-waybill-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-id="SHP004" title="Download e-Waybill" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 5: SHP005 -->
+<tr class="shipment-row hover:bg-surface-container-low/60 transition-colors group" data-id="SHP005" data-search="shp005 pune west aurangabad mh12mn7711 k. rao" data-status="In Transit">
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">local_shipping</span>
+<span class="font-headline-sm text-[13px] font-bold text-on-surface tracking-tight">SHP005</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+<span class="font-medium text-on-surface">Pune West</span>
+</div>
+<span class="text-[11px] text-secondary font-label-sm">Hinjawadi Logistics</span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary shrink-0"></span>
+<span class="font-medium text-on-surface">Aurangabad</span>
+</div>
+<span class="text-[11px] text-secondary font-label-sm">Waluj Mid-point</span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">MH12MN7711</span>
+<span class="text-[12px] text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">badge</span>
+                  K. Rao (Express)
+                </span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-primary-container/15 text-primary-container font-semibold gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+                In Transit
+              </span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">24 Oct, 09:30</span>
+<span class="text-[11px] text-primary font-medium">110 km remaining</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="view-details-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-eta="24 Oct, 09:30" data-id="SHP005" data-route="Pune West ➔ Aurangabad" data-status="In Transit" data-vehicle="MH12MN7711 • K. Rao" title="View Details" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="track-live-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-id="SHP005" title="Track Live Telematics" type="button">
+<span class="material-symbols-outlined text-[18px]">near_me</span>
+</button>
+<button class="download-waybill-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-id="SHP005" title="Download e-Waybill" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 6: SHP006 -->
+<tr class="shipment-row hover:bg-surface-container-low/60 transition-colors group" data-id="SHP006" data-search="shp006 kolhapur hub pune east mh09pq4420 m. kulkarni" data-status="Delivered">
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-tertiary">check_circle</span>
+<span class="font-headline-sm text-[13px] font-bold text-on-surface tracking-tight">SHP006</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+<span class="font-medium text-on-surface">Kolhapur Hub</span>
+</div>
+<span class="text-[11px] text-secondary font-label-sm">Shiroli Cross Dock</span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary shrink-0"></span>
+<span class="font-medium text-on-surface">Pune East</span>
+</div>
+<span class="text-[11px] text-secondary font-label-sm">Hadapsar Industrial Depot</span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">MH09PQ4420</span>
+<span class="text-[12px] text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">badge</span>
+                  M. Kulkarni
+                </span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-tertiary-container/20 text-tertiary font-semibold gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Delivered
+              </span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">25 Oct, 16:10</span>
+<span class="text-[11px] text-tertiary font-medium">Delivered to Dock 2</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="view-details-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-eta="25 Oct, 16:10" data-id="SHP006" data-route="Kolhapur Hub ➔ Pune East" data-status="Delivered" data-vehicle="MH09PQ4420 • M. Kulkarni" title="View Details" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="track-live-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-id="SHP006" title="Track Live Telematics" type="button">
+<span class="material-symbols-outlined text-[18px]">near_me</span>
+</button>
+<button class="download-waybill-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-id="SHP006" title="Download e-Waybill" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 7: SHP007 -->
+<tr class="shipment-row hover:bg-surface-container-low/60 transition-colors group" data-id="SHP007" data-search="shp007 jalgaon facility nashik mh19rs8191 t. more" data-status="In Transit">
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">local_shipping</span>
+<span class="font-headline-sm text-[13px] font-bold text-on-surface tracking-tight">SHP007</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+<span class="font-medium text-on-surface">Jalgaon Facility</span>
+</div>
+<span class="text-[11px] text-secondary font-label-sm">Agro Processing Park</span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary shrink-0"></span>
+<span class="font-medium text-on-surface">Nashik</span>
+</div>
+<span class="text-[11px] text-secondary font-label-sm">Ambad Industrial Center</span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">MH19RS8191</span>
+<span class="text-[12px] text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">badge</span>
+                  T. More (Reefer Unit)
+                </span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-primary-container/15 text-primary-container font-semibold gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+                In Transit
+              </span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">26 Oct, 13:20</span>
+<span class="text-[11px] text-primary font-medium">On Track (-4°C)</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="view-details-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-eta="26 Oct, 13:20" data-id="SHP007" data-route="Jalgaon Facility ➔ Nashik" data-status="In Transit" data-vehicle="MH19RS8191 • T. More" title="View Details" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="track-live-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-id="SHP007" title="Track Live Telematics" type="button">
+<span class="material-symbols-outlined text-[18px]">near_me</span>
+</button>
+<button class="download-waybill-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-id="SHP007" title="Download e-Waybill" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 8: SHP008 -->
+<tr class="shipment-row hover:bg-surface-container-low/60 transition-colors group" data-id="SHP008" data-search="shp008 solapur depot mumbai port mh13tu1002 p. chavan" data-status="Pending">
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">schedule</span>
+<span class="font-headline-sm text-[13px] font-bold text-on-surface tracking-tight">SHP008</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+<span class="font-medium text-on-surface">Solapur Depot</span>
+</div>
+<span class="text-[11px] text-secondary font-label-sm">Textile Cargo Terminal</span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary shrink-0"></span>
+<span class="font-medium text-on-surface">Mumbai Port</span>
+</div>
+<span class="text-[11px] text-secondary font-label-sm">Victoria Docks Gate 3</span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">MH13TU1002</span>
+<span class="text-[12px] text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">badge</span>
+                  P. Chavan (Queued)
+                </span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-surface-container-high text-on-surface-variant font-semibold gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                Pending
+              </span>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap">
+<div class="flex flex-col">
+<span class="font-semibold text-on-surface">27 Oct, 08:00</span>
+<span class="text-[11px] text-secondary">Manifest Awaiting Seal</span>
+</div>
+</td>
+<td class="py-3.5 px-space-md whitespace-nowrap text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="view-details-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-eta="27 Oct, 08:00" data-id="SHP008" data-route="Solapur Depot ➔ Mumbai Port" data-status="Pending" data-vehicle="MH13TU1002 • P. Chavan" title="View Details" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<button class="track-live-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-id="SHP008" title="Track Live Telematics" type="button">
+<span class="material-symbols-outlined text-[18px]">near_me</span>
+</button>
+<button class="download-waybill-btn p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" data-id="SHP008" title="Download e-Waybill" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Empty State Fallback -->
+<div class="hidden flex-col items-center justify-center p-space-xl text-center" id="noResultsState">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-secondary mb-3">
+<span class="material-symbols-outlined text-[26px]">search_off</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">No shipments match your criteria</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-sm mt-1">Try resetting filter tabs or checking for another corridor consignment number.</p>
+<button class="mt-4 px-4 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high font-label-md text-label-md text-primary font-semibold transition-all" id="resetFiltersBtn" type="button">
+        Reset Search &amp; Tabs
+      </button>
+</div>
+<!-- Clean Modern Pagination Bar -->
+<div class="p-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm bg-surface-container-lowest">
+<div class="flex items-center gap-2">
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+          Showing <span class="font-semibold text-on-surface" id="showingCount">1 to 8</span> of <span class="font-semibold text-on-surface">25</span> shipments
+        </span>
+<span class="text-secondary text-sm hidden md:inline">•</span>
+<span class="font-label-sm text-label-sm text-secondary hidden md:inline">Telemetry refresh: 10s auto</span>
+</div>
+<div class="flex items-center gap-1.5">
+<button class="h-9 w-9 flex items-center justify-center rounded-lg bg-surface-container-low hover:bg-surface-container text-secondary transition-colors disabled:opacity-40" disabled="" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="h-9 w-9 flex items-center justify-center rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md font-semibold shadow-sm" type="button">1</button>
+<button class="h-9 w-9 flex items-center justify-center rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-label-md text-label-md transition-colors" type="button">2</button>
+<button class="h-9 w-9 flex items-center justify-center rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-label-md text-label-md transition-colors" type="button">3</button>
+<span class="px-1 text-secondary text-sm">...</span>
+<button class="h-9 w-9 flex items-center justify-center rounded-lg bg-surface-container-low hover:bg-surface-container text-secondary transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom Context Visual Split: Active Telemetry Map Snapshot & Corridor Speed Insight -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-space-md">
+<!-- Mini Map Quick Feed -->
+<div class="lg:col-span-2 bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">map</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Western Express Corridor Telematics</span>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container px-2.5 py-1 rounded-full text-secondary font-medium">Pune • Mumbai • Nashik Triangular Grid</span>
+</div>
+<!-- Static Location View Container with Location Pipeline -->
+<div class="w-full h-52 bg-cover bg-center rounded-lg relative overflow-hidden flex items-end p-4 shadow-inner" data-location="Maharashtra, India" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuABoBQne77hdxE-AtQj1OMY5aGguOgnwCF-KHO6cZzbEHyL6JQNuWisXXLpkxKL6ElqLiopRu9XuS6c28HenyIiOPeBg2y4YfY4UbQv6_1WZPY1xTCS5iggWZ_SCnTsUwUBo0xXLoh7JXx0ghRcV_ROzHC-T01BVIBsmhrN4JzUEvWJ0lR1RoORL-Gi1eCC9_3_zfUJaIMY9JjDwy6ry55r254-8I0uOMTiNXHOxupsO-qrSrFpP-Nh')">
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/90 via-inverse-surface/30 to-transparent pointer-events-none"></div>
+<div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between w-full gap-2">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-tertiary-fixed animate-ping"></span>
+<span class="font-label-md text-label-md text-white font-semibold">Active Fleet Density: 18 Trucks within 50km radius</span>
+</div>
+<button class="px-3 py-1.5 rounded-lg bg-white/90 hover:bg-white text-on-surface font-label-sm text-label-sm font-semibold transition-all shadow-md self-start sm:self-auto" type="button">
+            Switch to Fullscreen Map ↗
+          </button>
+</div>
+</div>
+</div>
+<!-- Dispatch Alert / Verification Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between mb-2">
+<span class="font-headline-sm text-headline-sm text-on-surface">Verification Engine</span>
+<span class="material-symbols-outlined text-tertiary text-[20px]">verified</span>
+</div>
+<div class="space-y-3 my-2">
+<div class="flex items-start gap-3 p-2.5 rounded-lg bg-surface-container-low">
+<span class="material-symbols-outlined text-tertiary text-[20px] mt-0.5">e911_emergency</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">e-Waybill Auto-Validation</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">100% matched against GSTN gateway</span>
+</div>
+</div>
+<div class="flex items-start gap-3 p-2.5 rounded-lg bg-surface-container-low">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5">sensors</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">IoT Geofence Compliance</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">0 unauthorized stop alerts logged today</span>
+</div>
+</div>
+</div>
+<div class="pt-2">
+<button class="w-full py-2.5 px-3 rounded-lg bg-surface-container hover:bg-surface-container-high text-primary font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+          Run Security &amp; Seal Audit
+        </button>
+</div>
+</div>
+</div>
+<!-- Detail Slide-Over Modal / Flyout Overlay (Hidden by Default) -->
+<div class="fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm hidden items-center justify-center p-4" id="shipmentDetailModal">
+<div class="bg-surface-container-lowest rounded-xl max-w-lg w-full p-space-lg shadow-xl relative animate-in fade-in zoom-in-95 duration-150">
+<div class="flex items-center justify-between pb-3">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">package_2</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface" id="modalShipmentId">SHP001</h3>
+<span class="font-label-sm text-label-sm text-secondary">Telemetry Quick View</span>
+</div>
+</div>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-secondary hover:bg-surface-container transition-colors" id="closeModalBtn" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="space-y-4 my-4 font-body-sm text-body-sm">
+<div class="p-3 rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-secondary uppercase">Transit Route</span>
+<span class="font-headline-sm text-[15px] text-on-surface font-semibold" id="modalRoute">-</span>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="p-3 rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-secondary uppercase">Assigned Unit</span>
+<span class="font-medium text-on-surface" id="modalVehicle">-</span>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-low flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-secondary uppercase">Schedule ETA</span>
+<span class="font-medium text-on-surface" id="modalEta">-</span>
+</div>
+</div>
+<div class="p-3 rounded-lg bg-surface-container-low flex items-center justify-between">
+<span class="font-label-md text-label-md text-secondary">Corridor Telematics Status</span>
+<span class="font-label-md text-label-md font-bold text-primary" id="modalStatusBadge">-</span>
+</div>
+<div class="flex flex-col gap-2 pt-2">
+<span class="font-label-sm text-label-sm text-secondary uppercase">Live Route Timeline</span>
+<div class="flex items-center justify-between relative px-2">
+<div class="absolute left-4 right-4 h-0.5 bg-surface-container-high top-3 -z-0"></div>
+<div class="flex flex-col items-center z-10">
+<span class="w-6 h-6 rounded-full bg-tertiary text-on-tertiary flex items-center justify-center text-[12px]">✓</span>
+<span class="font-label-sm text-[10px] text-on-surface mt-1">Dispatched</span>
+</div>
+<div class="flex flex-col items-center z-10">
+<span class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center text-[12px]">●</span>
+<span class="font-label-sm text-[10px] text-on-surface mt-1">Ghat Check</span>
+</div>
+<div class="flex flex-col items-center z-10">
+<span class="w-6 h-6 rounded-full bg-surface-container-highest text-secondary flex items-center justify-center text-[12px]">3</span>
+<span class="font-label-sm text-[10px] text-secondary mt-1">Dock In</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-end gap-2 pt-4">
+<button class="px-4 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-all" id="modalCloseActionBtn" type="button">
+          Close
+        </button>
+<button class="px-4 py-2 rounded-lg bg-primary-container text-on-primary-container hover:bg-primary hover:text-on-primary font-label-md text-label-md font-semibold transition-all" type="button">
+          Open Telematics Stream
+        </button>
+</div>
+</div>
+</div>
+<!-- Notification Toast (Feedback Trigger) -->
+<div class="fixed bottom-6 right-6 z-50 bg-inverse-surface text-inverse-on-surface px-4 py-3 rounded-lg shadow-xl hidden items-center gap-3 animate-in fade-in slide-in-from-bottom-2" id="toastNotification">
+<span class="material-symbols-outlined text-tertiary-fixed text-[20px]">check_circle</span>
+<span class="font-body-sm text-body-sm font-medium" id="toastMessage">Waybill manifest downloaded successfully</span>
+</div>
+</div>
+<script>
+  (function () {
+    const searchInput = document.getElementById('shipmentSearchInput');
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const rows = document.querySelectorAll('.shipment-row');
+    const noResults = document.getElementById('noResultsState');
+    const showingCount = document.getElementById('showingCount');
+    const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+    
+    // Modal elements
+    const modal = document.getElementById('shipmentDetailModal');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const modalCloseActionBtn = document.getElementById('modalCloseActionBtn');
+    const modalShipmentId = document.getElementById('modalShipmentId');
+    const modalRoute = document.getElementById('modalRoute');
+    const modalVehicle = document.getElementById('modalVehicle');
+    const modalEta = document.getElementById('modalEta');
+    const modalStatusBadge = document.getElementById('modalStatusBadge');
+
+    // Toast element
+    const toast = document.getElementById('toastNotification');
+    const toastMessage = document.getElementById('toastMessage');
+
+    let currentStatus = 'all';
+    let searchQuery = '';
+
+    function showToast(text) {
+      if (!toast) return;
+      toastMessage.textContent = text;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 3500);
+    }
+
+    function applyFilters() {
+      let visibleCount = 0;
+      rows.forEach(row => {
+        const rowStatus = row.getAttribute('data-status');
+        const rowSearch = row.getAttribute('data-search') || '';
+
+        const matchesStatus = (currentStatus === 'all') || (rowStatus.toLowerCase() === currentStatus.toLowerCase());
+        const matchesQuery = !searchQuery || rowSearch.toLowerCase().includes(searchQuery.toLowerCase());
+
+        if (matchesStatus && matchesQuery) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      if (showingCount) {
+        showingCount.textContent = visibleCount > 0 ? `1 to ${visibleCount}` : '0';
+      }
+
+      if (noResults) {
+        if (visibleCount === 0) {
+          noResults.classList.remove('hidden');
+          noResults.classList.add('flex');
+        } else {
+          noResults.classList.add('hidden');
+          noResults.classList.remove('flex');
+        }
+      }
+    }
+
+    // Filter tab clicks
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        filterTabs.forEach(t => {
+          t.classList.remove('bg-primary-container', 'text-on-primary-container', 'font-semibold', 'shadow-sm');
+          t.classList.add('text-secondary', 'hover:bg-surface-container', 'font-medium');
+        });
+
+        tab.classList.remove('text-secondary', 'hover:bg-surface-container', 'font-medium');
+        tab.classList.add('bg-primary-container', 'text-on-primary-container', 'font-semibold', 'shadow-sm');
+
+        currentStatus = tab.getAttribute('data-status');
+        applyFilters();
+      });
+    });
+
+    // Search input
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value.trim();
+        applyFilters();
+      });
+    }
+
+    // Reset filters action
+    if (resetFiltersBtn) {
+      resetFiltersBtn.addEventListener('click', () => {
+        if (searchInput) searchInput.value = '';
+        searchQuery = '';
+        currentStatus = 'all';
+
+        filterTabs.forEach((t, index) => {
+          if (index === 0) {
+            t.classList.remove('text-secondary', 'hover:bg-surface-container', 'font-medium');
+            t.classList.add('bg-primary-container', 'text-on-primary-container', 'font-semibold', 'shadow-sm');
+          } else {
+            t.classList.remove('bg-primary-container', 'text-on-primary-container', 'font-semibold', 'shadow-sm');
+            t.classList.add('text-secondary', 'hover:bg-surface-container', 'font-medium');
+          }
+        });
+
+        applyFilters();
+      });
+    }
+
+    // Row Actions: View Details Modal
+    document.querySelectorAll('.view-details-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        modalShipmentId.textContent = btn.getAttribute('data-id');
+        modalRoute.textContent = btn.getAttribute('data-route');
+        modalVehicle.textContent = btn.getAttribute('data-vehicle');
+        modalEta.textContent = btn.getAttribute('data-eta');
+        modalStatusBadge.textContent = btn.getAttribute('data-status');
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      });
+    });
+
+    function closeModal() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+    if (modalCloseActionBtn) modalCloseActionBtn.addEventListener('click', closeModal);
+    if (modal) {
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+    }
+
+    // Row Actions: Track Live
+    document.querySelectorAll('.track-live-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        showToast(`Connecting live telematics telemetry for ${id}...`);
+        setTimeout(() => {
+          window.location.href = 'live-tracking.html';
+        }, 600);
+      });
+    });
+
+    // Row Actions: Download Waybill
+    document.querySelectorAll('.download-waybill-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        showToast(`e-Waybill for ${id} generated & downloaded (PDF).`);
+      });
+    });
+
+    // Create Shipment Trigger
+    const createBtn = document.getElementById('createShipmentBtn');
+    if (createBtn) {
+      createBtn.addEventListener('click', () => {
+        window.location.href = 'create-shipment.html';
+      });
+    }
+
+    // Manifest Export Trigger
+    const exportBtn = document.getElementById('exportCsvBtn');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', () => {
+        showToast('Exporting 25 active corridor manifests as CSV...');
+      });
+    }
+
+    // User Profile Dropdown
+    const userProfileBtn = document.getElementById('userProfileBtn');
+    const userDropdownMenu = document.getElementById('userDropdownMenu');
+    if (userProfileBtn && userDropdownMenu) {
+      userProfileBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        userDropdownMenu.classList.toggle('hidden');
+      });
+      document.addEventListener('click', (e) => {
+        if (!userProfileBtn.contains(e.target) && !userDropdownMenu.contains(e.target)) {
+          userDropdownMenu.classList.add('hidden');
+        }
+      });
+    }
+  })();
+</script>
+<script type="module">
+  import { apiService } from './src/services/apiService.js';
+
+  async function loadShipmentsData() {
+    const tableBody = document.getElementById('shipmentTableBody');
+    if (!tableBody) return;
+
+    try {
+      const shipments = await apiService.shipments.getAll();
+      if (shipments && shipments.length > 0) {
+        tableBody.innerHTML = shipments.map((shp) => {
+          const isDelivered = shp.status === 'DELIVERED';
+          const isPending = shp.status === 'CREATED' || shp.status === 'PENDING';
+          const badge = isDelivered
+            ? `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-tertiary-container/20 text-tertiary font-semibold gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>Delivered</span>`
+            : isPending
+            ? `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-amber-100 text-amber-800 font-semibold gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Pending</span>`
+            : `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-sm text-label-sm bg-primary-container/15 text-primary-container font-semibold gap-1.5"><span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>In Transit</span>`;
+
+          return `
+            <tr class="shipment-row hover:bg-surface-container-low/60 transition-colors group" data-id="${shp.trackingNumber}" data-status="${shp.status}">
+              <td class="py-3.5 px-space-md whitespace-nowrap">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[18px] text-primary">local_shipping</span>
+                  <span class="font-headline-sm text-[13px] font-bold text-on-surface tracking-tight">${shp.trackingNumber}</span>
+                </div>
+              </td>
+              <td class="py-3.5 px-space-md whitespace-nowrap">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+                  <span class="font-medium text-on-surface">${shp.pickupAddress || 'Pune Origin Depot'}</span>
+                </div>
+                <span class="text-[11px] text-secondary font-label-sm">${shp.customerName || 'Consolidated Freight'}</span>
+              </td>
+              <td class="py-3.5 px-space-md whitespace-nowrap">
+                <div class="flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-secondary shrink-0"></span>
+                  <span class="font-medium text-on-surface">${shp.deliveryAddress || 'Mumbai Port'}</span>
+                </div>
+                <span class="text-[11px] text-secondary font-label-sm">Weight: ${shp.weightKg ? shp.weightKg + ' kg' : '5,000 kg'}</span>
+              </td>
+              <td class="py-3.5 px-space-md whitespace-nowrap">
+                <div class="flex flex-col">
+                  <span class="font-semibold text-on-surface">Oracle Fleet</span>
+                  <span class="text-[12px] text-on-surface-variant flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[14px]">verified</span>
+                    AIS-140 GPS Synced
+                  </span>
+                </div>
+              </td>
+              <td class="py-3.5 px-space-md whitespace-nowrap">
+                ${badge}
+              </td>
+              <td class="py-3.5 px-space-md whitespace-nowrap">
+                <div class="flex flex-col">
+                  <span class="font-semibold text-on-surface">${shp.expectedDelivery || 'Expected Today'}</span>
+                  <span class="text-[11px] text-primary font-medium">Oracle XE Live</span>
+                </div>
+              </td>
+              <td class="py-3.5 px-space-md whitespace-nowrap text-right">
+                <div class="flex items-center justify-end gap-1">
+                  <button onclick="window.location.href='live-tracking.html?tracking=${shp.trackingNumber}'" class="p-1.5 rounded-lg text-secondary hover:text-primary hover:bg-surface-container transition-colors" title="Track Live Telematics" type="button">
+                    <span class="material-symbols-outlined text-[18px]">near_me</span>
+                  </button>
+                  <button onclick="deleteShipmentItem(${shp.shipmentId})" class="p-1.5 rounded-lg text-rose-500 hover:text-rose-700 hover:bg-rose-50 transition-colors" title="Delete Shipment" type="button">
+                    <span class="material-symbols-outlined text-[18px]">delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+    } catch (e) {
+      console.warn('Backend offline, using fallback shipments:', e);
+    }
+  }
+
+  window.deleteShipmentItem = async function(id) {
+    if (!confirm(`Are you sure you want to delete shipment #${id}?`)) return;
+    try {
+      await apiService.shipments.delete(id);
+      loadShipmentsData();
+    } catch (e) {
+      alert('Could not delete shipment: ' + e.message);
+    }
+  };
+
+  loadShipmentsData();
+</script>
+</main></div>
+</body></html>

@@ -1,0 +1,1399 @@
+<!DOCTYPE html><html class="h-full bg-slate-50" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>FleetTrack - Smart Logistics &amp; Fleet Operations Engine</title>
+<!-- Authentication Protection Gate -->
+<script>
+  if (localStorage.getItem('fleettrack_logged_in') !== 'true') {
+    window.location.replace('login.html');
+  }
+</script>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Custom Configuration matching Design Theme tokens -->
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#2563eb',
+              600: '#1d4ed8',
+              700: '#1e40af',
+            },
+            navy: {
+              800: '#1e293b',
+              900: '#0f172a',
+              950: '#090d16',
+            },
+            primary: {
+              DEFAULT: '#004ac6',
+              container: '#2563eb',
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<!-- Material Symbols Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style data-purpose="custom-scrollbars">
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+<style data-purpose="map-styling">
+    .map-grid-pattern {
+      background-color: #f8fafc;
+      background-image: 
+        linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+        linear-gradient(to bottom, #e2e8f0 1px, transparent 1px);
+      background-size: 44px 44px;
+    }
+    .road-network {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 0.3; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .radar-pulse {
+      animation: pulse-ring 2.5s infinite ease-in-out;
+    }
+  </style>
+
+<!-- Leaflet Maps CSS and JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<style>
+  #dashboardCorridorMap {
+    background-color: #f1f5f9;
+    z-index: 0;
+  }
+  .leaflet-container {
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+  }
+</style>
+</head>
+<body class="h-full flex flex-col font-sans text-slate-800 antialiased overflow-hidden selection:bg-blue-500 selection:text-white">
+<div class="flex h-screen w-full bg-slate-50">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-64 bg-navy-900 text-slate-300 flex flex-col shrink-0 border-r border-slate-800 z-30 select-none" data-purpose="main-navigation-sidebar">
+<!-- Brand & Wordmark -->
+<a href="index.html" class="h-16 flex items-center px-6 border-b border-navy-800/80 gap-3 hover:bg-navy-800/50 transition-colors">
+<div class="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<div>
+<span class="text-lg font-bold tracking-tight text-white flex items-center gap-1.5">
+          Fleet<span class="text-blue-400">Track</span>
+</span>
+<p class="text-[10px] text-slate-400 font-medium -mt-1 leading-tight">Logistics &amp; Fleet Engine</p>
+</div>
+</a>
+<!-- Navigation Links -->
+<nav class="flex-1 py-5 px-3 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-lg text-sm font-medium bg-blue-600 text-white shadow-sm shadow-blue-900/40" href="index.html">
+<svg class="w-5 h-5 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+        Dashboard
+      </a>
+<a class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:text-white hover:bg-navy-800 transition-colors" href="fleet.html">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+        Fleet
+      </a>
+<a class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:text-white hover:bg-navy-800 transition-colors" href="drivers.html">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+        Drivers
+      </a>
+<a class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:text-white hover:bg-navy-800 transition-colors" href="shipments.html">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+        Shipments
+      </a>
+<a class="flex items-center justify-between px-3.5 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:text-white hover:bg-navy-800 transition-colors" href="live-tracking.html">
+<div class="flex items-center gap-3.5">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+          Live Tracking
+        </div>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Live</span>
+</a>
+<a class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:text-white hover:bg-navy-800 transition-colors" href="reports.html">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+        Reports &amp; Analytics
+      </a>
+<a class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:text-white hover:bg-navy-800 transition-colors" href="settings.html">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+        Settings
+      </a>
+</nav>
+<!-- Telemetry Gateway Health Status -->
+<div class="p-3 mx-3 mb-2 rounded-lg bg-navy-800/60 border border-slate-700/50">
+<div class="flex items-center justify-between text-[11px] mb-1.5">
+<span class="text-slate-400">IoT Ingestion Hub</span>
+<span class="text-emerald-400 font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          99.98%
+        </span>
+</div>
+<div class="w-full bg-slate-700/70 h-1.5 rounded-full overflow-hidden">
+<div class="bg-gradient-to-r from-blue-500 to-emerald-400 h-1.5 rounded-full w-[94%]"></div>
+</div>
+<div class="flex justify-between text-[10px] text-slate-500 mt-1.5">
+<span class="">1,420 msgs/sec</span>
+<span class="">48 Nodes</span>
+</div>
+</div>
+<!-- System Status Indicator & Sign Out at Bottom -->
+<div class="p-3 border-t border-navy-800 bg-navy-950/80 space-y-2">
+<div class="flex items-center gap-2.5 px-1">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+</span>
+<span class="text-xs font-medium text-slate-300">System Online</span>
+<span class="text-[10px] ml-auto text-slate-500 font-mono">v2.4 PRO</span>
+</div>
+<button onclick="localStorage.removeItem('fleettrack_logged_in'); window.location.href='login.html';" class="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-rose-400 hover:text-white hover:bg-rose-950/60 transition-colors" type="button">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+<span>Sign Out / Exit</span>
+</button>
+</div>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContentWrapper -->
+<div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+<!-- BEGIN: TopHeader -->
+<header class="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between shrink-0 z-20" data-purpose="dashboard-topbar">
+<!-- Search Input with Keyboard shortcut -->
+<div class="relative w-80">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</span>
+<input class="w-full text-xs bg-slate-50 border border-slate-200 rounded-lg pl-9 pr-12 py-2 text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all font-medium" placeholder="Search vehicles, shipments, corridors..." type="text">
+<kbd class="absolute right-2.5 top-2 px-1.5 py-0.5 text-[10px] font-semibold text-slate-400 bg-slate-200/70 border border-slate-300 rounded">⌘K</kbd>
+</div>
+<!-- Right Side: Actions, Date & User Profile -->
+<div class="flex items-center gap-3.5">
+<!-- Database Live Connection Badge -->
+<div id="dbStatusPill" class="hidden sm:flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg border bg-emerald-50 text-emerald-700 border-emerald-200">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span id="dbStatusText">Oracle DB: Connected</span>
+</div>
+<!-- Live Date Badge -->
+<div class="hidden md:flex items-center gap-2 text-xs font-medium text-slate-600 bg-slate-100/90 px-3 py-1.5 rounded-lg border border-slate-200">
+<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="">Live Fleet Shift</span>
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 ml-1"></span>
+<span class="text-[10px] text-slate-400 font-mono">AIS-140</span>
+</div>
+<!-- Notification Bell with Count badge -->
+<button aria-label="Notifications" class="relative p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors" type="button">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="absolute top-1 right-1 w-2.5 h-2.5 bg-rose-500 rounded-full ring-2 ring-white animate-ping"></span>
+<span class="absolute top-1 right-1 w-2.5 h-2.5 bg-rose-500 rounded-full ring-2 ring-white"></span>
+</button>
+<!-- Help / Documentation -->
+<button aria-label="Help" class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors" type="button">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+<!-- Divider -->
+<div class="h-6 w-px bg-slate-200"></div>
+<!-- User Profile Dropdown Pill -->
+<div class="relative">
+  <button id="userProfileBtn" class="flex items-center gap-3 pl-1 text-left focus:outline-none rounded-lg p-1 hover:bg-slate-50 transition" type="button">
+    <div class="relative">
+      <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-700 to-indigo-600 flex items-center justify-center text-white font-bold text-xs shadow-sm ring-2 ring-slate-100">SK</div>
+      <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full"></span>
+    </div>
+    <div class="text-left hidden sm:block">
+      <div class="text-xs font-bold text-slate-800">Sakshi Kumavat</div>
+      <div class="text-[11px] text-slate-400 leading-tight">Chief Fleet Dispatcher</div>
+    </div>
+    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+    </svg>
+  </button>
+  <!-- User Profile Dropdown Menu -->
+  <div id="userProfileDropdown" class="hidden absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-slate-200/90 py-1.5 z-50 text-xs">
+    <div class="px-4 py-2 border-b border-slate-100">
+      <p class="font-bold text-slate-900">Sakshi Kumavat</p>
+      <p class="text-slate-400 text-[11px] truncate">sakshi@fleettrack.io</p>
+    </div>
+    <div class="py-1">
+      <a href="settings.html" class="flex items-center gap-2.5 px-4 py-2 text-slate-700 hover:bg-slate-50 transition-colors">
+        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        System Settings
+      </a>
+      <a href="live-tracking.html" class="flex items-center gap-2.5 px-4 py-2 text-slate-700 hover:bg-slate-50 transition-colors">
+        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        Live Tracking Map
+      </a>
+      <a href="create-shipment.html" class="flex items-center gap-2.5 px-4 py-2 text-slate-700 hover:bg-slate-50 transition-colors">
+        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        Create Shipment
+      </a>
+    </div>
+    <div class="border-t border-slate-100 pt-1">
+      <button onclick="localStorage.removeItem('fleettrack_logged_in'); window.location.href='login.html';" class="w-full flex items-center gap-2.5 px-4 py-2 text-rose-600 hover:bg-rose-50 transition-colors text-left font-semibold">
+        <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+</header>
+<!-- END: TopHeader -->
+<!-- Scrollable Main Viewport -->
+<main class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- Header Title & Quick Primary Action -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+<div>
+<div class="flex items-center gap-2.5">
+<h1 class="text-xl font-bold tracking-tight text-slate-900">Operations Dashboard</h1>
+<span class="text-[11px] font-semibold text-blue-700 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full">Telemetry Active</span>
+</div>
+<p class="text-xs text-slate-500 mt-0.5">Real-time status of fleet dispatch, automated corridor routing, sensor diagnostics &amp; multi-depot throughput.</p>
+</div>
+<div class="flex items-center gap-2.5">
+<button class="inline-flex items-center gap-2 px-3.5 py-2 bg-white border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-50 shadow-sm transition-colors">
+<svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+            Export Telemetry
+          </button>
+<button onclick="window.location.href='create-shipment.html'" style="cursor:pointer;" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 rounded-lg text-xs font-semibold text-white hover:bg-blue-700 shadow-sm shadow-blue-500/25 transition-all">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+            Create Shipment
+          </button>
+</div>
+</div>
+<!-- Real-time Incident & Alerts Stream Ticker -->
+<div class="bg-gradient-to-r from-amber-500/10 via-rose-500/5 to-blue-500/10 border border-amber-200/80 rounded-xl px-4 py-2.5 flex items-center justify-between gap-3 shadow-sm text-xs">
+<div class="flex items-center gap-2.5 overflow-hidden">
+<span class="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-rose-600 text-white font-bold text-[10px] tracking-wider uppercase shrink-0">
+<span class="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
+            Live Alert
+          </span>
+<div class="flex items-center gap-4 text-slate-700 truncate">
+<span class="inline-flex items-center gap-1.5 font-medium">
+<span class="text-rose-600 font-semibold">MH12GH3456:</span> Tire pressure warning (24 PSI &lt; 32) on Axle 2 • 3m ago
+            </span>
+<span class="text-slate-300">|</span>
+<span class="inline-flex items-center gap-1.5 font-medium text-amber-800">
+<span class="text-amber-600 font-semibold">Chakan Gate 4:</span> Geofence exit verified (+12 min delay clearance)
+            </span>
+<span class="text-slate-300">|</span>
+<span class="inline-flex items-center gap-1.5 font-medium text-slate-600">
+<span class="text-blue-600 font-semibold">Corridor NH-48:</span> Moderate monsoon fog near Lonavala Ghat, max speed advisory 50 km/h
+            </span>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<button class="text-[11px] font-semibold text-blue-700 hover:text-blue-900 bg-white px-2.5 py-1 rounded border border-blue-200 shadow-2xs hover:bg-blue-50 transition-colors">Acknowledge (3)</button>
+</div>
+</div>
+<!-- BEGIN: KPICardsSection -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3.5" data-purpose="fleet-kpi-metrics">
+<!-- KPI 1: Total Shipments -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm flex items-center justify-between hover:border-blue-300 transition-all">
+<div>
+<p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Total Shipments</p>
+<div class="flex items-baseline gap-2 mt-1">
+<span id="kpiTotalShipments" class="text-2xl font-bold text-slate-900">--</span>
+<span class="inline-flex items-center text-[10px] font-semibold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">
+                Oracle XE
+              </span>
+</div>
+<p class="text-[10px] text-slate-400 mt-1 font-mono">Consignments Ingested</p>
+</div>
+<div class="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<!-- KPI 2: Active Trips -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm flex items-center justify-between hover:border-emerald-300 transition-all">
+<div>
+<p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Active In Transit</p>
+<div class="flex items-baseline gap-2 mt-1">
+<span id="kpiActiveTrips" class="text-2xl font-bold text-slate-900">--</span>
+<span class="inline-flex items-center text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">
+                Live Route
+              </span>
+</div>
+<p class="text-[10px] text-slate-400 mt-1 font-mono">AIS-140 Tracked</p>
+</div>
+<div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<!-- KPI 3: Delivered Shipments -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm flex items-center justify-between hover:border-teal-300 transition-all">
+<div>
+<p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Delivered Orders</p>
+<div class="flex items-baseline gap-2 mt-1">
+<span id="kpiDeliveredShipments" class="text-2xl font-bold text-slate-900">--</span>
+<span class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                POD Done
+              </span>
+</div>
+<p class="text-[10px] text-slate-400 mt-1 font-mono">Completed Consignments</p>
+</div>
+<div class="w-10 h-10 rounded-xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-600 shrink-0">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<!-- KPI 4: Fleet Vehicles & Available -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm flex items-center justify-between hover:border-indigo-300 transition-all">
+<div>
+<p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Fleet Assets</p>
+<div class="flex items-baseline gap-2 mt-1">
+<span id="kpiTotalVehicles" class="text-2xl font-bold text-slate-900">--</span>
+<span class="inline-flex items-center text-[10px] font-semibold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded">
+                <span id="kpiAvailableVehicles" class="font-bold mr-0.5">--</span> Avail
+              </span>
+</div>
+<p class="text-[10px] text-slate-400 mt-1 font-mono">Commercial Haulers</p>
+</div>
+<div class="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<!-- KPI 5: Fuel Expense -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm flex items-center justify-between hover:border-amber-300 transition-all">
+<div>
+<p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Fuel Expense</p>
+<div class="flex items-baseline gap-2 mt-1">
+<span id="kpiTotalFuelExpense" class="text-xl font-bold text-amber-600">--</span>
+</div>
+<p class="text-[10px] text-slate-400 mt-1 font-mono">Diesel &amp; Fleet Fuel</p>
+</div>
+<div class="w-10 h-10 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600 shrink-0">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+<!-- KPI 6: Maintenance Expense -->
+<div class="bg-white p-3.5 rounded-xl border border-slate-200/90 shadow-sm flex items-center justify-between hover:border-purple-300 transition-all">
+<div>
+<p class="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Maintenance</p>
+<div class="flex items-baseline gap-2 mt-1">
+<span id="kpiTotalMaintenanceExpense" class="text-xl font-bold text-purple-600">--</span>
+</div>
+<p class="text-[10px] text-slate-400 mt-1 font-mono">Service &amp; Repairs</p>
+</div>
+<div class="w-10 h-10 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 shrink-0">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+</section>
+<!-- END: KPICardsSection -->
+<!-- BEGIN: Advanced Fleet Performance & Velocity Chart -->
+<section class="bg-white rounded-xl border border-slate-200/90 shadow-sm p-5" data-purpose="advanced-fleet-velocity-analytics">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between pb-4 border-b border-slate-100 gap-4">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="text-sm font-bold text-slate-900">Fleet Activity, Dispatch Volume &amp; Velocity</h2>
+<span class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">+14.8% vs last week</span>
+</div>
+<p class="text-xs text-slate-400 mt-0.5">High-fidelity multi-metric comparison of weekly dispatched volume vs completed delivery milestones.</p>
+</div>
+<div class="flex flex-wrap items-center gap-3">
+<!-- Metric Toggle Buttons -->
+<div class="inline-flex p-0.5 bg-slate-100 rounded-lg text-xs font-semibold text-slate-600">
+<button class="px-2.5 py-1 bg-white rounded-md shadow-xs text-blue-600 font-bold border border-slate-200/60">Volume (Tons)</button>
+<button class="px-2.5 py-1 text-slate-500 hover:text-slate-800">Fuel (L/100km)</button>
+<button class="px-2.5 py-1 text-slate-500 hover:text-slate-800">Avg Speed (km/h)</button>
+</div>
+<!-- Time Range Selector -->
+<div class="inline-flex p-0.5 bg-slate-100 rounded-lg text-xs font-medium text-slate-500">
+<button class="px-2.5 py-1 hover:text-slate-800">Today</button>
+<button class="px-2.5 py-1 bg-blue-600 text-white rounded-md font-semibold shadow-xs">7D</button>
+<button class="px-2.5 py-1 hover:text-slate-800">30D</button>
+<button class="px-2.5 py-1 hover:text-slate-800">Custom</button>
+</div>
+</div>
+</div>
+<!-- Metric KPI Sub-ribbon -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 py-3.5 border-b border-slate-100 my-2">
+<div class="px-2">
+<span class="text-[11px] font-medium text-slate-400 uppercase">Gross Tonnage Dispatched</span>
+<div class="text-lg font-bold text-slate-900 mt-0.5">348.6 <span class="text-xs font-normal text-slate-500">Tons</span></div>
+<span class="text-[10px] font-semibold text-emerald-600">↑ 18.2% pacing</span>
+</div>
+<div class="px-2 border-l border-slate-100">
+<span class="text-[11px] font-medium text-slate-400 uppercase">Avg Fleet Eco-Efficiency</span>
+<div class="text-lg font-bold text-slate-900 mt-0.5">28.4 <span class="text-xs font-normal text-slate-500">L/100km</span></div>
+<span class="text-[10px] font-semibold text-emerald-600">↓ 2.1L lower fuel burn</span>
+</div>
+<div class="px-2 border-l border-slate-100">
+<span class="text-[11px] font-medium text-slate-400 uppercase">Corridor Transit Velocity</span>
+<div class="text-lg font-bold text-slate-900 mt-0.5">64.8 <span class="text-xs font-normal text-slate-500">km/h avg</span></div>
+<span class="text-[10px] font-semibold text-blue-600">Optimal traffic window</span>
+</div>
+<div class="px-2 border-l border-slate-100">
+<span class="text-[11px] font-medium text-slate-400 uppercase">Turnaround Dock Latency</span>
+<div class="text-lg font-bold text-slate-900 mt-0.5">38 <span class="text-xs font-normal text-slate-500">min/dock</span></div>
+<span class="text-[10px] font-semibold text-emerald-600">Target &lt; 45 min met</span>
+</div>
+</div>
+<!-- Rich SVG Multi-metric Area/Line/Bar Combo Graph -->
+<div class="relative w-full h-64 pt-2">
+<!-- Legends Overlay -->
+<div class="flex items-center justify-end gap-5 text-xs pb-2">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-xs bg-blue-600"></span>
+<span class="text-slate-600 font-medium">Dispatched Freight (Tons)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-3 rounded-xs bg-emerald-500"></span>
+<span class="text-slate-600 font-medium">Completed Milestones</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-1 bg-amber-500 rounded-full"></span>
+<span class="text-slate-600 font-medium">Fleet Fuel Curve (L/100km)</span>
+</div>
+</div>
+<!-- SVG Chart Canvas -->
+<svg class="w-full h-52 overflow-visible" preserveAspectRatio="none" viewBox="0 0 800 200">
+<defs>
+<linearGradient id="areaGradientBlue" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#2563eb" stop-opacity="0.35"></stop>
+<stop offset="100%" stop-color="#2563eb" stop-opacity="0.0"></stop>
+</linearGradient>
+<linearGradient id="areaGradientGreen" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#10b981" stop-opacity="0.30"></stop>
+<stop offset="100%" stop-color="#10b981" stop-opacity="0.0"></stop>
+</linearGradient>
+</defs>
+<!-- Horizontal Grid lines -->
+<line stroke="#f1f5f9" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="800" y1="20" y2="20"></line>
+<line stroke="#f1f5f9" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="800" y1="65" y2="65"></line>
+<line stroke="#f1f5f9" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="800" y1="110" y2="110"></line>
+<line stroke="#f1f5f9" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="800" y1="155" y2="155"></line>
+<line stroke="#e2e8f0" stroke-width="1.5" x1="0" x2="800" y1="190" y2="190"></line>
+<!-- Weekly Bar Elements (Backdrop for volume distribution) -->
+<!-- Mon -->
+<rect fill="#e0e7ff" height="80" rx="3" width="16" x="42" y="110"></rect>
+<rect fill="#d1fae5" height="65" rx="3" width="16" x="62" y="125"></rect>
+<!-- Tue -->
+<rect fill="#e0e7ff" height="110" rx="3" width="16" x="156" y="80"></rect>
+<rect fill="#d1fae5" height="95" rx="3" width="16" x="176" y="95"></rect>
+<!-- Wed -->
+<rect fill="#e0e7ff" height="135" rx="3" width="16" x="270" y="55"></rect>
+<rect fill="#d1fae5" height="120" rx="3" width="16" x="290" y="70"></rect>
+<!-- Thu -->
+<rect fill="#e0e7ff" height="100" rx="3" width="16" x="384" y="90"></rect>
+<rect fill="#d1fae5" height="85" rx="3" width="16" x="404" y="105"></rect>
+<!-- Fri -->
+<rect fill="#e0e7ff" height="150" rx="3" width="16" x="498" y="40"></rect>
+<rect fill="#d1fae5" height="140" rx="3" width="16" x="518" y="50"></rect>
+<!-- Sat -->
+<rect fill="#e0e7ff" height="120" rx="3" width="16" x="612" y="70"></rect>
+<rect fill="#d1fae5" height="110" rx="3" width="16" x="632" y="80"></rect>
+<!-- Sun -->
+<rect fill="#e0e7ff" height="60" rx="3" width="16" x="726" y="130"></rect>
+<rect fill="#d1fae5" height="50" rx="3" width="16" x="746" y="140"></rect>
+<!-- Area Path 1: Primary Dispatch Volume -->
+<path d="M 60,115 Q 170,75 280,50 T 510,35 T 625,65 T 740,125 L 740,190 L 60,190 Z" fill="url(#areaGradientBlue)"></path>
+<path d="M 60,115 Q 170,75 280,50 T 510,35 T 625,65 T 740,125" fill="none" stroke="#2563eb" stroke-linecap="round" stroke-width="3"></path>
+<!-- Area Path 2: Milestones Fulfilled -->
+<path d="M 60,130 Q 170,95 280,72 T 510,52 T 625,78 T 740,140 L 740,190 L 60,190 Z" fill="url(#areaGradientGreen)"></path>
+<path d="M 60,130 Q 170,95 280,72 T 510,52 T 625,78 T 740,140" fill="none" stroke="#10b981" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Fuel Curve Line (Amber Line with Dots) -->
+<path d="M 60,70 Q 170,90 280,105 T 510,85 T 625,95 T 740,80" fill="none" stroke="#f59e0b" stroke-dasharray="4 4" stroke-width="2"></path>
+<!-- Interactive Highlight Data Nodes -->
+<circle cx="510" cy="35" fill="#2563eb" r="5" stroke="#ffffff" stroke-width="2"></circle>
+<circle cx="510" cy="52" fill="#10b981" r="4.5" stroke="#ffffff" stroke-width="2"></circle>
+<circle cx="510" cy="85" fill="#f59e0b" r="4" stroke="#ffffff" stroke-width="2"></circle>
+<!-- Data Tooltip callout for Friday Peak -->
+<g transform="translate(450, -5)">
+<rect fill="#0f172a" height="34" opacity="0.95" rx="6" width="124" x="0" y="0"></rect>
+<text fill="#ffffff" font-size="10" font-weight="bold" text-anchor="middle" x="62" y="14">Friday Peak: 74.2 Tons</text>
+<text fill="#93c5fd" font-size="9" text-anchor="middle" x="62" y="27">Delivered: 96% | 27.2 L/100km</text>
+</g>
+</svg>
+<!-- X Axis Dates -->
+<div class="flex justify-between text-[11px] font-semibold text-slate-400 px-6 mt-1">
+<span class="">18 Oct (Mon)</span>
+<span class="">19 Oct (Tue)</span>
+<span class="">20 Oct (Wed)</span>
+<span class="">21 Oct (Thu)</span>
+<span class="text-blue-600 font-bold">22 Oct (Fri - Peak)</span>
+<span class="">23 Oct (Sat)</span>
+<span class="">24 Oct (Sun)</span>
+</div>
+</div>
+</section>
+<!-- END: Advanced Fleet Performance & Velocity Chart -->
+<!-- BEGIN: ChartsAndMapRow -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Visual: Enhanced Shipment Status Donut & Transit Telemetry -->
+<div class="lg:col-span-4 bg-white p-5 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between" data-purpose="status-breakdown-card">
+<div>
+<div class="flex items-center justify-between pb-3 border-b border-slate-100">
+<div>
+<h3 class="text-sm font-bold text-slate-800">Shipment Status Breakdown</h3>
+<p class="text-[11px] text-slate-400">Total volume in current cycle</p>
+</div>
+<span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-100">25 Orders</span>
+</div>
+<!-- Enhanced Multi-Ring Radial Progress Representation -->
+<div class="relative py-4 flex items-center justify-center">
+<svg class="w-48 h-48 transform -rotate-90" viewBox="0 0 36 36">
+<!-- Background track ring -->
+<path class="text-slate-100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.8"></path>
+<!-- Segment 1: Delivered (15/25 = 60%) -->
+<path class="text-emerald-500" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="60, 100" stroke-linecap="round" stroke-width="4"></path>
+<!-- Segment 2: In Transit (5/25 = 20%) offset 60 -->
+<path class="text-blue-500" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="20, 100" stroke-dashoffset="-60" stroke-linecap="round" stroke-width="4"></path>
+<!-- Segment 3: Pending (3/25 = 12%) offset 80 -->
+<path class="text-amber-500" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="12, 100" stroke-dashoffset="-80" stroke-linecap="round" stroke-width="4"></path>
+<!-- Segment 4: Delayed (2/25 = 8%) offset 92 -->
+<path class="text-rose-500" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="8, 100" stroke-dashoffset="-92" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+<div class="absolute flex flex-col items-center justify-center text-center">
+<span class="text-[10px] uppercase font-bold tracking-wider text-slate-400">Total Active</span>
+<span class="text-3xl font-extrabold text-slate-900 tracking-tight">25</span>
+<span class="text-[11px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full mt-0.5">92.0% Fleet SLA</span>
+</div>
+</div>
+<!-- Legends Breakdown with Telemetry Metric Tags -->
+<div class="space-y-2 pt-1">
+<div class="flex items-center justify-between text-xs p-1.5 rounded-lg hover:bg-slate-50 transition-colors">
+<span class="flex items-center gap-2 text-slate-700 font-medium">
+<span class="w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-emerald-100"></span>
+                  Delivered Safely
+                </span>
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-900">15 <span class="text-slate-400 font-normal">(60%)</span></span>
+<span class="text-[10px] text-emerald-600 font-mono">Ø 2.4h</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-xs p-1.5 rounded-lg hover:bg-slate-50 transition-colors">
+<span class="flex items-center gap-2 text-slate-700 font-medium">
+<span class="w-2.5 h-2.5 rounded-full bg-blue-500 ring-2 ring-blue-100"></span>
+                  In Transit Corridor
+                </span>
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-900">5 <span class="text-slate-400 font-normal">(20%)</span></span>
+<span class="text-[10px] text-blue-600 font-mono">68 km/h</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-xs p-1.5 rounded-lg hover:bg-slate-50 transition-colors">
+<span class="flex items-center gap-2 text-slate-700 font-medium">
+<span class="w-2.5 h-2.5 rounded-full bg-amber-500 ring-2 ring-amber-100"></span>
+                  Pending Dock Dispatch
+                </span>
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-900">3 <span class="text-slate-400 font-normal">(12%)</span></span>
+<span class="text-[10px] text-amber-600 font-mono">18m wait</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-xs p-1.5 rounded-lg hover:bg-slate-50 transition-colors">
+<span class="flex items-center gap-2 text-slate-700 font-medium">
+<span class="w-2.5 h-2.5 rounded-full bg-rose-500 ring-2 ring-rose-100"></span>
+                  Delayed / Rerouting
+                </span>
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-900">2 <span class="text-slate-400 font-normal">(8%)</span></span>
+<span class="text-[10px] text-rose-600 font-mono">+42m delay</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Distance Traveled Sparkline & Corridor Latency -->
+<div class="mt-4 pt-3.5 border-t border-slate-100">
+<div class="flex items-center justify-between mb-1.5">
+<div>
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Distance Covered (24h)</span>
+<div class="text-base font-extrabold text-slate-900">1,250 km <span class="text-xs text-slate-400 font-normal">/ 1,400 km target</span></div>
+</div>
+<span class="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">+12% vs last week</span>
+</div>
+<!-- Sparkline SVG -->
+<svg class="w-full h-8 overflow-visible" viewBox="0 0 200 32">
+<path d="M0,28 Q30,8 60,20 T120,12 T160,16 T200,4" fill="none" stroke="#2563eb" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M0,28 Q30,8 60,20 T120,12 T160,16 T200,4 L200,32 L0,32 Z" fill="url(#gradient-blue-mini)" opacity="0.15"></path>
+<defs>
+<linearGradient id="gradient-blue-mini" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#2563eb"></stop>
+<stop offset="100%" stop-color="#ffffff"></stop>
+</linearGradient>
+</defs>
+</svg>
+</div>
+</div>
+<!-- Right Visual: Live Tracking Map Section with Telemetry Overlays -->
+<div class="lg:col-span-8 bg-white rounded-xl border border-slate-200/90 shadow-sm flex flex-col overflow-hidden min-h-[440px]" data-purpose="live-tracking-map-container">
+<!-- Map Top Bar: Title & Filter Legends + Telemetry Switches -->
+<div class="p-3.5 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-white">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-ping"></span>
+<h3 class="text-sm font-bold text-slate-900">Live Telematics Corridor</h3>
+<span class="text-xs text-slate-400 font-medium">Maharashtra Western Expressway (Pune - Mumbai JNPT)</span>
+</div>
+<!-- Layer Toggles & Status Filters -->
+<div class="flex items-center gap-3 text-xs font-medium">
+<!-- Corridor Layer Toggles -->
+<div class="flex items-center bg-slate-100 rounded-lg p-0.5 text-[11px] font-semibold text-slate-600">
+<button class="px-2 py-0.5 bg-white text-blue-700 rounded shadow-2xs border border-slate-200 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> Traffic
+                </button>
+<button class="px-2 py-0.5 text-slate-500 hover:text-slate-800">Tolls</button>
+<button class="px-2 py-0.5 text-slate-500 hover:text-slate-800">Weather</button>
+</div>
+<!-- Route Status Filter Pills -->
+<div class="flex items-center gap-3 text-xs font-semibold pl-1 border-l border-slate-200">
+<span class="flex items-center gap-1.5 text-slate-700">
+<span class="w-2 h-2 rounded-full bg-blue-600"></span> On Route
+                </span>
+<span class="flex items-center gap-1.5 text-slate-700">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span> Stopped
+                </span>
+<span class="flex items-center gap-1.5 text-slate-700">
+<span class="w-2 h-2 rounded-full bg-rose-500"></span> Delayed
+                </span>
+</div>
+</div>
+</div>
+<!-- Simulated Map Canvas with Route, Sensor Overlay and Floating Vehicle Details Box -->
+<div class="relative flex-1 min-h-[460px] overflow-hidden">
+<!-- Real Working Interactive Leaflet Corridor Map -->
+<div id="dashboardCorridorMap" class="absolute inset-0 w-full h-full z-0"></div>
+
+<!-- Telemetry Live HUD Badge (Top-Left of map) -->
+<div class="absolute top-4 left-4 z-20 flex flex-wrap gap-2 pointer-events-none">
+<div class="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-200/90 shadow-sm flex items-center gap-2 pointer-events-auto">
+<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="text-[11px] font-medium text-slate-500">Corridor GPS Signal:</span>
+<span class="text-xs font-bold text-slate-800">Strong (4G LTE-M)</span>
+</div>
+<div class="bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-lg border border-slate-200/90 shadow-sm flex items-center gap-2 pointer-events-auto">
+<span class="text-blue-600 text-xs">❄️</span>
+<span class="text-[11px] font-medium text-slate-500">Cold Chain Reefer:</span>
+<span class="text-xs font-bold text-blue-700">-4.2°C (Stable)</span>
+</div>
+<a href="live-tracking.html" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg shadow-sm text-xs font-bold flex items-center gap-1.5 pointer-events-auto transition">
+<span>Full Screen Live Map →</span>
+</a>
+</div>
+
+<!-- Floating Vehicle Details Card with Advanced Sensor Telemetry -->
+<div class="absolute bottom-4 right-4 w-80 bg-white/95 backdrop-blur-md rounded-xl border border-slate-200/90 shadow-xl p-4 text-xs z-20" data-purpose="floating-vehicle-card">
+<div class="flex items-center justify-between pb-2.5 border-b border-slate-100">
+<div class="flex items-center gap-2">
+<span id="dashCardPlate" class="font-bold text-slate-900 text-sm tracking-tight font-mono">MH12AB1234</span>
+<span class="text-[10px] text-slate-400 font-mono">Heavy Hauler</span>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                  ● On Route (GPS Lock)
+                </span>
+</div>
+<!-- Vehicle Real-time Metrics Grid -->
+<div class="grid grid-cols-3 gap-2 py-2.5 my-1 bg-slate-50/80 rounded-lg p-2 border border-slate-100">
+<div class="text-center">
+<span class="text-[10px] text-slate-400 font-medium block">GPS Speed</span>
+<span class="text-xs font-extrabold text-slate-900">68 km/h</span>
+</div>
+<div class="text-center border-x border-slate-200">
+<span class="text-[10px] text-slate-400 font-medium block">Reefer Temp</span>
+<span class="text-xs font-extrabold text-blue-600">-4.0°C</span>
+</div>
+<div class="text-center">
+<span class="text-[10px] text-slate-400 font-medium block">Rest Clock</span>
+<span class="text-xs font-extrabold text-emerald-600">3h 24m</span>
+</div>
+</div>
+<div class="space-y-1.5 py-1.5 text-[11px]">
+<div class="flex justify-between">
+<span class="text-slate-400 font-medium">Assigned Driver:</span>
+<span class="text-slate-800 font-semibold">Ramesh Patel (Rating: 4.9★)</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-400 font-medium">Current Geolocation:</span>
+<span class="text-slate-800 font-medium">Near Pune Tollway (KM 84)</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-400 font-medium">Cargo Category:</span>
+<span class="text-slate-800 font-medium">Pharmaceutical Vaccines (12t)</span>
+</div>
+<div class="flex justify-between">
+<span class="text-slate-400 font-medium">Target Destination:</span>
+<span class="text-blue-700 font-bold">Mumbai Port (ETA 16:30)</span>
+</div>
+</div>
+<div class="mt-2.5 pt-2 border-t border-slate-100 flex gap-2">
+<button onclick="window.location.href='live-tracking.html'" style="cursor:pointer;" class="flex-1 py-1.5 px-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold text-xs text-center transition-colors shadow-xs">
+                  Full Diagnostics
+                </button>
+<button class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold">
+                  Ping Driver
+                </button>
+</div>
+</div>
+<!-- Map Zoom & Layers Controls Overlay -->
+<div class="absolute bottom-4 left-4 bg-white border border-slate-200 rounded-lg shadow-sm flex flex-col overflow-hidden text-slate-600 z-10 font-bold text-xs">
+<button id="dashZoomIn" class="p-2 hover:bg-slate-50 border-b border-slate-200 leading-none" type="button">+</button>
+<button id="dashZoomOut" class="p-2 hover:bg-slate-50 leading-none" type="button">−</button>
+</div>
+</div>
+</div>
+</div>
+<!-- END: ChartsAndMapRow -->
+<!-- BEGIN: Fuel & SLA Analytics Dual Cards -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6" data-purpose="telemetry-deep-dive">
+<!-- Fleet Fuel & Efficiency Analytics Card -->
+<div class="lg:col-span-6 bg-white p-5 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-3 border-b border-slate-100">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+                  ⛽
+                </div>
+<div>
+<h3 class="text-sm font-bold text-slate-900">Fleet Fuel &amp; Efficiency Analytics</h3>
+<p class="text-[11px] text-slate-400">Eco-Score vs Idle Fuel Loss across fleet vehicle tiers</p>
+</div>
+</div>
+<span class="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">91.4 Eco-Index</span>
+</div>
+<!-- Bar Chart Comparison -->
+<div class="space-y-4 pt-4">
+<!-- Category 1: Heavy Haulers -->
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="font-bold text-slate-700">Heavy Haulers (Multi-Axle)</span>
+<span class="text-slate-500 font-mono text-[11px]">Eco: <strong class="text-slate-800">86/100</strong> • Idle Loss: <strong class="text-rose-600">4.2 L/day</strong></span>
+</div>
+<div class="grid grid-cols-12 gap-2 items-center">
+<div class="col-span-12 flex h-3 bg-slate-100 rounded-full overflow-hidden">
+<div class="bg-blue-600 h-full rounded-l-full" style="width: 72%" title="Driving fuel efficiency"></div>
+<div class="bg-amber-400 h-full" style="width: 16%" title="Loaded throttle burn"></div>
+<div class="bg-rose-500 h-full" style="width: 12%" title="Idle fuel wastage"></div>
+</div>
+</div>
+</div>
+<!-- Category 2: Medium Trucks -->
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="font-bold text-slate-700">Medium Transit Trucks</span>
+<span class="text-slate-500 font-mono text-[11px]">Eco: <strong class="text-slate-800">92/100</strong> • Idle Loss: <strong class="text-amber-600">2.1 L/day</strong></span>
+</div>
+<div class="grid grid-cols-12 gap-2 items-center">
+<div class="col-span-12 flex h-3 bg-slate-100 rounded-full overflow-hidden">
+<div class="bg-blue-600 h-full rounded-l-full" style="width: 82%"></div>
+<div class="bg-amber-400 h-full" style="width: 11%"></div>
+<div class="bg-rose-500 h-full" style="width: 7%"></div>
+</div>
+</div>
+</div>
+<!-- Category 3: Electric Vans -->
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="font-bold text-slate-700">Electric Delivery Vans (EV)</span>
+<span class="text-slate-500 font-mono text-[11px]">Eco: <strong class="text-emerald-700">98/100</strong> • Idle Loss: <strong class="text-emerald-600">0.0 L (0.4 kWh)</strong></span>
+</div>
+<div class="grid grid-cols-12 gap-2 items-center">
+<div class="col-span-12 flex h-3 bg-slate-100 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full rounded-full" style="width: 95%"></div>
+<div class="bg-blue-400 h-full" style="width: 5%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+<div class="flex items-center gap-3 text-[11px]">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-blue-600"></span> Cruising Eff.</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span> High Throttle</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-rose-500"></span> Idle Loss</span>
+</div>
+<span class="font-semibold text-emerald-600">Saved ₹42,800 this month</span>
+</div>
+</div>
+<!-- On-Time Delivery SLA & Transit Health Index Card -->
+<div class="lg:col-span-6 bg-white p-5 rounded-xl border border-slate-200/90 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-3 border-b border-slate-100">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+                  🎯
+                </div>
+<div>
+<h3 class="text-sm font-bold text-slate-900">On-Time Delivery SLA &amp; Transit Health</h3>
+<p class="text-[11px] text-slate-400">Target SLA threshold: 92.0% minimum across corridors</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-lg font-extrabold text-emerald-600">94.2%</span>
+<span class="text-[10px] text-slate-400 block -mt-1 font-semibold">Overall SLA</span>
+</div>
+</div>
+<!-- Corridor SLA Sparkbars -->
+<div class="space-y-3.5 pt-4">
+<!-- Corridor 1 -->
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="font-semibold text-slate-700">Pune–Mumbai Expressway (E-Way)</span>
+<span class="text-xs font-bold text-emerald-600">96.8% <span class="text-[10px] font-normal text-slate-400">(48 runs)</span></span>
+</div>
+<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full rounded-full" style="width: 96.8%"></div>
+</div>
+</div>
+<!-- Corridor 2 -->
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="font-semibold text-slate-700">NH-48 Golden Quadrilateral Sector</span>
+<span class="text-xs font-bold text-blue-600">93.4% <span class="text-[10px] font-normal text-slate-400">(32 runs)</span></span>
+</div>
+<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+<div class="bg-blue-600 h-full rounded-full" style="width: 93.4%"></div>
+</div>
+</div>
+<!-- Corridor 3 -->
+<div>
+<div class="flex justify-between text-xs mb-1">
+<span class="font-semibold text-slate-700">Nashik–Pune Industrial Corridor</span>
+<span class="text-xs font-bold text-amber-600">89.1% <span class="text-[10px] font-normal text-slate-400">(Ghat congestion)</span></span>
+</div>
+<div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+<div class="bg-amber-500 h-full rounded-full" style="width: 89.1%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+<span class="text-slate-400 text-[11px]">Fastest Corridor: Pune–Mumbai Expressway (3.2h avg)</span>
+<a class="text-blue-600 font-bold hover:underline" href="reports.html">Corridor Benchmarks →</a>
+</div>
+</div>
+</div>
+<!-- END: Fuel & SLA Analytics Dual Cards -->
+<!-- BEGIN: RecentShipmentsSection -->
+<section class="bg-white rounded-xl border border-slate-200/90 shadow-sm overflow-hidden" data-purpose="recent-shipments-table">
+<!-- Table Header / Search & Filter Controls -->
+<div class="px-5 py-4 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="text-sm font-bold text-slate-900">Recent Shipments &amp; Live Telematics Status</h2>
+<span class="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">Realtime Feed</span>
+</div>
+<p class="text-xs text-slate-400">Manage, inspect sensory alerts, and audit pending transit orders across distribution centers.</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs text-slate-500 font-medium">Showing 5 of 25</span>
+<a class="text-xs font-bold text-blue-600 hover:text-blue-800 ml-2" href="shipments.html">View All Shipments →</a>
+</div>
+</div>
+<!-- Responsive Data Table -->
+<div class="overflow-x-auto">
+<table class="min-w-full divide-y divide-slate-200 text-left text-xs">
+<thead class="bg-slate-50/70 text-slate-500 font-bold uppercase tracking-wider">
+<tr>
+<th class="py-3 px-5" scope="col">Shipment ID</th>
+<th class="py-3 px-5" scope="col">Pickup Point</th>
+<th class="py-3 px-5" scope="col">Destination Hub</th>
+<th class="py-3 px-5" scope="col">Assigned Vehicle</th>
+<th class="py-3 px-5" scope="col">Telemetry Health</th>
+<th class="py-3 px-5" scope="col">Status</th>
+<th class="py-3 px-5" scope="col">ETA / Arrival</th>
+<th class="py-3 px-5 text-right" scope="col">Actions</th>
+</tr>
+</thead>
+<tbody id="recentShipmentsTableBody" class="divide-y divide-slate-100 bg-white font-medium text-slate-700">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3.5 px-5 font-bold text-blue-600">SHP001</td>
+<td class="py-3.5 px-5 text-slate-800 font-semibold">Pune Central</td>
+<td class="py-3.5 px-5 text-slate-800">Mumbai JNPT</td>
+<td class="py-3.5 px-5 text-slate-600 font-mono">MH12AB1234</td>
+<td class="py-3.5 px-5">
+<span class="text-[11px] text-emerald-600 font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Reefer -4°C Normal
+                  </span>
+</td>
+<td class="py-3.5 px-5">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    Delivered
+                  </span>
+</td>
+<td class="py-3.5 px-5 text-slate-500 font-mono">20 Oct, 04:30 PM</td>
+<td class="py-3.5 px-5 text-right">
+<button class="text-slate-400 hover:text-slate-600 p-1 rounded hover:bg-slate-100">
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+<path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 11-4 2 2 0 010 4z"></path>
+</svg>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3.5 px-5 font-bold text-blue-600">SHP002</td>
+<td class="py-3.5 px-5 text-slate-800 font-semibold">Nashik MIDC</td>
+<td class="py-3.5 px-5 text-slate-800">Pune Cargo</td>
+<td class="py-3.5 px-5 text-slate-600 font-mono">MH15CD5678</td>
+<td class="py-3.5 px-5">
+<span class="text-[11px] text-blue-600 font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> 68 km/h • 100% Battery
+                  </span>
+</td>
+<td class="py-3.5 px-5">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                    In Transit
+                  </span>
+</td>
+<td class="py-3.5 px-5 text-slate-500 font-mono">21 Oct, 09:45 AM</td>
+<td class="py-3.5 px-5 text-right">
+<button class="text-slate-400 hover:text-slate-600 p-1 rounded hover:bg-slate-100">
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+<path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 11-4 2 2 0 010 4z"></path>
+</svg>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3.5 px-5 font-bold text-blue-600">SHP003</td>
+<td class="py-3.5 px-5 text-slate-800 font-semibold">Aurangabad East</td>
+<td class="py-3.5 px-5 text-slate-800">Nagpur Hub</td>
+<td class="py-3.5 px-5 text-slate-600 font-mono">MH20EF9012</td>
+<td class="py-3.5 px-5">
+<span class="text-[11px] text-slate-500 font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> Dock 2 Inspection
+                  </span>
+</td>
+<td class="py-3.5 px-5">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                    Pending
+                  </span>
+</td>
+<td class="py-3.5 px-5 text-slate-500 font-mono">22 Oct, 02:00 PM</td>
+<td class="py-3.5 px-5 text-right">
+<button class="text-slate-400 hover:text-slate-600 p-1 rounded hover:bg-slate-100">
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+<path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 11-4 2 2 0 010 4z"></path>
+</svg>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3.5 px-5 font-bold text-blue-600">SHP004</td>
+<td class="py-3.5 px-5 text-slate-800 font-semibold">Mumbai Central</td>
+<td class="py-3.5 px-5 text-slate-800">Nashik Depot</td>
+<td class="py-3.5 px-5 text-slate-600 font-mono">MH12GH3456</td>
+<td class="py-3.5 px-5">
+<span class="text-[11px] text-rose-600 font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping"></span> TPMS Tire Warning
+                  </span>
+</td>
+<td class="py-3.5 px-5">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-rose-50 text-rose-700 border border-rose-200">
+<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                    Delayed (+3h)
+                  </span>
+</td>
+<td class="py-3.5 px-5 text-rose-600 font-bold font-mono">23 Oct, Expected Today</td>
+<td class="py-3.5 px-5 text-right">
+<button class="text-slate-400 hover:text-slate-600 p-1 rounded hover:bg-slate-100">
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+<path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 11-4 2 2 0 010 4z"></path>
+</svg>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50/80 transition-colors">
+<td class="py-3.5 px-5 font-bold text-blue-600">SHP005</td>
+<td class="py-3.5 px-5 text-slate-800 font-semibold">Pune Express Hub</td>
+<td class="py-3.5 px-5 text-slate-800">Aurangabad West</td>
+<td class="py-3.5 px-5 text-slate-600 font-mono">MH14JK7890</td>
+<td class="py-3.5 px-5">
+<span class="text-[11px] text-blue-600 font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> On Route • Green Zone
+                  </span>
+</td>
+<td class="py-3.5 px-5">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                    In Transit
+                  </span>
+</td>
+<td class="py-3.5 px-5 text-slate-500 font-mono">24 Oct, 06:15 PM</td>
+<td class="py-3.5 px-5 text-right">
+<button class="text-slate-400 hover:text-slate-600 p-1 rounded hover:bg-slate-100">
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+<path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 11-4 2 2 0 010 4z"></path>
+</svg>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer Pagination Bar -->
+<div class="px-5 py-3 bg-slate-50/80 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
+<span class="">Showing <span class="font-bold text-slate-700">1</span> to <span class="font-bold text-slate-700">5</span> of <span class="font-bold text-slate-700">25</span> shipments</span>
+<div class="flex items-center gap-1">
+<button class="px-2.5 py-1 border border-slate-300 rounded bg-white text-slate-600 disabled:opacity-50 hover:bg-slate-50" disabled="">Previous</button>
+<button class="px-2.5 py-1 border border-blue-600 bg-blue-600 text-white rounded font-bold">1</button>
+<button class="px-2.5 py-1 border border-slate-300 rounded bg-white text-slate-600 hover:bg-slate-50">2</button>
+<button class="px-2.5 py-1 border border-slate-300 rounded bg-white text-slate-600 hover:bg-slate-50">3</button>
+<button class="px-2.5 py-1 border border-slate-300 rounded bg-white text-slate-600 hover:bg-slate-50">Next</button>
+</div>
+</div>
+</section>
+<!-- END: RecentShipmentsSection -->
+</main>
+<!-- END: ScrollableMainViewport -->
+</div>
+<!-- END: MainContentWrapper -->
+</div>
+
+
+
+<script data-purpose="dashboard-leaflet-corridor-map">
+document.addEventListener('DOMContentLoaded', function() {
+  // User profile dropdown toggle
+  const userBtn = document.getElementById('userProfileBtn');
+  const userDropdown = document.getElementById('userProfileDropdown');
+  if (userBtn && userDropdown) {
+    userBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      userDropdown.classList.toggle('hidden');
+    });
+    document.addEventListener('click', () => {
+      userDropdown.classList.add('hidden');
+    });
+  }
+
+  // Map Initialization
+  if (typeof L === 'undefined' || !document.getElementById('dashboardCorridorMap')) return;
+
+  const map = L.map('dashboardCorridorMap', {
+    center: [18.82, 73.35],
+    zoom: 9,
+    zoomControl: false,
+    attributionControl: false
+  });
+
+  // Free, high-reliability Esri World Street Map tile API
+  const streetLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 18,
+    attribution: '© Esri & Contributors'
+  }).addTo(map);
+
+  // Corridor Polyline (Pune to Mumbai Port)
+  const corridorCoords = [
+    [18.5204, 73.8567], // Pune
+    [18.6322, 73.7431], // Dehu Road
+    [18.7214, 73.6823], // Talegaon Toll
+    [18.7537, 73.4063], // Lonavala / Khandala Ghat
+    [18.7842, 73.3441], // Khopoli
+    [18.8924, 73.1782], // Khalapur Toll
+    [18.9894, 73.1175], // Panvel
+    [18.9496, 72.9510]  // Mumbai Port JNPT
+  ];
+
+  // Route outer glow line
+  L.polyline(corridorCoords, {
+    color: '#004ac6',
+    weight: 7,
+    opacity: 0.35,
+    lineCap: 'round',
+    lineJoin: 'round'
+  }).addTo(map);
+
+  // Animated dashed highway route
+  L.polyline(corridorCoords, {
+    color: '#2563eb',
+    weight: 3.5,
+    opacity: 0.95,
+    dashArray: '8, 6',
+    lineCap: 'round'
+  }).addTo(map);
+
+  // Hub Waypoint Markers
+  function addHub(lat, lng, code, name, color) {
+    const icon = L.divIcon({
+      className: '',
+      html: `
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="width:26px;height:26px;border-radius:9999px;background:${color};color:white;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:11px;box-shadow:0 3px 8px rgba(0,0,0,0.3);border:2px solid white;">${code}</div>
+          <div style="background:rgba(255,255,255,0.95);backdrop-filter:blur(4px);color:#0f172a;font-size:11px;font-weight:700;padding:2px 8px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,0.15);white-space:nowrap;border:1px solid #e2e8f0;">${name}</div>
+        </div>
+      `,
+      iconSize: [140, 30],
+      iconAnchor: [13, 15]
+    });
+    L.marker([lat, lng], { icon: icon }).addTo(map);
+  }
+
+  addHub(18.5204, 73.8567, 'PN', 'Pune Origin Depot', '#2563eb');
+  addHub(18.9496, 72.9510, 'MB', 'Mumbai JNPT Port', '#0f172a');
+  addHub(19.9975, 73.7898, 'NK', 'Nashik MIDC Terminal', '#475569');
+
+  // Multiple Active Vehicles on the Map
+  const vehicles = [
+    {
+      plate: 'MH12AB1234',
+      coords: [18.7537, 73.4063],
+      driver: 'Ramesh Patel',
+      speed: '68 km/h',
+      status: 'On Route',
+      color: '#2563eb',
+      dest: 'Mumbai Port (ETA 16:30)'
+    },
+    {
+      plate: 'MH14DE5678',
+      coords: [18.8924, 73.1782],
+      driver: 'Amit Shinde',
+      speed: '72 km/h',
+      status: 'On Route',
+      color: '#007d55',
+      dest: 'Panvel Depot (ETA 15:45)'
+    },
+    {
+      plate: 'MH04FK9012',
+      coords: [18.6322, 73.7431],
+      driver: 'Vikram Rao',
+      speed: '58 km/h',
+      status: 'Stopped',
+      color: '#eab308',
+      dest: 'Dehu Yard (Refueling)'
+    }
+  ];
+
+  vehicles.forEach(veh => {
+    const isLead = veh.plate === 'MH12AB1234';
+    const vehIcon = L.divIcon({
+      className: '',
+      html: `
+        <div style="position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer;">
+          <span style="position:absolute;width:${isLead ? '40px' : '30px'};height:${isLead ? '40px' : '30px'};border-radius:9999px;background:${veh.color};opacity:0.45;animation:ping 2s cubic-bezier(0,0,0.2,1) infinite;"></span>
+          <div style="width:${isLead ? '32px' : '26px'};height:${isLead ? '32px' : '26px'};border-radius:9999px;background:${veh.color};color:white;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,0.3);border:2px solid white;z-index:2;">
+            <svg style="width:16px;height:16px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+          </div>
+          <div style="position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);background:#090d16;color:white;font-size:10px;font-weight:bold;font-family:monospace;padding:1px 5px;border-radius:4px;white-space:nowrap;box-shadow:0 2px 4px rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.2);">${veh.plate}</div>
+        </div>
+      `,
+      iconSize: [40, 40],
+      iconAnchor: [20, 20]
+    });
+
+    const marker = L.marker(veh.coords, { icon: vehIcon }).addTo(map);
+
+    const popupContent = `
+      <div style="padding:10px;min-width:180px;font-family:'Plus Jakarta Sans',sans-serif;">
+        <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #f1f5f9;padding-bottom:6px;">
+          <strong style="color:#0f172a;font-family:monospace;font-size:12px;">${veh.plate}</strong>
+          <span style="font-size:10px;padding:2px 6px;border-radius:9999px;background:#eff6ff;color:#2563eb;font-weight:700;">${veh.status}</span>
+        </div>
+        <div style="font-size:11px;color:#64748b;margin-top:6px;line-height:1.5;">
+          <div>Driver: <strong style="color:#1e293b;">${veh.driver}</strong></div>
+          <div>Speed: <strong style="color:#1e293b;">${veh.speed}</strong></div>
+          <div>Destination: <strong style="color:#2563eb;">${veh.dest}</strong></div>
+        </div>
+        <a href="live-tracking.html" style="display:block;margin-top:8px;padding:5px 8px;background:#2563eb;color:white;border-radius:6px;text-align:center;font-size:11px;font-weight:600;text-decoration:none;">Open in Live Tracking →</a>
+      </div>
+    `;
+    marker.bindPopup(popupContent);
+
+    marker.on('click', () => {
+      const plateEl = document.getElementById('dashCardPlate');
+      if (plateEl) plateEl.textContent = veh.plate;
+    });
+  });
+
+  // Zoom controls
+  const zIn = document.getElementById('dashZoomIn');
+  const zOut = document.getElementById('dashZoomOut');
+  if (zIn) zIn.addEventListener('click', () => map.zoomIn());
+  if (zOut) zOut.addEventListener('click', () => map.zoomOut());
+
+  setTimeout(() => map.invalidateSize(), 300);
+});
+</script>
+
+<script type="module">
+import { apiService } from './src/services/apiService.js';
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // 1. Health check & DB connection indicator
+  const statusDot = document.getElementById('dbStatusDot');
+  const statusText = document.getElementById('dbStatusText');
+  try {
+    const health = await apiService.health.check();
+    if (health && health.status === 'UP') {
+      if (statusDot) {
+        statusDot.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse';
+      }
+      if (statusText) {
+        statusText.textContent = 'Oracle 11g Live';
+        statusText.className = 'text-emerald-700 font-medium';
+      }
+    } else {
+      if (statusDot) statusDot.className = 'w-2 h-2 rounded-full bg-amber-500';
+      if (statusText) statusText.textContent = 'Demo Mode (Offline)';
+    }
+  } catch (err) {
+    if (statusDot) statusDot.className = 'w-2 h-2 rounded-full bg-slate-400';
+    if (statusText) statusText.textContent = 'Demo Mode';
+  }
+
+  // 2. Dashboard KPIs
+  try {
+    const summary = await apiService.dashboard.getSummary();
+    if (summary) {
+      const sEl = document.getElementById('kpiTotalShipments');
+      const aEl = document.getElementById('kpiActiveTrips');
+      const dEl = document.getElementById('kpiDeliveredShipments');
+      const vEl = document.getElementById('kpiTotalVehicles');
+      const avEl = document.getElementById('kpiAvailableVehicles');
+      const fEl = document.getElementById('kpiTotalFuelExpense');
+      const mEl = document.getElementById('kpiTotalMaintenanceExpense');
+
+      if (sEl && summary.totalShipments != null) sEl.textContent = summary.totalShipments;
+      if (aEl && summary.activeTrips != null) aEl.textContent = summary.activeTrips;
+      if (dEl && summary.deliveredShipments != null) dEl.textContent = summary.deliveredShipments;
+      if (vEl && summary.totalVehicles != null) vEl.textContent = summary.totalVehicles;
+      if (avEl && summary.availableVehicles != null) avEl.textContent = `${summary.availableVehicles} Available`;
+      if (fEl && summary.totalFuelExpense != null) {
+        fEl.textContent = '₹' + Number(summary.totalFuelExpense).toLocaleString('en-IN');
+      }
+      if (mEl && summary.totalMaintenanceExpense != null) {
+        mEl.textContent = '₹' + Number(summary.totalMaintenanceExpense).toLocaleString('en-IN');
+      }
+    }
+  } catch (e) {
+    console.warn('Dashboard KPI load error:', e);
+  }
+
+  // 3. Recent shipments table
+  const tbody = document.getElementById('recentShipmentsTableBody');
+  if (tbody) {
+    try {
+      const shipments = await apiService.shipments.getAll();
+      if (Array.isArray(shipments) && shipments.length > 0) {
+        tbody.innerHTML = shipments.slice(0, 6).map(s => {
+          const status = (s.status || 'IN_TRANSIT').toUpperCase();
+          const badgeClass = status === 'DELIVERED' 
+            ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
+            : status === 'IN_TRANSIT' 
+            ? 'bg-blue-50 text-blue-700 border-blue-200' 
+            : 'bg-amber-50 text-amber-700 border-amber-200';
+          const trackingNo = s.trackingNumber || s.shipmentNumber || ('SHP-' + String(s.id).padStart(4, '0'));
+          const origin = s.pickupAddress || s.origin || 'Main Depot';
+          const destination = s.deliveryAddress || s.destination || 'Consignee Hub';
+          const vehicle = (s.vehicle && s.vehicle.licensePlate) || s.vehiclePlate || s.assignedVehicle || 'Assigned';
+          const deliveryDate = s.expectedDelivery || s.estimatedDelivery;
+          const formattedDate = deliveryDate ? new Date(deliveryDate).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' }) : 'On Schedule';
+          
+          return `
+            <tr class="hover:bg-slate-50/80 transition-colors">
+              <td class="py-3.5 px-5 font-bold text-blue-600">
+                <a href="live-tracking.html?tracking=${encodeURIComponent(trackingNo)}" class="hover:underline">
+                  ${trackingNo}
+                </a>
+              </td>
+              <td class="py-3.5 px-5 text-slate-800 font-semibold">${origin}</td>
+              <td class="py-3.5 px-5 text-slate-800">${destination}</td>
+              <td class="py-3.5 px-5 text-slate-600 font-mono text-xs">${vehicle}</td>
+              <td class="py-3.5 px-5">
+                <span class="text-[11px] text-emerald-600 font-semibold flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Sensor Active
+                </span>
+              </td>
+              <td class="py-3.5 px-5">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold border ${badgeClass}">
+                  <span class="w-1.5 h-1.5 rounded-full ${status === 'DELIVERED' ? 'bg-emerald-500' : 'bg-blue-500'}"></span>
+                  ${status.replace('_', ' ')}
+                </span>
+              </td>
+              <td class="py-3.5 px-5 text-slate-500 font-mono text-xs">${formattedDate}</td>
+              <td class="py-3.5 px-5 text-right">
+                <a href="live-tracking.html?tracking=${encodeURIComponent(trackingNo)}" class="text-blue-600 hover:text-blue-800 font-semibold text-xs">
+                  Track →
+                </a>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      }
+    } catch (e) {
+      console.warn('Recent shipments load error:', e);
+    }
+  }
+});
+</script>
+</body></html>

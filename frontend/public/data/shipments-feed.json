@@ -1,0 +1,54 @@
+{
+  "totalShipments": 142,
+  "inTransit": 28,
+  "outForDelivery": 14,
+  "deliveredToday": 94,
+  "delayed": 6,
+  "shipments": [
+    {
+      "trackingNumber": "FT-SHP-2026-901",
+      "client": "Tata Motors Supply Chain Ltd",
+      "origin": "Pune (Pimpri Industrial Hub)",
+      "destination": "JNPT Port, Navi Mumbai",
+      "status": "IN_TRANSIT",
+      "progressPct": 65,
+      "priority": "HIGH",
+      "vehicleAssigned": "MH12AB1234",
+      "driverAssigned": "Ramesh Patel",
+      "cargo": "Heavy Powertrain Components",
+      "weightKg": 22400,
+      "dispatchedAt": "2026-10-25T07:30:00Z",
+      "expectedDelivery": "2026-10-25T16:30:00Z"
+    },
+    {
+      "trackingNumber": "FT-SHP-2026-902",
+      "client": "Serum Biopharma Logistics",
+      "origin": "Pune Chakan Biotech Hub",
+      "destination": "Panvel Cold Storage Warehouse",
+      "status": "IN_TRANSIT",
+      "progressPct": 80,
+      "priority": "CRITICAL_COLD_CHAIN",
+      "vehicleAssigned": "MH14DE5678",
+      "driverAssigned": "Amit Shinde",
+      "cargo": "Temperature-Controlled Vaccines (2°C - 8°C)",
+      "weightKg": 14200,
+      "dispatchedAt": "2026-10-25T08:15:00Z",
+      "expectedDelivery": "2026-10-25T15:45:00Z"
+    },
+    {
+      "trackingNumber": "FT-SHP-2026-903",
+      "client": "Hindustan Consumer Logistics",
+      "origin": "Dehu Road Warehousing Complex",
+      "destination": "Nashik MIDC Distribution Center",
+      "status": "STOP_REFUEL",
+      "progressPct": 30,
+      "priority": "STANDARD",
+      "vehicleAssigned": "MH04FK9012",
+      "driverAssigned": "Vikram Rao",
+      "cargo": "Packaged Retail Goods & Personal Care",
+      "weightKg": 18600,
+      "dispatchedAt": "2026-10-25T10:00:00Z",
+      "expectedDelivery": "2026-10-25T19:15:00Z"
+    }
+  ]
+}

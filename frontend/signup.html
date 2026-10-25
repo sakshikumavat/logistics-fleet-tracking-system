@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html class="h-full bg-slate-50" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Create Enterprise Account | FleetTrack Logistics & Fleet Engine</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Phosphor Icons CDN -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            },
+            fleetNavy: {
+              800: '#0f172a',
+              900: '#0b1120',
+              950: '#020617',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    /* Telemetry grid background effect */
+    .telemetry-pattern {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
+    }
+    
+    /* Radio cards styling */
+    .fleet-radio-input:checked + label {
+      border-color: #2563eb;
+      background-color: #eff6ff;
+      color: #1d4ed8;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+    
+    .fleet-radio-input:checked + label .tier-check {
+      display: flex;
+    }
+
+    /* Role switcher button active state */
+    .role-btn.active {
+      background-color: #ffffff;
+      color: #0f172a;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body class="min-h-full flex flex-col justify-between bg-slate-50 text-slate-800 telemetry-pattern">
+
+  <!-- Top Navigation Header -->
+  <header class="w-full border-b border-slate-200/80 bg-white/95 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Brand Logo -->
+      <a href="login.html" class="flex items-center gap-2.5 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-700 to-brand-500 flex items-center justify-center text-white shadow-md shadow-brand-500/25 group-hover:scale-105 transition-transform">
+          <i class="ph-bold ph-truck text-2xl"></i>
+        </div>
+        <div class="flex items-baseline gap-1.5">
+          <span class="text-xl font-extrabold tracking-tight text-slate-900">Fleet<span class="text-brand-600">Track</span></span>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-brand-700 bg-brand-50 border border-brand-200 rounded px-2 py-0.5">Enterprise</span>
+        </div>
+      </a>
+
+      <!-- Quick Action: Already have an account -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <span class="text-xs sm:text-sm text-slate-500 hidden sm:inline-block">Already registered?</span>
+        <a href="login.html" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-brand-600 hover:text-brand-700 bg-brand-50 hover:bg-brand-100 border border-brand-200/60 px-3.5 py-2 rounded-xl transition-all shadow-xs">
+          <i class="ph-bold ph-sign-in text-base"></i>
+          <span>Sign In Instead</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Hero & Registration Viewport -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      
+      <!-- Left Column: Value Proposition & Telemetry Credibility -->
+      <section class="lg:col-span-5 flex flex-col justify-between space-y-8 pt-2">
+        <div class="space-y-6">
+          
+          <!-- Live Indicator Badge -->
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-100/80 text-brand-700 text-xs font-bold uppercase tracking-wider border border-blue-200/60">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-500 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-600"></span>
+            </span>
+            Operator & Enterprise Onboarding
+          </div>
+
+          <!-- Hero Headline -->
+          <div class="space-y-3">
+            <h1 class="text-3xl sm:text-4xl xl:text-[42px] font-extrabold tracking-tight text-slate-900 leading-[1.18]">
+              Smarter Logistics. <br>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-blue-600 to-indigo-700">
+                Better Tomorrow.
+              </span>
+            </h1>
+            <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+              Set up your logistics enterprise account in under 3 minutes. Connect vehicles, assign drivers, and streamline dispatch with zero hardware lock-in.
+            </p>
+          </div>
+
+          <!-- Feature Bullets with Emerald Badges -->
+          <div class="space-y-4 pt-1">
+            <div class="flex items-start gap-3.5 p-3 rounded-xl bg-white/70 border border-slate-200/60 shadow-xs">
+              <div class="w-8 h-8 rounded-lg bg-emerald-100/90 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
+                <i class="ph-bold ph-navigation-arrow text-base"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-slate-900">Real-time AIS-140 GPS & Sensor Telematics</h4>
+                <p class="text-xs text-slate-500 mt-0.5">Sub-second telemetry updates across trucks, reefers, and transit tankers.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3.5 p-3 rounded-xl bg-white/70 border border-slate-200/60 shadow-xs">
+              <div class="w-8 h-8 rounded-lg bg-emerald-100/90 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
+                <i class="ph-bold ph-shield-check text-base"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-slate-900">Automated e-Waybill & Geofence SLA Tracking</h4>
+                <p class="text-xs text-slate-500 mt-0.5">Corridor check-ins, FastTag toll transit tracking & delay alerts.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-3.5 p-3 rounded-xl bg-white/70 border border-slate-200/60 shadow-xs">
+              <div class="w-8 h-8 rounded-lg bg-emerald-100/90 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5">
+                <i class="ph-bold ph-users-three text-base"></i>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-slate-900">Multi-depot Dispatch & Driver Roster</h4>
+                <p class="text-xs text-slate-500 mt-0.5">Instant license verification, digital PoD handoffs, and shift metrics.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Enterprise High-SLA Stats Card -->
+          <div class="p-5 rounded-2xl bg-gradient-to-br from-slate-900 via-fleetNavy-900 to-slate-950 text-white shadow-xl shadow-slate-900/10 space-y-4 border border-slate-800">
+            <div class="flex items-center justify-between text-xs text-slate-400 border-b border-slate-800/80 pb-3">
+              <span class="flex items-center gap-1.5 font-semibold text-slate-300">
+                <i class="ph-fill ph-shield-check text-brand-400 text-sm"></i>
+                High-SLA Availability
+              </span>
+              <span class="text-emerald-400 font-mono font-bold flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                99.98% System Uptime
+              </span>
+            </div>
+
+            <div class="grid grid-cols-3 gap-3 text-center">
+              <div>
+                <div class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">12,500+</div>
+                <div class="text-[11px] text-slate-400 font-medium mt-0.5">Active Trucks</div>
+              </div>
+              <div class="border-x border-slate-800">
+                <div class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">280+</div>
+                <div class="text-[11px] text-slate-400 font-medium mt-0.5">Corridors</div>
+              </div>
+              <div>
+                <div class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">4.2M</div>
+                <div class="text-[11px] text-slate-400 font-medium mt-0.5">Km Logged/Mo</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Compliance Badges -->
+          <div class="pt-2">
+            <p class="text-[11px] uppercase tracking-wider font-bold text-slate-400 mb-2.5">Enterprise Standards & Integration</p>
+            <div class="flex flex-wrap items-center gap-2.5">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 text-xs font-semibold shadow-xs">
+                <i class="ph-bold ph-cpu text-brand-600"></i> AIS-140 Certified
+              </span>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 text-xs font-semibold shadow-xs">
+                <i class="ph-bold ph-database text-brand-600"></i> VAHAN Integrated
+              </span>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-slate-700 text-xs font-semibold shadow-xs">
+                <i class="ph-bold ph-lock-key text-brand-600"></i> ISO 27001 Security
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Right Column: Clean, Polished Registration Form Card -->
+      <section class="lg:col-span-7 bg-white rounded-3xl shadow-2xl shadow-blue-900/5 border border-slate-200/90 overflow-hidden">
+        
+        <!-- Header & Segmented Tabs Bar -->
+        <div class="p-6 sm:p-8 bg-slate-50/70 border-b border-slate-200/80">
+          
+          <!-- Top Tab Switcher: Sign In vs Sign Up -->
+          <div class="inline-flex p-1 bg-slate-200/70 rounded-2xl w-full border border-slate-300/60 mb-6">
+            <a href="login.html" class="w-1/2 py-2.5 text-center text-xs sm:text-sm font-semibold rounded-xl text-slate-600 hover:text-slate-900 transition-all flex items-center justify-center gap-2">
+              <i class="ph ph-sign-in text-base"></i>
+              <span>Sign In</span>
+            </a>
+            <a href="signup.html" class="w-1/2 py-2.5 text-center text-xs sm:text-sm font-bold rounded-xl bg-white text-brand-600 shadow-md shadow-slate-200 transition-all flex items-center justify-center gap-2 border border-slate-200/60">
+              <i class="ph-bold ph-user-plus text-base text-brand-600"></i>
+              <span>Create Account (Sign Up)</span>
+            </a>
+          </div>
+
+          <!-- Card Header & Role Persona Switcher -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">Create your operator account</h2>
+              <p class="text-xs sm:text-sm text-slate-500 mt-0.5">Select your dispatch role to tailor your platform console.</p>
+            </div>
+            
+            <!-- Persona Switcher -->
+            <div class="inline-flex p-1 bg-slate-200/80 rounded-xl shrink-0 self-start sm:self-auto border border-slate-300/50">
+              <button id="tab-enterprise" type="button" class="role-btn active px-3 py-1.5 rounded-lg text-xs font-bold text-slate-900 transition-all">
+                Enterprise Fleet
+              </button>
+              <button id="tab-operator" type="button" class="role-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all">
+                Owner / Driver
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Registration Fields Form -->
+        <form id="signup-form" onsubmit="event.preventDefault(); handleRegistration();" class="p-6 sm:p-8 space-y-6">
+          
+          <!-- Identity Fields: Row 1 (Name & Email) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <!-- Full Name -->
+            <div class="space-y-1.5">
+              <label for="fullName" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                Full Name <span class="text-rose-500">*</span>
+              </label>
+              <div class="relative rounded-xl shadow-xs">
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                  <i class="ph ph-user text-lg"></i>
+                </div>
+                <input id="fullName" name="fullName" type="text" required placeholder="Sakshi Kumavat"
+                  class="block w-full h-11 rounded-xl border-slate-300 pl-11 pr-4 text-sm text-slate-800 placeholder:text-slate-400 focus:border-brand-600 focus:ring-4 focus:ring-brand-500/10 transition-all">
+              </div>
+            </div>
+
+            <!-- Work Email -->
+            <div class="space-y-1.5">
+              <label for="workEmail" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                Work Email Address <span class="text-rose-500">*</span>
+              </label>
+              <div class="relative rounded-xl shadow-xs">
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                  <i class="ph ph-envelope-simple text-lg"></i>
+                </div>
+                <input id="workEmail" name="workEmail" type="email" required placeholder="sakshi@westernexpress.in"
+                  class="block w-full h-11 rounded-xl border-slate-300 pl-11 pr-4 text-sm text-slate-800 placeholder:text-slate-400 focus:border-brand-600 focus:ring-4 focus:ring-brand-500/10 transition-all">
+              </div>
+            </div>
+          </div>
+
+          <!-- Identity Fields: Row 2 (Phone & Organization) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <!-- Phone Number -->
+            <div class="space-y-1.5">
+              <label for="phoneNumber" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                Phone Number (WhatsApp SLA) <span class="text-rose-500">*</span>
+              </label>
+              <div class="relative flex rounded-xl shadow-xs">
+                <span class="inline-flex items-center px-3.5 rounded-l-xl border border-r-0 border-slate-300 bg-slate-100 text-slate-700 font-bold text-xs select-none">
+                  🇮🇳 +91
+                </span>
+                <input id="phoneNumber" name="phoneNumber" type="tel" required placeholder="98765 43210"
+                  class="block w-full h-11 min-w-0 flex-1 rounded-none rounded-r-xl border-slate-300 px-3.5 text-sm text-slate-800 placeholder:text-slate-400 focus:border-brand-600 focus:ring-4 focus:ring-brand-500/10 transition-all">
+              </div>
+            </div>
+
+            <!-- Organization Name -->
+            <div class="space-y-1.5">
+              <label for="companyName" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                Logistics / Fleet Organization <span class="text-rose-500">*</span>
+              </label>
+              <div class="relative rounded-xl shadow-xs">
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                  <i class="ph ph-buildings text-lg"></i>
+                </div>
+                <input id="companyName" name="companyName" type="text" required placeholder="Western Express Logistics Ltd"
+                  class="block w-full h-11 rounded-xl border-slate-300 pl-11 pr-4 text-sm text-slate-800 placeholder:text-slate-400 focus:border-brand-600 focus:ring-4 focus:ring-brand-500/10 transition-all">
+              </div>
+            </div>
+          </div>
+
+          <!-- Fleet Capacity Selection -->
+          <div class="space-y-2.5">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                Fleet Size Under Management <span class="text-rose-500">*</span>
+              </label>
+              <span class="text-[11px] text-slate-400 font-medium">Can scale up anytime</span>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <!-- Tier 1 -->
+              <div>
+                <input id="fleet-1-5" name="fleetSize" type="radio" value="1-5" class="fleet-radio-input sr-only">
+                <label for="fleet-1-5" class="relative flex flex-col items-center justify-center p-3 sm:py-3.5 text-center border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all">
+                  <span class="text-xs sm:text-sm font-extrabold text-slate-900">1 - 5</span>
+                  <span class="text-[11px] text-slate-500 font-medium mt-0.5">Vehicles</span>
+                </label>
+              </div>
+
+              <!-- Tier 2 (Default Checked) -->
+              <div>
+                <input id="fleet-6-25" name="fleetSize" type="radio" value="6-25" checked class="fleet-radio-input sr-only">
+                <label for="fleet-6-25" class="relative flex flex-col items-center justify-center p-3 sm:py-3.5 text-center border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all">
+                  <span class="text-xs sm:text-sm font-extrabold text-slate-900">6 - 25</span>
+                  <span class="text-[11px] text-slate-500 font-medium mt-0.5">Medium Hub</span>
+                </label>
+              </div>
+
+              <!-- Tier 3 -->
+              <div>
+                <input id="fleet-25-100" name="fleetSize" type="radio" value="25-100" class="fleet-radio-input sr-only">
+                <label for="fleet-25-100" class="relative flex flex-col items-center justify-center p-3 sm:py-3.5 text-center border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all">
+                  <span class="text-xs sm:text-sm font-extrabold text-slate-900">25 - 100</span>
+                  <span class="text-[11px] text-slate-500 font-medium mt-0.5">Multi-Corridor</span>
+                </label>
+              </div>
+
+              <!-- Tier 4 -->
+              <div>
+                <input id="fleet-100plus" name="fleetSize" type="radio" value="100+" class="fleet-radio-input sr-only">
+                <label for="fleet-100plus" class="relative flex flex-col items-center justify-center p-3 sm:py-3.5 text-center border border-slate-200 rounded-xl cursor-pointer hover:bg-slate-50 transition-all">
+                  <span class="text-xs sm:text-sm font-extrabold text-slate-900">100+ Units</span>
+                  <span class="text-[11px] text-slate-500 font-medium mt-0.5">Enterprise</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Primary Operating Corridor / Hub -->
+          <div class="space-y-1.5">
+            <label for="operatingRegion" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+              Primary Operating Corridor / Regional Hub <span class="text-rose-500">*</span>
+            </label>
+            <div class="relative rounded-xl shadow-xs">
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                <i class="ph ph-map-pin text-lg"></i>
+              </div>
+              <select id="operatingRegion" name="operatingRegion" required
+                class="block w-full h-11 rounded-xl border-slate-300 pl-11 pr-10 text-sm text-slate-800 focus:border-brand-600 focus:ring-4 focus:ring-brand-500/10 cursor-pointer transition-all">
+                <option value="mumbai-pune-nashik" selected>Maharashtra Western Corridor (Mumbai / Pune / Nashik)</option>
+                <option value="delhi-ncr-haryana">Northern Trunk Corridor (Delhi NCR / Jaipur / Ludhiana)</option>
+                <option value="bangalore-chennai">Southern Tech & Freight Corridor (Bengaluru / Chennai / Hyderabad)</option>
+                <option value="gujarat-ports">Western Industrial Port Belt (Ahmedabad / Surat / Mundra)</option>
+                <option value="pan-india">Pan-India Inter-State Multi-Modal</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Password Setup Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-1">
+            <!-- Create Password -->
+            <div class="space-y-1.5">
+              <label for="accountPassword" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                Create Password <span class="text-rose-500">*</span>
+              </label>
+              <div class="relative rounded-xl shadow-xs">
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                  <i class="ph ph-lock text-lg"></i>
+                </div>
+                <input id="accountPassword" name="password" type="password" required placeholder="••••••••••••"
+                  class="block w-full h-11 rounded-xl border-slate-300 pl-11 pr-11 text-sm text-slate-800 placeholder:text-slate-400 focus:border-brand-600 focus:ring-4 focus:ring-brand-500/10 transition-all">
+                <button type="button" onclick="togglePasswordVisibility('accountPassword', this)" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 transition-colors">
+                  <i class="ph ph-eye text-lg"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="space-y-1.5">
+              <label for="confirmPassword" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">
+                Confirm Password <span class="text-rose-500">*</span>
+              </label>
+              <div class="relative rounded-xl shadow-xs">
+                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                  <i class="ph ph-lock-key text-lg"></i>
+                </div>
+                <input id="confirmPassword" name="confirmPassword" type="password" required placeholder="••••••••••••"
+                  class="block w-full h-11 rounded-xl border-slate-300 pl-11 pr-11 text-sm text-slate-800 placeholder:text-slate-400 focus:border-brand-600 focus:ring-4 focus:ring-brand-500/10 transition-all">
+                <button type="button" onclick="togglePasswordVisibility('confirmPassword', this)" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 transition-colors">
+                  <i class="ph ph-eye text-lg"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Password Requirement & Strength Bar -->
+          <div class="p-3.5 bg-slate-50 border border-slate-200/80 rounded-xl space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="text-slate-500 font-semibold">Security Strength:</span>
+              <span id="strengthText" class="text-emerald-600 font-bold">Strong</span>
+            </div>
+            <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden flex">
+              <div id="strengthBar" class="bg-emerald-500 h-full w-4/5 rounded-full transition-all duration-300"></div>
+            </div>
+            <p class="text-[11px] text-slate-500 flex items-center gap-1.5 font-medium">
+              <i class="ph-bold ph-shield-check text-xs text-brand-600"></i>
+              Must contain minimum 8 characters with at least one number and special symbol.
+            </p>
+          </div>
+
+          <!-- Compliance & Opt-in Checkboxes -->
+          <div class="space-y-3 pt-1">
+            <!-- Terms agreement -->
+            <div class="flex items-start">
+              <div class="flex items-center h-5">
+                <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500 cursor-pointer">
+              </div>
+              <div class="ml-3 text-xs leading-normal">
+                <label for="terms" class="text-slate-600 cursor-pointer">
+                  I agree to FleetTrack's <a href="#" class="font-bold text-brand-600 hover:underline">Terms of Service</a> and <a href="#" class="font-bold text-brand-600 hover:underline">Telematics Data Privacy Policy</a>.
+                </label>
+              </div>
+            </div>
+
+            <!-- WhatsApp SLA Updates -->
+            <div class="flex items-start">
+              <div class="flex items-center h-5">
+                <input id="whatsappAlerts" name="whatsappAlerts" type="checkbox" checked class="h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500 cursor-pointer">
+              </div>
+              <div class="ml-3 text-xs leading-normal">
+                <label for="whatsappAlerts" class="text-slate-600 cursor-pointer">
+                  Enable instant WhatsApp SLA alerts, geofence breaches & emergency dispatch notifications.
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Primary Submit CTA Button -->
+          <div class="pt-2 flex flex-col gap-3">
+            <button type="submit" id="submitBtn" class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-base font-bold text-white bg-gradient-to-r from-brand-600 via-blue-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 active:scale-[0.99] shadow-lg shadow-brand-600/30 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
+              <span>Create FleetTrack Account</span>
+              <i class="ph-bold ph-arrow-right text-lg"></i>
+            </button>
+
+            <!-- 1-Click Instant Demo Button -->
+            <button type="button" onclick="quickDemoAccess()" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-all">
+              <i class="ph-bold ph-lightning text-amber-500 text-base"></i>
+              <span>Quick 1-Click Demo Access (Skip Setup)</span>
+            </button>
+          </div>
+
+          <!-- Bottom Alternatives & Navigation Links -->
+          <div class="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-center">
+            <div class="text-slate-500">
+              Already have an enterprise console? 
+              <a href="login.html" class="font-bold text-brand-600 hover:text-brand-700 hover:underline ml-1">Sign In here</a>
+            </div>
+            <div>
+              <a href="#" class="inline-flex items-center gap-1 text-slate-500 hover:text-brand-600 font-medium">
+                <i class="ph ph-headset text-sm"></i>
+                <span>Contact 24/7 Dispatch Desk</span>
+              </a>
+            </div>
+          </div>
+
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Minimal Footer -->
+  <footer class="w-full border-t border-slate-200 bg-white py-6 mt-12 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>FleetTrack AIS-140 Gateway Server: <strong class="text-slate-700">Online v2.4</strong></span>
+      </div>
+      <div>
+        © 2026 FleetTrack Logistics Technologies Inc. All rights reserved.
+      </div>
+      <div class="flex gap-4">
+        <a href="#" class="hover:text-slate-700">Security Audit</a>
+        <a href="#" class="hover:text-slate-700">API Documentation</a>
+        <a href="#" class="hover:text-slate-700">Driver Portal</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts: Interactivity and Registration Flow -->
+  <script type="module">
+    import { apiService } from './src/services/apiService.js';
+
+    window.handleRegistration = async function() {
+      const submitBtn = document.getElementById('submitBtn');
+      const fullName = document.getElementById('fullName') ? document.getElementById('fullName').value.trim() : '';
+      const email = document.getElementById('workEmail') ? document.getElementById('workEmail').value.trim() : '';
+      const password = document.getElementById('accountPassword') ? document.getElementById('accountPassword').value : '';
+      const isOperator = document.getElementById('tab-operator')?.classList.contains('active');
+      const role = isOperator ? 'DRIVER' : 'ADMIN';
+
+      if (!fullName || !email || !password) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Registering in Oracle Database...
+        `;
+      }
+
+      try {
+        await apiService.auth.signup({ fullName, email, password, role });
+        localStorage.setItem('fleettrack_logged_in', 'true');
+        window.location.href = 'index.html';
+      } catch (err) {
+        console.warn('Signup error:', err);
+        // Fallback gracefully if backend offline
+        if (err.message && err.message.includes('Failed to fetch')) {
+          localStorage.setItem('fleettrack_logged_in', 'true');
+          window.location.href = 'index.html';
+        } else {
+          alert('Registration Error: ' + (err.message || 'Could not complete registration.'));
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Complete Registration & Launch Console';
+          }
+        }
+      }
+    };
+
+    window.quickDemoAccess = function() {
+      localStorage.setItem('fleettrack_logged_in', 'true');
+      window.location.href = 'index.html';
+    };
+  </script>
+  <script>
+
+    // Password visibility toggle
+    function togglePasswordVisibility(inputId, button) {
+      const input = document.getElementById(inputId);
+      const icon = button.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'ph ph-eye-slash text-lg';
+      } else {
+        input.type = 'password';
+        icon.className = 'ph ph-eye text-lg';
+      }
+    }
+
+    // Role switcher logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const enterpriseTab = document.getElementById('tab-enterprise');
+      const operatorTab = document.getElementById('tab-operator');
+      const companyField = document.getElementById('companyName');
+
+      if (enterpriseTab && operatorTab) {
+        operatorTab.addEventListener('click', () => {
+          operatorTab.classList.add('active');
+          enterpriseTab.classList.remove('active');
+          if (companyField) {
+            companyField.placeholder = "e.g. Self-Employed / Single Rig Owner";
+          }
+        });
+
+        enterpriseTab.addEventListener('click', () => {
+          enterpriseTab.classList.add('active');
+          operatorTab.classList.remove('active');
+          if (companyField) {
+            companyField.placeholder = "Western Express Logistics Ltd";
+          }
+        });
+      }
+
+      // Dynamic Password Strength Meter
+      const passwordInput = document.getElementById('accountPassword');
+      const strengthText = document.getElementById('strengthText');
+      const strengthBar = document.getElementById('strengthBar');
+
+      if (passwordInput && strengthBar && strengthText) {
+        passwordInput.addEventListener('input', () => {
+          const val = passwordInput.value;
+          if (val.length === 0) {
+            strengthBar.className = 'bg-slate-300 h-full w-0 rounded-full transition-all duration-300';
+            strengthText.textContent = 'None';
+            strengthText.className = 'text-slate-400 font-bold';
+          } else if (val.length < 6) {
+            strengthBar.className = 'bg-rose-500 h-full w-1/4 rounded-full transition-all duration-300';
+            strengthText.textContent = 'Weak';
+            strengthText.className = 'text-rose-500 font-bold';
+          } else if (val.length < 10) {
+            strengthBar.className = 'bg-amber-500 h-full w-3/5 rounded-full transition-all duration-300';
+            strengthText.textContent = 'Good';
+            strengthText.className = 'text-amber-500 font-bold';
+          } else {
+            strengthBar.className = 'bg-emerald-500 h-full w-full rounded-full transition-all duration-300';
+            strengthText.textContent = 'Strong';
+            strengthText.className = 'text-emerald-600 font-bold';
+          }
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

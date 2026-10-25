@@ -1,0 +1,25 @@
+{
+  "name": "fleettrack-logistics-os",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FleetTrack Logistics OS - Smart Logistics & Fleet Management Portal",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "start": "vite --open",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
+  },
+  "keywords": [
+    "fleet-management",
+    "telematics",
+    "logistics",
+    "dashboard",
+    "real-time-tracking"
+  ],
+  "author": "Sakshi Kumavat",
+  "license": "ISC"
+}

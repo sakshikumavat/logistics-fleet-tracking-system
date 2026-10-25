@@ -1,0 +1,370 @@
+<!DOCTYPE html><html lang="en"><head><script>if (localStorage.getItem('fleettrack_logged_in') !== 'true') { window.location.replace('login.html'); }</script><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_dashboard" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"error":"#ba1a1a","surface-variant":"#d3e4fe","outline":"#737686","tertiary":"#006242","secondary-fixed":"#dae2fd","on-primary-container":"#eeefff","tertiary-container":"#007d55","surface-container-high":"#dce9ff","on-secondary-container":"#5c647a","surface-dim":"#cbdbf5","surface-tint":"#0053db","on-tertiary-container":"#bdffdb","error-container":"#ffdad6","on-error":"#ffffff","on-tertiary-fixed-variant":"#005236","on-primary-fixed":"#00174b","on-secondary-fixed-variant":"#3f465c","primary-container":"#2563eb","on-tertiary-fixed":"#002113","surface-container-low":"#eff4ff","primary-fixed-dim":"#b4c5ff","on-surface":"#0b1c30","on-surface-variant":"#434655","inverse-surface":"#213145","surface-bright":"#f8f9ff","outline-variant":"#c3c6d7","primary-fixed":"#dbe1ff","on-error-container":"#93000a","secondary-fixed-dim":"#bec6e0","surface-container-lowest":"#ffffff","on-background":"#0b1c30","surface-container-highest":"#d3e4fe","on-primary-fixed-variant":"#003ea8","on-secondary-fixed":"#131b2e","on-tertiary":"#ffffff","inverse-primary":"#b4c5ff","on-secondary":"#ffffff","on-primary":"#ffffff","surface":"#f8f9ff","tertiary-fixed":"#6ffbbe","primary":"#004ac6","secondary-container":"#dae2fd","background":"#f8f9ff","inverse-on-surface":"#eaf1ff","surface-container":"#e5eeff","secondary":"#565e74","tertiary-fixed-dim":"#4edea3"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xs":"0.25rem","space-md":"1rem","space-xl":"2rem","margin":"1.5rem","space-sm":"0.5rem","gutter":"1.25rem","space-lg":"1.5rem"},"fontFamily":{"headline-md":["Plus Jakarta Sans"],"headline-xl":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"stat-counter":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"]},"fontSize":{"headline-md":["20px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-md":["13px",{"lineHeight":"18px","fontWeight":"600"}],"headline-sm":["16px",{"lineHeight":"24px","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"stat-counter":["28px",{"lineHeight":"34px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.02em","fontWeight":"600"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-screen w-64 bg-inverse-surface text-inverse-on-surface z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.06)]"><div class="flex flex-col"><a href="index.html" class="h-16 px-space-md flex items-center gap-space-sm bg-inverse-surface hover:opacity-95 transition-opacity"><div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[22px]">local_shipping</span></div><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm tracking-tight text-white leading-tight truncate">FleetTrack</span><span class="font-label-sm text-label-sm text-outline-variant truncate leading-none mt-0.5">Logistics &amp; Fleet Engine</span></div></a><nav class="flex flex-col gap-1 px-space-sm mt-space-md" data-active-classes="bg-primary-container text-on-primary-container font-headline-sm rounded-lg shadow-sm"><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-outline-variant hover:bg-surface-variant/10 hover:text-white transition-all" data-path="dashboard" href="index.html"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label-md text-label-md">Dashboard</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-outline-variant hover:bg-surface-variant/10 hover:text-white transition-all" data-path="fleet" href="fleet.html"><span class="material-symbols-outlined text-[20px]">directions_car</span><span class="font-label-md text-label-md">Fleet</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-outline-variant hover:bg-surface-variant/10 hover:text-white transition-all" data-path="drivers" href="drivers.html"><span class="material-symbols-outlined text-[20px]">badge</span><span class="font-label-md text-label-md">Drivers</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-2.5 transition-all bg-primary-container text-on-primary-container font-headline-sm rounded-lg shadow-sm" data-path="shipments" href="shipments.html"><span class="material-symbols-outlined text-[20px]">inventory_2</span><span class="font-label-md text-label-md">Shipments</span></a><a class="flex items-center justify-between px-space-md py-2.5 rounded-lg text-outline-variant hover:bg-surface-variant/10 hover:text-white transition-all" data-path="live-tracking" href="live-tracking.html"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px]">near_me</span><span class="font-label-md text-label-md">Live Tracking</span></div><span class="bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm px-2 py-0.5 rounded-full flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed animate-pulse"></span>Live</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-outline-variant hover:bg-surface-variant/10 hover:text-white transition-all" data-path="reports-analytics" href="reports.html"><span class="material-symbols-outlined text-[20px]">analytics</span><span class="font-label-md text-label-md">Reports &amp; Analytics</span></a><a class="flex items-center gap-space-sm px-space-md py-2.5 rounded-lg text-outline-variant hover:bg-surface-variant/10 hover:text-white transition-all" data-path="settings" href="settings.html"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-label-md text-label-md">Settings</span></a></nav></div><div class="p-space-md m-space-sm rounded-lg bg-surface-variant/5 flex flex-col gap-2"><div class="flex items-center justify-between"><div class="flex items-center gap-2"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary-fixed opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary-container"></span></span><span class="font-label-sm text-label-sm text-outline-variant uppercase tracking-wider">System Online</span></div><span class="font-label-sm text-label-sm text-secondary-fixed-dim">v2.4</span></div><button onclick="localStorage.removeItem('fleettrack_logged_in'); window.location.href='login.html';" class="mt-1 flex items-center gap-2 text-outline-variant hover:text-red-400 font-label-sm text-xs transition-colors py-1"><span class="material-symbols-outlined text-[16px]">logout</span><span>Sign Out / Exit</span></button></div></aside><div class="pl-64 min-h-screen flex flex-col bg-background"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.03)] z-40 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md flex-1 max-w-xl"><div class="relative w-full flex items-center"><span class="material-symbols-outlined absolute left-3 text-secondary text-[20px] pointer-events-none">search</span><input class="w-full h-10 pl-10 pr-14 bg-surface-container-low font-body-sm text-body-sm text-on-surface rounded-lg placeholder-outline focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search telemetry, vehicles, drivers, consignments..." type="text"><div class="absolute right-2.5 flex items-center pointer-events-none"><kbd class="h-5 px-1.5 flex items-center font-label-sm text-[10px] text-secondary bg-surface-container rounded">⌘K</kbd></div></div><div class="hidden xl:flex items-center gap-1.5 px-space-sm py-1.5 bg-surface-container-low rounded-lg shrink-0"><span class="material-symbols-outlined text-secondary text-[18px]">calendar_today</span><span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Today: Live Shift</span><span class="material-symbols-outlined text-secondary text-[16px]">expand_more</span></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-1"><button aria-label="Notifications" class="relative w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-error ring-2 ring-surface-container-lowest"></span></button><button aria-label="Help Documentation" class="w-9 h-9 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">help</span></button></div><div class="h-6 w-[1px] bg-outline-variant/30"></div><div class="relative"><div id="userProfileBtn" class="flex items-center gap-space-sm cursor-pointer hover:opacity-80 transition-opacity"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden md:flex flex-col text-left"><div class="flex items-center gap-1"><span class="font-label-md text-label-md text-on-surface leading-none">Sakshi Kumavat</span><span class="material-symbols-outlined text-secondary text-[14px]">expand_more</span></div><span class="font-label-sm text-label-sm text-on-surface-variant leading-none mt-1">System Admin</span></div></div><div id="userDropdownMenu" class="hidden absolute right-0 mt-2 w-48 bg-surface-container-lowest rounded-xl shadow-xl border border-outline-variant/20 py-1.5 z-50"><a href="settings.html" class="flex items-center gap-2.5 px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-[18px] text-secondary">manage_accounts</span><span>System Settings</span></a><a href="live-tracking.html" class="flex items-center gap-2.5 px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-[18px] text-secondary">near_me</span><span>Live Fleet Map</span></a><a href="create-shipment.html" class="flex items-center gap-2.5 px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-[18px] text-secondary">add_circle</span><span>Create Shipment</span></a><div class="my-1 border-t border-outline-variant/15"></div><button onclick="localStorage.removeItem('fleettrack_logged_in'); window.location.href='login.html';" class="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-error hover:bg-error-container/20 transition-colors text-left"><span class="material-symbols-outlined text-[18px]">logout</span><span>Sign Out</span></button></div></div></div></header><main class="flex-1 pt-16 w-full px-space-lg py-space-lg bg-background"><div class="flex flex-col w-full">
+<!-- Breadcrumb & Page Context Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-sm mb-space-lg">
+<div>
+<nav class="flex items-center gap-2 mb-2">
+<a class="font-label-md text-label-md text-outline hover:text-primary transition-colors flex items-center gap-1" href="shipments.html">
+<span class="material-symbols-outlined text-[16px]">inventory_2</span>
+<span class="">Shipments</span>
+</a>
+<span class="material-symbols-outlined text-outline-variant text-[14px]">chevron_right</span>
+<span class="font-label-md text-label-md text-primary font-semibold">Create Shipment</span>
+</nav>
+<div class="flex items-baseline gap-3">
+<h1 class="font-headline-xl text-headline-xl text-on-surface">Create Shipment</h1>
+<span class="hidden sm:inline-block font-label-sm text-label-sm px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container tracking-wide uppercase">Consignment Ingest</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Schedule and dispatch a new consignment across distribution hubs</p>
+</div>
+<!-- Quick Stats Bar / System Availability Badge -->
+<div class="flex items-center gap-3 bg-surface-container-low px-space-md py-2.5 rounded-xl shadow-sm">
+<div class="flex items-center gap-2 pr-3">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary-fixed opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-tertiary-container"></span>
+</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline leading-tight">Fleet Depots</span>
+<span class="font-label-md text-label-md text-on-surface leading-tight">14 Active Hubs</span>
+</div>
+</div>
+<div class="w-px h-6 bg-surface-variant"></div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">local_shipping</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline leading-tight">Available Capacity</span>
+<span class="font-label-md text-label-md text-on-surface leading-tight">88.4 Tons</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Centered Layout Container -->
+<div class="w-full max-w-5xl mx-auto">
+<form class="space-y-space-lg" id="create-shipment-form" onsubmit="event.preventDefault(); triggerSubmit();">
+<!-- Card: Primary Logistics Form -->
+<div class="bg-surface-container-lowest rounded-xl shadow-md p-space-lg md:p-space-xl">
+<!-- Section: Waypoint & Transport Engine -->
+<div class="flex items-center justify-between pb-space-sm mb-space-md">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">alt_route</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Route &amp; Fleet Assignment</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Identify pickup origin, delivery terminal, and assign carrier unit</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider font-semibold">Step 01 of 03</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<!-- Pickup Location -->
+<div class="space-y-1.5">
+<label class="font-label-md text-label-md text-on-surface flex items-center gap-1">
+              Pickup Location <span class="text-error">*</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-secondary text-[20px] pointer-events-none">warehouse</span>
+<input id="pickupLocationInput" class="w-full h-11 pl-11 pr-10 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md placeholder-outline focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all" placeholder="e.g. Pune Central Depot" required="" type="text" value="Pune Central Depot (Hub 04)">
+<span class="material-symbols-outlined absolute right-3 text-secondary text-[18px] pointer-events-none">unfold_more</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-tertiary">check_circle</span> Geo-verified distribution node
+            </p>
+</div>
+<!-- Assign Vehicle -->
+<div class="space-y-1.5">
+<label class="font-label-md text-label-md text-on-surface flex items-center gap-1">
+              Assign Vehicle <span class="text-error">*</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-secondary text-[20px] pointer-events-none">local_shipping</span>
+<select id="assignedVehicleSelect" class="w-full h-11 pl-11 pr-10 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md appearance-none focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all cursor-pointer" required="">
+<option selected="" value="MH12AB1234">MH12AB1234 (10T Truck - Available)</option>
+<option value="MH14CD5678">MH14CD5678 (24T Heavy Hauler - Available)</option>
+<option value="DL01XY9980">DL01XY9980 (Reefer 8T - Hub Staged)</option>
+<option value="KA03EF4321">KA03EF4321 (Eco Electric 5T - Ready)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 text-secondary text-[20px] pointer-events-none">expand_more</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-outline">Driver: Ramesh Shinde (Safety Score: 98%)</span>
+<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-tertiary-container text-on-tertiary-container font-medium">94% Battery / Full Tank</span>
+</div>
+</div>
+<!-- Destination -->
+<div class="space-y-1.5">
+<label class="font-label-md text-label-md text-on-surface flex items-center gap-1">
+              Destination Terminal <span class="text-error">*</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-secondary text-[20px] pointer-events-none">location_on</span>
+<input id="destinationTerminalInput" class="w-full h-11 pl-11 pr-10 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md placeholder-outline focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all" placeholder="e.g. Mumbai Port Terminal 2" required="" type="text" value="Mumbai Port Terminal 2 (Gate B)">
+<span class="material-symbols-outlined absolute right-3 text-secondary text-[18px] pointer-events-none">explore</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline">Estimated transit corridor: 148 km via NH-48 Express</p>
+</div>
+<!-- Expected Delivery Date -->
+<div class="space-y-1.5">
+<label class="font-label-md text-label-md text-on-surface flex items-center gap-1">
+              Expected Delivery Date <span class="text-error">*</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-secondary text-[20px] pointer-events-none">calendar_today</span>
+<input id="expectedDateInput" class="w-full h-11 pl-11 pr-10 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all" required="" type="date" value="2026-10-26">
+<span class="material-symbols-outlined absolute right-3 text-secondary text-[18px] pointer-events-none">schedule</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline">Target SLA window: Same-day delivery by 18:30 IST</p>
+</div>
+</div>
+<!-- Section: Cargo Specifications & Priority -->
+<div class="flex items-center justify-between pb-space-sm mb-space-md mt-space-xl">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">conveyor_belt</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Cargo Specifications &amp; Urgency</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Calibrate volumetric payload metrics and dispatch priority tier</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider font-semibold">Step 02 of 03</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<!-- Package Weight / Volume -->
+<div class="space-y-1.5">
+<label class="font-label-md text-label-md text-on-surface flex items-center justify-between">
+<span class="">Package Weight (kg) / Volume <span class="text-error">*</span></span>
+<span class="font-label-sm text-label-sm text-outline">Max Capacity: 10,000 kg</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-secondary text-[20px] pointer-events-none">scale</span>
+<input id="cargoWeightInput" class="w-full h-11 pl-11 pr-14 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md placeholder-outline focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all" placeholder="e.g. 5000" required="" type="number" value="4850">
+<span class="absolute right-3.5 font-label-sm text-label-sm text-outline bg-surface-container px-2 py-0.5 rounded">KG</span>
+</div>
+<!-- Dynamic Payload Meter -->
+<div class="w-full bg-surface-container-high rounded-full h-2 overflow-hidden mt-1">
+<div class="bg-primary h-full rounded-full transition-all duration-500" style="width: 48.5%;"></div>
+</div>
+<div class="flex justify-between font-body-sm text-body-sm text-outline">
+<span class="">Vehicle load factor: 48.5%</span>
+<span class="text-tertiary font-medium">Safe operating limit</span>
+</div>
+</div>
+<!-- Priority Level -->
+<div class="space-y-1.5">
+<label class="font-label-md text-label-md text-on-surface block">
+              Priority Level <span class="text-error">*</span>
+</label>
+<div class="grid grid-cols-3 gap-2.5">
+<!-- Normal -->
+<label class="relative flex flex-col items-center justify-center p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer text-center group">
+<input class="peer sr-only" name="priority" type="radio" value="normal">
+<div class="w-4 h-4 rounded-full border-2 border-outline-variant peer-checked:border-primary peer-checked:bg-primary mb-1.5 flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-lowest"></span>
+</div>
+<span class="font-label-md text-label-md text-on-surface peer-checked:text-primary font-semibold">Normal</span>
+<span class="font-label-sm text-label-sm text-outline mt-0.5">Standard SLA</span>
+<div class="absolute inset-0 rounded-lg peer-checked:bg-primary/5 pointer-events-none"></div>
+</label>
+<!-- Express (Selected) -->
+<label class="relative flex flex-col items-center justify-center p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer text-center group">
+<input checked="" class="peer sr-only" name="priority" type="radio" value="express">
+<div class="w-4 h-4 rounded-full border-2 border-outline-variant peer-checked:border-primary peer-checked:bg-primary mb-1.5 flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-lowest"></span>
+</div>
+<span class="font-label-md text-label-md text-on-surface peer-checked:text-primary font-semibold">Express</span>
+<span class="font-label-sm text-label-sm text-outline mt-0.5">Direct Route</span>
+<div class="absolute inset-0 rounded-lg peer-checked:bg-primary/5 pointer-events-none"></div>
+</label>
+<!-- Critical / Urgent -->
+<label class="relative flex flex-col items-center justify-center p-3 rounded-lg bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer text-center group">
+<input class="peer sr-only" name="priority" type="radio" value="critical">
+<div class="w-4 h-4 rounded-full border-2 border-outline-variant peer-checked:border-error peer-checked:bg-error mb-1.5 flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-container-lowest"></span>
+</div>
+<span class="font-label-md text-label-md text-on-surface peer-checked:text-error font-semibold">Critical</span>
+<span class="font-label-sm text-label-sm text-outline mt-0.5">Priority Escort</span>
+<div class="absolute inset-0 rounded-lg peer-checked:bg-error/5 pointer-events-none"></div>
+</label>
+</div>
+<p class="font-body-sm text-body-sm text-outline">Express consignments bypass intermediate transit sorting depots.</p>
+</div>
+</div>
+<!-- Section: Recipient & Handling Directives -->
+<div class="flex items-center justify-between pb-space-sm mb-space-md mt-space-xl">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">person_pin_circle</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Consignee &amp; Special Instructions</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Recipient contact authorization and cargo preservation requirements</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider font-semibold">Step 03 of 03</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<!-- Recipient Name -->
+<div class="space-y-1.5">
+<label class="font-label-md text-label-md text-on-surface flex items-center gap-1">
+              Consignee / Recipient Name <span class="text-error">*</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-secondary text-[20px] pointer-events-none">person</span>
+<input id="recipientNameInput" class="w-full h-11 pl-11 pr-4 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md placeholder-outline focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all" placeholder="e.g. Vikram Malhotra (Logistics Head)" required="" type="text" value="Vikram Malhotra - Apex Shipping Corp">
+</div>
+<span class="font-body-sm text-body-sm text-outline">Authorised dock receiver for Terminal 2 clearance</span>
+</div>
+<!-- Contact Phone -->
+<div class="space-y-1.5">
+<label class="font-label-md text-label-md text-on-surface flex items-center gap-1">
+              Recipient Contact Phone <span class="text-error">*</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-secondary text-[20px] pointer-events-none">phone_in_talk</span>
+<input id="recipientPhoneInput" class="w-full h-11 pl-11 pr-4 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md placeholder-outline focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all" placeholder="+91 98230 00000" required="" type="tel" value="+91 98220 44912">
+</div>
+<span class="font-body-sm text-body-sm text-outline">Automated SMS dispatch notifications will be triggered</span>
+</div>
+<!-- Notes & Special Instructions (Full span) -->
+<div class="md:col-span-2 space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface">Notes &amp; Special Instructions</label>
+<span class="font-label-sm text-label-sm text-outline">Optional • 250 chars remaining</span>
+</div>
+<div class="relative">
+<textarea id="specialInstructionsInput" class="w-full p-3.5 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md placeholder-outline focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all resize-y" placeholder="Fragile goods, temperature sensitive cargo, gate pass required..." rows="3">Fragile electronic components palletized on Level 2. Maintain continuous cargo bay temperature below 24°C. Gate pass pre-approved under Reference GP-2025-098.</textarea>
+</div>
+</div>
+</div>
+<!-- Security & Pre-Dispatch Checklist Pills -->
+<div class="mt-space-lg pt-space-md bg-surface-container-low/60 rounded-lg p-space-md flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[20px]">verified_user</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Automated Pre-Dispatch Clearance</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">FastTag toll balance verified • Driver hours within safety compliance</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">Insurance ID: #INS-8841-B</span>
+<span class="px-2.5 py-1 rounded-full bg-tertiary-container text-on-tertiary-container font-label-sm text-label-sm flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed"></span> Telematics Ready
+            </span>
+</div>
+</div>
+</div>
+<!-- Footer Action Toolbar -->
+<div class="flex items-center justify-between bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="hidden sm:flex items-center gap-2 text-outline">
+<span class="material-symbols-outlined text-[18px]">info</span>
+<span class="font-body-sm text-body-sm">All dispatched consignments generate instant live GPS tracking links.</span>
+</div>
+<div class="flex items-center justify-end gap-space-md w-full sm:w-auto">
+<button class="h-10 px-space-lg rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface-variant font-label-md text-label-md transition-colors flex items-center gap-1.5" onclick="window.location.href='shipments.html'" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+<span class="">Cancel</span>
+</button>
+<button id="createShipmentSubmitBtn" class="h-10 px-space-lg rounded-lg bg-primary-container hover:bg-primary text-on-primary font-headline-sm text-headline-sm transition-all shadow-md hover:shadow-lg flex items-center gap-2 active:scale-95" type="submit">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span id="createShipmentBtnText">+ Create Shipment</span>
+</button>
+</div>
+</div>
+</form>
+</div>
+<!-- Notification Toast Container (interactive feedback) -->
+<div class="fixed bottom-6 right-6 z-50 bg-inverse-surface text-inverse-on-surface px-space-lg py-space-md rounded-xl shadow-xl transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-space-md pointer-events-none" id="toast-success">
+<div class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-white">Consignment Scheduled</span>
+<span class="font-body-sm text-body-sm text-outline-variant">Shipment created and registered in Oracle Database.</span>
+</div>
+</div>
+</div>
+<script type="module">
+  import { apiService } from './src/services/apiService.js';
+
+  window.triggerSubmit = async function() {
+    const submitBtn = document.getElementById('createShipmentSubmitBtn');
+    const btnText = document.getElementById('createShipmentBtnText');
+
+    const pickup = document.getElementById('pickupLocationInput')?.value.trim();
+    const destination = document.getElementById('destinationTerminalInput')?.value.trim();
+    const expectedDate = document.getElementById('expectedDateInput')?.value;
+    const weightVal = parseFloat(document.getElementById('cargoWeightInput')?.value);
+    const recipientName = document.getElementById('recipientNameInput')?.value.trim() || 'Consolidated Freight Receiver';
+    const recipientPhone = document.getElementById('recipientPhoneInput')?.value.trim() || '+91 98200 44112';
+    const selectedVehicle = document.getElementById('assignedVehicleSelect')?.value || 'MH12AB1234';
+
+    if (!pickup || !destination) {
+      alert('Please specify both pickup origin and destination terminal.');
+      return;
+    }
+    if (isNaN(weightVal) || weightVal <= 0) {
+      alert('Please enter a valid weight in kg greater than zero.');
+      return;
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      if (btnText) btnText.textContent = 'Saving to Oracle XE...';
+    }
+
+    const payload = {
+      trackingNumber: 'FT-2026-' + Math.floor(1000 + Math.random() * 9000),
+      customerName: recipientName,
+      customerPhone: recipientPhone,
+      pickupAddress: pickup,
+      deliveryAddress: destination,
+      weightKg: weightVal,
+      status: 'IN_TRANSIT',
+      expectedDelivery: expectedDate || null
+    };
+
+    try {
+      const created = await apiService.shipments.create(payload);
+      console.info('Shipment created in Oracle DB:', created);
+
+      const toast = document.getElementById('toast-success');
+      if (toast) {
+        const descEl = toast.querySelector('.font-body-sm');
+        if (descEl && created) {
+          descEl.textContent = `Shipment #${created.trackingNumber || payload.trackingNumber} saved in Oracle and routed to ${selectedVehicle}`;
+        }
+        toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+        toast.classList.add('translate-y-0', 'opacity-100');
+      }
+
+      setTimeout(() => {
+        window.location.href = 'shipments.html';
+      }, 1500);
+    } catch (err) {
+      console.error('Backend create error:', err);
+      alert('Could not persist shipment to Oracle Database: ' + (err.message || 'Server error.'));
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        if (btnText) btnText.textContent = '+ Create Shipment';
+      }
+    }
+  };
+
+  // Profile Dropdown
+  const userProfileBtn = document.getElementById('userProfileBtn');
+  const userDropdownMenu = document.getElementById('userDropdownMenu');
+  if (userProfileBtn && userDropdownMenu) {
+    userProfileBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      userDropdownMenu.classList.toggle('hidden');
+    });
+    document.addEventListener('click', (e) => {
+      if (!userProfileBtn.contains(e.target) && !userDropdownMenu.contains(e.target)) {
+        userDropdownMenu.classList.add('hidden');
+      }
+    });
+  }
+</script></main></div>
+</body></html>

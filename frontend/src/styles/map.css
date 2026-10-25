@@ -1,0 +1,53 @@
+/* Industrial Telematics Map & Radar Animations */
+.map-grid-pattern {
+  background-color: #f8fafc;
+  background-image: 
+    linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+    linear-gradient(to bottom, #e2e8f0 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.road-network {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+.radar-pulse {
+  animation: pulse-ring 2.5s infinite ease-in-out;
+}
+
+#dashboardCorridorMap,
+#liveTrackingMap {
+  background-color: #f1f5f9;
+  z-index: 0;
+}
+
+.leaflet-container {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid #e2e8f0;
+}
+
+.leaflet-popup-tip {
+  background: white;
+}

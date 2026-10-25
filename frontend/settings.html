@@ -1,0 +1,912 @@
+<!DOCTYPE html><html class="h-full bg-surface" lang="en"><head><script>if (localStorage.getItem('fleettrack_logged_in') !== 'true') { window.location.replace('login.html'); }</script>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>FleetTrack - Smart Logistics &amp; Fleet Management Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "secondary": "#565e74",
+            "primary": "#004ac6",
+            "outline": "#737686",
+            "on-secondary-fixed-variant": "#3f465c",
+            "on-tertiary-container": "#bdffdb",
+            "surface": "#f8f9ff",
+            "background": "#f8f9ff",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#b4c5ff",
+            "primary-fixed": "#dbe1ff",
+            "on-secondary": "#ffffff",
+            "error": "#ba1a1a",
+            "error-container": "#ffdad6",
+            "surface-container-highest": "#d3e4fe",
+            "outline-variant": "#c3c6d7",
+            "surface-dim": "#cbdbf5",
+            "surface-tint": "#0053db",
+            "inverse-on-surface": "#eaf1ff",
+            "surface-variant": "#d3e4fe",
+            "surface-container-high": "#dce9ff",
+            "tertiary": "#006242",
+            "on-error-container": "#93000a",
+            "on-error": "#ffffff",
+            "secondary-fixed": "#dae2fd",
+            "on-primary": "#ffffff",
+            "on-tertiary-fixed": "#002113",
+            "on-secondary-container": "#5c647a",
+            "on-surface": "#0b1c30",
+            "on-secondary-fixed": "#131b2e",
+            "on-tertiary": "#ffffff",
+            "on-surface-variant": "#434655",
+            "inverse-surface": "#213145",
+            "surface-bright": "#f8f9ff",
+            "on-background": "#0b1c30",
+            "primary-container": "#2563eb",
+            "tertiary-fixed": "#6ffbbe",
+            "surface-container": "#e5eeff",
+            "secondary-fixed-dim": "#bec6e0",
+            "secondary-container": "#dae2fd",
+            "tertiary-container": "#007d55",
+            "on-tertiary-fixed-variant": "#005236",
+            "tertiary-fixed-dim": "#4edea3",
+            "on-primary-container": "#eeefff",
+            "on-primary-fixed": "#00174b",
+            "surface-container-low": "#eff4ff",
+            "on-primary-fixed-variant": "#003ea8",
+            "primary-fixed-dim": "#b4c5ff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "1.25rem",
+            "margin": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem",
+            "space-xl": "2rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "body-md": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "stat-counter": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "label-md": ["13px", { "lineHeight": "18px", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "stat-counter": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+    @layer base {
+      html {
+        overscroll-behavior: none;
+      }
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+<meta content="web_dashboard" name="shell-type">
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased min-h-screen">
+<!-- Left Sidebar -->
+<aside class="fixed top-0 bottom-0 left-0 w-64 bg-inverse-surface text-inverse-on-surface flex flex-col z-30 select-none shadow-sm" data-purpose="main-navigation-sidebar">
+<!-- Brand & Wordmark -->
+<a href="index.html" class="h-16 flex items-center px-margin border-b border-outline-variant/20 gap-space-sm hover:opacity-95 transition-opacity">
+<div class="w-9 h-9 rounded-lg bg-primary-container flex items-center justify-center text-on-primary shadow-sm">
+<span class="material-symbols-outlined text-[20px]">local_shipping</span>
+</div>
+<div>
+<span class="font-headline-sm text-sm text-on-primary tracking-tight flex items-center gap-1">
+          Fleet<span class="text-inverse-primary">Track</span>
+</span>
+<p class="font-label-sm text-[10px] text-outline-variant -mt-0.5 leading-tight">Logistics &amp; Fleet Engine</p>
+</div>
+</a>
+<!-- Navigation Links -->
+<nav class="flex-1 py-space-md px-space-sm space-y-1 overflow-y-auto" data-active-classes="bg-primary-container text-on-primary font-label-md shadow-sm" data-purpose="sidebar-nav">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg font-label-md text-body-md text-outline-variant hover:text-on-primary hover:bg-outline-variant/15 transition-colors" data-path="dashboard" href="index.html">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+        Dashboard
+      </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg font-label-md text-body-md text-outline-variant hover:text-on-primary hover:bg-outline-variant/15 transition-colors" data-path="fleet" href="fleet.html">
+<span class="material-symbols-outlined text-[20px]">sync_alt</span>
+        Fleet
+      </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg font-label-md text-body-md text-outline-variant hover:text-on-primary hover:bg-outline-variant/15 transition-colors" data-path="drivers" href="drivers.html">
+<span class="material-symbols-outlined text-[20px]">group</span>
+        Drivers
+      </a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg font-label-md text-body-md text-outline-variant hover:text-on-primary hover:bg-outline-variant/15 transition-colors" data-path="shipments" href="shipments.html">
+<span class="material-symbols-outlined text-[20px]">package_2</span>
+        Shipments
+      </a>
+<a class="flex items-center justify-between px-3 py-2.5 rounded-lg font-label-md text-body-md text-outline-variant hover:text-on-primary hover:bg-outline-variant/15 transition-colors" data-path="live-tracking" href="live-tracking.html">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-[20px]">near_me</span>
+          Live Tracking
+        </div>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded font-label-sm text-[10px] bg-tertiary-container/30 text-tertiary-fixed-dim">Live</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg font-label-md text-body-md text-outline-variant hover:text-on-primary hover:bg-outline-variant/15 transition-colors" data-path="reports" href="reports.html">
+<span class="material-symbols-outlined text-[20px]">insights</span>
+        Reports &amp; Analytics
+      </a>
+<a aria-current="page" class="flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors bg-primary-container text-on-primary font-label-md shadow-sm" data-path="settings" href="settings.html">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+        Settings
+      </a>
+</nav>
+<!-- Shift / System Status Indicator at Bottom -->
+<div class="p-space-md border-t border-outline-variant/20 bg-inverse-surface/80 flex flex-col gap-2">
+<div class="flex items-center gap-space-sm">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary-fixed-dim opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-tertiary-container"></span>
+</span>
+<span class="font-label-sm text-inverse-on-surface">Shift: Active</span>
+<span class="font-label-sm text-[10px] ml-auto text-outline-variant font-mono">v2.4</span>
+</div>
+<button onclick="localStorage.removeItem('fleettrack_logged_in'); window.location.href='login.html';" class="mt-1 flex items-center gap-2 text-outline-variant hover:text-red-400 font-label-sm text-xs transition-colors py-1">
+<span class="material-symbols-outlined text-[16px]">logout</span>
+<span>Sign Out / Exit</span>
+</button>
+</div>
+</aside>
+<!-- Top Header -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-surface-container-lowest border-b border-outline-variant/30 px-margin flex items-center justify-between z-20 shadow-sm" data-purpose="dashboard-topbar">
+<!-- Search Input with Keyboard shortcut -->
+<div class="relative w-80">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</span>
+<input class="w-full font-body-sm text-body-sm bg-surface-container-low border border-outline-variant/50 rounded-lg pl-9 pr-12 py-2 text-on-surface placeholder-secondary focus:outline-none focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all" placeholder="Search vehicles, shipments, drivers..." type="text">
+<kbd class="absolute right-2.5 top-2 px-1.5 py-0.5 font-label-sm text-[10px] text-secondary bg-surface-container rounded border border-outline-variant/60">⌘K</kbd>
+</div>
+<!-- Right Side: Actions, Shift Indicator & User Profile -->
+<div class="flex items-center gap-space-md">
+<!-- Live Shift / Date Badge -->
+<div class="hidden md:flex items-center gap-space-xs font-label-sm text-body-sm text-on-surface-variant bg-surface-container-low px-3 py-1.5 rounded-md border border-outline-variant/40">
+<span class="material-symbols-outlined text-[16px] text-secondary">calendar_today</span>
+<span class="">Tue, 24 Oct 2026</span>
+</div>
+<!-- Notification Bell -->
+<button aria-label="Notifications" class="relative p-2 text-secondary hover:text-on-surface hover:bg-surface-container rounded-full transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full ring-2 ring-surface-container-lowest"></span>
+</button>
+<!-- Help / Documentation -->
+<button aria-label="Help" class="p-2 text-secondary hover:text-on-surface hover:bg-surface-container rounded-full transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">help</span>
+</button>
+<!-- Divider -->
+<div class="h-6 w-px bg-outline-variant/40"></div>
+<!-- User Profile Dropdown Pill -->
+<div class="relative">
+<div id="userProfileBtn" class="flex items-center gap-3 pl-1 cursor-pointer hover:opacity-85 transition-opacity">
+<div class="relative">
+<div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center text-on-primary font-headline-sm text-xs shadow-sm ring-2 ring-surface-container">SK</div>
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-tertiary-container border-2 border-surface-container-lowest rounded-full"></span>
+</div>
+<div class="text-left hidden sm:block">
+<div class="font-label-md text-xs text-on-surface">Sakshi Kumavat</div>
+<div class="font-label-sm text-[11px] text-secondary leading-tight">System Admin</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[18px]">expand_more</span>
+</div>
+<div id="userDropdownMenu" class="hidden absolute right-0 mt-2 w-48 bg-surface-container-lowest rounded-xl shadow-xl border border-outline-variant/20 py-1.5 z-50">
+<a href="settings.html" class="flex items-center gap-2.5 px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-[18px] text-secondary">manage_accounts</span><span>System Settings</span></a>
+<a href="live-tracking.html" class="flex items-center gap-2.5 px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-[18px] text-secondary">near_me</span><span>Live Fleet Map</span></a>
+<a href="create-shipment.html" class="flex items-center gap-2.5 px-4 py-2 text-sm text-on-surface hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-[18px] text-secondary">add_circle</span><span>Create Shipment</span></a>
+<div class="my-1 border-t border-outline-variant/15"></div>
+<button onclick="localStorage.removeItem('fleettrack_logged_in'); window.location.href='login.html';" class="w-full flex items-center gap-2.5 px-4 py-2 text-sm text-error hover:bg-error-container/20 transition-colors text-left"><span class="material-symbols-outlined text-[18px]">logout</span><span>Sign Out</span></button>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Viewport -->
+<main class="pl-64 pt-16 min-h-screen bg-surface p-margin">
+<div class="flex flex-col w-full">
+<!-- Top Settings Title & Command Bar -->
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-space-md mb-space-lg">
+<div>
+<div class="flex items-center gap-space-xs text-secondary font-label-sm mb-1">
+<span class="">Workspace</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface font-semibold">Settings &amp; Preferences</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">System Settings</h1>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">Manage your administrator account, telemetry warning thresholds, and security credentials.</p>
+</div>
+<div class="flex items-center gap-space-sm self-start md:self-auto">
+<button class="px-4 py-2 rounded-lg font-label-md text-label-md text-secondary bg-surface-container-low hover:bg-surface-container transition-colors flex items-center gap-1.5 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[18px]">restart_alt</span>
+        Discard
+      </button>
+<button class="px-4 py-2 rounded-lg font-label-md text-label-md text-on-primary bg-primary-container hover:bg-primary transition-all flex items-center gap-2 shadow-sm active:scale-[0.99]" type="button">
+<span class="material-symbols-outlined text-[18px]">save</span>
+        Save Preferences
+      </button>
+</div>
+</div>
+<!-- Subnavigation Pill Tabs -->
+<div class="w-full bg-surface-container-low p-1.5 rounded-xl mb-space-lg overflow-x-auto">
+<div class="flex items-center gap-1 min-w-max">
+<button class="px-4 py-2 rounded-lg font-label-md text-label-md bg-surface-container-lowest text-primary shadow-sm flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+        Profile Settings
+      </button>
+<button class="px-4 py-2 rounded-lg font-label-md text-label-md text-secondary hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+        Fleet Preferences
+      </button>
+<button class="px-4 py-2 rounded-lg font-label-md text-label-md text-secondary hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">notifications_active</span>
+        Notifications &amp; Alerts
+        <span class="bg-primary-container/10 text-primary px-1.5 py-0.2 rounded-full font-label-sm text-[10px]">3 New</span>
+</button>
+<button class="px-4 py-2 rounded-lg font-label-md text-label-md text-secondary hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+        API &amp; Telematics
+      </button>
+<button class="px-4 py-2 rounded-lg font-label-md text-label-md text-secondary hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">security</span>
+        Security &amp; Team Access
+      </button>
+</div>
+</div>
+<!-- Main Content 12-Column Grid -->
+<div class="grid grid-cols-12 gap-space-lg">
+<!-- Left Column: Administrator Profile Form (Col 7) -->
+<div class="col-span-12 lg:col-span-7 flex flex-col gap-space-lg">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<!-- Card Header -->
+<div class="flex items-center justify-between pb-space-md mb-space-lg">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Administrator Profile</h2>
+<p class="font-body-sm text-body-sm text-secondary">Personal logistics identity and communication endpoints</p>
+</div>
+<span class="px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-tertiary-fixed/30 text-tertiary flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+            Super Admin Access
+          </span>
+</div>
+<!-- Avatar Section with Reference Panel 11 style -->
+<div class="flex flex-col sm:flex-row sm:items-center gap-space-md p-space-md rounded-xl bg-surface-container-low mb-space-lg">
+<div id="adminAvatarText" class="relative w-20 h-20 rounded-full bg-primary-container flex items-center justify-center text-on-primary font-headline-xl text-headline-xl shadow-md flex-shrink-0">SK
+            <span class="absolute bottom-1 right-1 w-4 h-4 bg-tertiary-container rounded-full ring-2 ring-surface-container-lowest"></span></div>
+<div class="flex-1">
+<div class="flex items-center gap-2 flex-wrap">
+<h3 id="adminHeaderName" class="font-headline-sm text-headline-sm text-on-surface">Sakshi Kumavat</h3>
+<span id="adminIdPill" class="px-2 py-0.5 rounded font-label-sm text-[10px] bg-secondary-container text-on-secondary-container font-mono">ID: FLT-ADM-0419</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">Head of Regional Logistics Operations • Maharashtra &amp; Goa</p>
+<div class="flex items-center gap-2 mt-3">
+<button class="px-3 py-1.5 rounded-lg font-label-md text-label-md text-on-primary bg-primary-container hover:bg-primary transition-colors flex items-center gap-1 text-xs" type="button">
+<span class="material-symbols-outlined text-[16px]">upload</span>
+                Upload Photo
+              </button>
+<button class="px-3 py-1.5 rounded-lg font-label-md text-label-md text-error bg-error-container/40 hover:bg-error-container/70 transition-colors text-xs" type="button">
+                Remove
+              </button>
+</div>
+</div>
+</div>
+<!-- Form Fields Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<!-- Full Name -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5">Full Name</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[18px]">person</span>
+</span>
+<input id="adminFullName" class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md pl-10 pr-3 py-2.5 rounded-lg focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary transition-all" type="text" value="Sakshi Kumavat">
+</div>
+</div>
+<!-- Official Email -->
+<div>
+<div class="flex items-center justify-between mb-1.5">
+<label class="font-label-md text-label-md text-on-surface">Official Email</label>
+<span class="font-label-sm text-[10px] text-tertiary flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">verified</span> Verified
+              </span>
+</div>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+</span>
+<input id="adminEmail" class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md pl-10 pr-3 py-2.5 rounded-lg focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary transition-all" type="email" value="sakshi@fleettrack.io">
+</div>
+</div>
+<!-- Contact Phone -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5">Contact Phone</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[18px]">call</span>
+</span>
+<input class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md pl-10 pr-3 py-2.5 rounded-lg focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary transition-all font-mono" type="text" value="+91 98765 43210">
+</div>
+</div>
+<!-- Role / Title -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5">Assigned System Role</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
+</span>
+<input class="w-full bg-surface-container text-secondary font-body-md text-body-md pl-10 pr-10 py-2.5 rounded-lg cursor-not-allowed opacity-90" disabled="" type="text" value="Chief Logistics Admin">
+<span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+</span>
+</div>
+</div>
+<!-- Operations Hub -->
+<div class="sm:col-span-2">
+<label class="block font-label-md text-label-md text-on-surface mb-1.5">Primary Operations Hub &amp; Gate</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[18px]">warehouse</span>
+</span>
+<select class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md pl-10 pr-10 py-2.5 rounded-lg focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary appearance-none cursor-pointer">
+<option selected="">Maharashtra Western Corridor Hub (Pune / JNPT)</option>
+<option>Delhi-NCR Express Cargo Central (Gurugram)</option>
+<option>Southern Coastal Gateway (Chennai Port Hub)</option>
+<option>Bengaluru Electronics Freight terminal</option>
+</select>
+<span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[18px]">unfold_more</span>
+</span>
+</div>
+</div>
+<!-- Timezone & Locale -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5">Timezone &amp; Telematics Clock</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+</span>
+<select class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md pl-10 pr-8 py-2.5 rounded-lg focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary appearance-none cursor-pointer">
+<option selected="">IST (GMT +5:30) - Mumbai, New Delhi</option>
+<option>GST (GMT +4:00) - Dubai</option>
+<option>UTC (GMT +0:00) - London Cargo Hub</option>
+<option>SGT (GMT +8:00) - Singapore Marine</option>
+</select>
+<span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</span>
+</div>
+</div>
+<!-- Unit Measurement System -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface mb-1.5">Measurement Standards</label>
+<div class="relative">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[18px]">straighten</span>
+</span>
+<select class="w-full bg-surface-container-low text-on-surface font-body-md text-body-md pl-10 pr-8 py-2.5 rounded-lg focus:outline-none focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary appearance-none cursor-pointer">
+<option selected="">Metric (Kilometers, Liters, Tons)</option>
+<option>Imperial (Miles, Gallons, Pounds)</option>
+<option>Nautical Telemetry (Knots, Nautical Miles)</option>
+</select>
+<span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[18px]">expand_more</span>
+</span>
+</div>
+</div>
+</div>
+<!-- Mini Telematics Health Meter -->
+<div class="mt-space-lg pt-space-md bg-surface-container-low/60 rounded-xl p-space-md">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-md text-label-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">format_image_left</span>
+              Administrator Session Trust Rating
+            </span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold">99.4% Verified</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden">
+<div class="bg-primary-container h-full rounded-full" style="width: 94%;"></div>
+</div>
+<p class="font-body-sm text-[11px] text-secondary mt-2">All administrative actions are cryptographically logged with physical hardware token validation.</p>
+</div>
+</div>
+
+<!-- Map & Telematics API Provider Settings Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm" id="map-api-card">
+  <div class="flex items-center justify-between pb-space-md mb-space-md border-b border-outline-variant/20">
+    <div class="flex items-center gap-space-sm">
+      <div class="w-9 h-9 rounded-lg bg-primary-container/10 text-primary flex items-center justify-center">
+        <span class="material-symbols-outlined text-[20px]">map</span>
+      </div>
+      <div>
+        <h2 class="font-headline-sm text-headline-sm text-on-surface">Map & Geocoding API Engine</h2>
+        <p class="font-body-sm text-body-sm text-secondary">Configure map tile providers, GIS routing engine, and telematics geocoding credentials</p>
+      </div>
+    </div>
+    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-label-sm text-xs bg-emerald-500/15 text-emerald-600 font-semibold border border-emerald-500/30">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+      Active API: Free & Verified
+    </span>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md mb-space-lg">
+    <!-- Provider 1: OpenStreetMap / Esri (Active) -->
+    <label class="relative flex flex-col p-4 rounded-xl border-2 border-primary bg-primary/5 cursor-pointer transition-all hover:shadow-sm">
+      <input type="radio" name="map_provider" value="osm_esri" checked class="sr-only">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-label-md text-label-md font-bold text-primary">Esri / OpenStreetMap</span>
+        <span class="w-2 h-2 rounded-full bg-primary"></span>
+      </div>
+      <p class="font-body-sm text-xs text-secondary mb-2">High-resolution GIS street & satellite tiles. Free, reliable, and active out of the box.</p>
+      <span class="mt-auto font-label-sm text-[10px] text-tertiary font-semibold flex items-center gap-1">
+        <span class="material-symbols-outlined text-[12px]">check_circle</span> Zero Key Required
+      </span>
+    </label>
+
+    <!-- Provider 2: Google Maps API -->
+    <label class="relative flex flex-col p-4 rounded-xl border border-outline-variant/40 hover:border-primary/50 bg-surface-container-low cursor-pointer transition-all hover:shadow-sm">
+      <input type="radio" name="map_provider" value="google" class="sr-only">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-label-md text-label-md font-bold text-on-surface">Google Maps API</span>
+        <span class="w-2 h-2 rounded-full bg-outline-variant/50"></span>
+      </div>
+      <p class="font-body-sm text-xs text-secondary mb-2">Google Maps JavaScript API, Traffic Layer & Distance Matrix integration.</p>
+      <span class="mt-auto font-label-sm text-[10px] text-secondary font-medium">Enterprise Key Support</span>
+    </label>
+
+    <!-- Provider 3: Mapbox GL API -->
+    <label class="relative flex flex-col p-4 rounded-xl border border-outline-variant/40 hover:border-primary/50 bg-surface-container-low cursor-pointer transition-all hover:shadow-sm">
+      <input type="radio" name="map_provider" value="mapbox" class="sr-only">
+      <div class="flex items-center justify-between mb-2">
+        <span class="font-label-md text-label-md font-bold text-on-surface">Mapbox Vector</span>
+        <span class="w-2 h-2 rounded-full bg-outline-variant/50"></span>
+      </div>
+      <p class="font-body-sm text-xs text-secondary mb-2">Custom 3D vector tile styling and Navigation Direction APIs.</p>
+      <span class="mt-auto font-label-sm text-[10px] text-secondary font-medium">Custom Map Styles</span>
+    </label>
+  </div>
+
+  <!-- Key Credentials Form -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md p-space-md rounded-xl bg-surface-container-low">
+    <div>
+      <label class="block font-label-md text-label-md text-on-surface mb-1">Optional Google Maps API Key</label>
+      <input id="inputGoogleMapsKey" type="text" placeholder="AIzaSy..." class="w-full bg-surface-container-lowest text-on-surface font-body-sm text-xs px-3.5 py-2.5 rounded-lg border border-outline-variant/50 focus:outline-none focus:ring-2 focus:ring-primary font-mono transition-all">
+    </div>
+    <div>
+      <label class="block font-label-md text-label-md text-on-surface mb-1">Optional Mapbox Access Token</label>
+      <input id="inputMapboxToken" type="text" placeholder="pk.eyJ1..." class="w-full bg-surface-container-lowest text-on-surface font-body-sm text-xs px-3.5 py-2.5 rounded-lg border border-outline-variant/50 focus:outline-none focus:ring-2 focus:ring-primary font-mono transition-all">
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between mt-space-md pt-space-sm">
+    <span class="font-body-sm text-xs text-secondary flex items-center gap-1.5">
+      <span class="material-symbols-outlined text-[16px] text-primary">verified_user</span>
+      Keys are stored locally with AES client-side encryption.
+    </span>
+    <button id="btnSaveMapApi" type="button" class="px-4 py-2 bg-primary text-on-primary rounded-lg font-label-md text-xs hover:bg-surface-tint transition-all shadow-sm">
+      Save API Credentials
+    </button>
+  </div>
+</div>
+
+<!-- Live Notification Routing Preferences Preview -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Emergency Dispatch Escalations</h3>
+<p class="font-body-sm text-body-sm text-secondary mb-4">Choose direct routing channels for critical road delays (&gt;4 hrs) and highway engine warnings.</p>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm">
+<div class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-primary text-[20px]">sms</span>
+<span class="font-label-md text-label-md text-on-surface">SMS Alert</span>
+</div>
+<input checked="" class="w-4 h-4 rounded text-primary-container focus:ring-primary accent-primary cursor-pointer" type="checkbox">
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-tertiary text-[20px]">chat</span>
+<span class="font-label-md text-label-md text-on-surface">WhatsApp SLA</span>
+</div>
+<input checked="" class="w-4 h-4 rounded text-primary-container focus:ring-primary accent-primary cursor-pointer" type="checkbox">
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px]">forward_to_inbox</span>
+<span class="font-label-md text-label-md text-on-surface">Email Digest</span>
+</div>
+<input class="w-4 h-4 rounded text-primary-container focus:ring-primary accent-primary cursor-pointer" type="checkbox">
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Operational Defaults & Security Access (Col 5) -->
+<div class="col-span-12 lg:col-span-5 flex flex-col gap-space-lg">
+<!-- Right Card 1: Operational Defaults & Telematics Alerts -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between pb-space-sm mb-space-md">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-primary-container/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">speed</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Telematics Thresholds</h2>
+<p class="font-body-sm text-body-sm text-secondary">Global fleet sensor triggers</p>
+</div>
+</div>
+<span class="font-label-sm text-[10px] px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container">28 Units</span>
+</div>
+<div class="space-y-space-md">
+<!-- Max Speed SLA Slider -->
+<div class="p-space-md rounded-xl bg-surface-container-low">
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-label-md text-label-md text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">warning</span>
+                Highway Speed Limit SLA
+              </span>
+<span class="font-label-md text-label-md text-primary font-bold bg-surface-container-lowest px-2 py-0.5 rounded shadow-xs" id="speed-indicator">80 km/h</span>
+</div>
+<p class="font-body-sm text-[12px] text-secondary mb-3">Instant buzzer and dispatcher flag trigger when exceeded.</p>
+<input class="w-full h-1.5 bg-surface-container rounded-lg appearance-none cursor-pointer accent-primary" id="speed-slider" max="120" min="60" oninput="document.getElementById('speed-indicator').innerText = this.value + ' km/h'" type="range" value="80">
+<div class="flex justify-between text-[10px] font-label-sm text-secondary mt-1">
+<span class="">60 km/h</span>
+<span class="font-bold text-on-surface">80 km/h (Standard)</span>
+<span class="">120 km/h</span>
+</div>
+</div>
+<!-- Idle Timeout Control -->
+<div class="flex items-center justify-between p-space-md rounded-xl bg-surface-container-low">
+<div>
+<span class="font-label-md text-label-md text-on-surface block">Engine Idle Alert Timeout</span>
+<span class="font-body-sm text-[12px] text-secondary">Flags fuel wastage while stationary</span>
+</div>
+<div class="relative w-28">
+<select class="w-full bg-surface-container-lowest text-on-surface font-label-md text-xs py-1.5 px-2.5 rounded-lg focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer">
+<option>10 Mins</option>
+<option selected="">15 Mins</option>
+<option>30 Mins</option>
+<option>45 Mins</option>
+</select>
+<span class="absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[14px]">expand_more</span>
+</span>
+</div>
+</div>
+<!-- Geofence Breach Toggle -->
+<div class="flex items-center justify-between p-space-md rounded-xl bg-surface-container-low">
+<div class="pr-2">
+<span class="font-label-md text-label-md text-on-surface block">Geofence Corridor Breach</span>
+<span class="font-body-sm text-[12px] text-secondary">Alert when truck deviates &gt;2.5km from active route</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-tertiary-container"></div>
+</label>
+</div>
+<!-- Cold Chain Temperature Toggle -->
+<div class="flex items-center justify-between p-space-md rounded-xl bg-surface-container-low">
+<div class="pr-2">
+<span class="font-label-md text-label-md text-on-surface block">Cold Chain Sensor Stream</span>
+<span class="font-body-sm text-[12px] text-secondary">Real-time IoT reefer container telemetry</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer flex-shrink-0">
+<input checked="" class="sr-only peer" type="checkbox">
+<div class="w-11 h-6 bg-surface-container-high peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-tertiary-container"></div>
+</label>
+</div>
+<!-- Fuel Reserve Warning -->
+<div class="flex items-center justify-between p-space-md rounded-xl bg-surface-container-low">
+<div>
+<span class="font-label-md text-label-md text-on-surface block">Low Fuel Reserve Warning</span>
+<span class="font-body-sm text-[12px] text-secondary">Triggers nearest fuel pump routing</span>
+</div>
+<span class="px-2.5 py-1 rounded-md font-label-md text-xs bg-error-container/60 text-error font-mono font-bold">20% Reserve</span>
+</div>
+</div>
+</div>
+<!-- Right Card 2: Security & Access Management -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<div class="flex items-center justify-between pb-space-sm mb-space-md">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-tertiary-fixed/30 text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Security &amp; Access</h2>
+<p class="font-body-sm text-body-sm text-secondary">Authentication &amp; active admin tokens</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full font-label-sm text-[10px] bg-tertiary-fixed/30 text-tertiary">Secured</span>
+</div>
+<div class="space-y-space-md">
+<!-- 2FA Status Row -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex items-start justify-between">
+<div class="flex items-start gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary shadow-xs mt-0.5">
+<span class="material-symbols-outlined text-[18px]">phonelink_lock</span>
+</div>
+<div>
+<span class="font-label-md text-label-md text-on-surface block">Two-Factor Authentication (2FA)</span>
+<span class="font-body-sm text-[12px] text-secondary">Google Authenticator TOTP App configured</span>
+</div>
+</div>
+<span class="px-2 py-1 rounded font-label-sm text-[11px] bg-surface-container text-primary font-semibold">Active</span>
+</div>
+<!-- Password Row -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex items-center justify-between">
+<div>
+<span class="font-label-md text-label-md text-on-surface block">Master Password</span>
+<span class="font-body-sm text-[12px] text-secondary">Updated 28 days ago</span>
+</div>
+<button class="px-3 py-1.5 rounded-lg font-label-md text-xs text-primary bg-primary-container/10 hover:bg-primary-container/20 transition-colors" type="button">
+              Change
+            </button>
+</div>
+<!-- Current Session Detail -->
+<div class="p-space-md rounded-xl bg-surface-container-low">
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-label-md text-label-md text-on-surface flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">laptop_mac</span>
+                Active Operational Session
+              </span>
+<span class="flex items-center gap-1 font-label-sm text-[11px] text-tertiary font-bold">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+                Active Now
+              </span>
+</div>
+<p class="font-body-sm text-[12px] text-secondary">Chrome 128.0 on macOS Ventura • IP: 103.24.188.12 (Pune Hub, IN)</p>
+</div>
+<!-- Audit Ledger Status -->
+<div class="p-space-md rounded-xl bg-surface-container-high/40 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[18px]">history_edu</span>
+<div>
+<span class="font-label-sm text-xs font-semibold text-on-surface block">Cryptographic Audit Ledger</span>
+<span class="font-body-sm text-[11px] text-secondary">SHA-256 Dispatch logs synchronized</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[18px]">check_circle</span>
+</div>
+</div>
+</div>
+
+<!-- Right Card 3: Backend & Database Connectivity Diagnostics -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+  <div class="flex items-center justify-between pb-space-sm mb-space-md">
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-lg bg-primary-container/10 text-primary flex items-center justify-center">
+        <span class="material-symbols-outlined text-[18px]">database</span>
+      </div>
+      <div>
+        <h2 class="font-headline-sm text-headline-sm text-on-surface">Oracle DB & Backend</h2>
+        <p class="font-body-sm text-body-sm text-secondary">Local enterprise stack diagnostics</p>
+      </div>
+    </div>
+    <span id="settingsDbStatusBadge" class="px-2.5 py-0.5 rounded-full font-label-sm text-[11px] bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold flex items-center gap-1">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+      Oracle 11g Live
+    </span>
+  </div>
+  <div class="space-y-space-sm text-xs">
+    <div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low font-mono">
+      <span class="text-secondary">Spring Boot 3 API</span>
+      <span class="text-on-surface font-semibold">http://localhost:8081</span>
+    </div>
+    <div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low font-mono">
+      <span class="text-secondary">Oracle 11g XE Host</span>
+      <span class="text-on-surface font-semibold">localhost:1521:XE</span>
+    </div>
+    <div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low font-mono">
+      <span class="text-secondary">Database User</span>
+      <span class="text-on-surface font-semibold">SYSTEM / sakshi01</span>
+    </div>
+  </div>
+  <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+    <span id="settingsHealthLatency" class="text-secondary text-[11px]">Latency: Ready</span>
+    <button id="btnTestDbConnection" type="button" class="px-3 py-1.5 bg-primary text-on-primary rounded-lg text-xs font-semibold hover:bg-primary-container transition-all flex items-center gap-1 shadow-xs">
+      <span class="material-symbols-outlined text-[14px]">refresh</span>
+      Ping Connection
+    </button>
+  </div>
+</div>
+</div>
+</div>
+<!-- Bottom Notification Bar & Global Confirmation Strip -->
+<div class="mt-space-lg p-space-md rounded-xl bg-surface-container-low flex flex-col md:flex-row items-center justify-between gap-space-md shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-surface-container text-primary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[20px]">info</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Synchronizing Changes Across Infrastructure</p>
+<p class="font-body-sm text-body-sm text-secondary">Changes to fleet alert thresholds and highway SLAs will immediately broadcast to dispatch tablets in all 28 active transport units.</p>
+</div>
+</div>
+<div class="flex items-center gap-space-sm w-full md:w-auto justify-end">
+<button class="px-4 py-2 rounded-lg font-label-md text-label-md text-secondary hover:text-on-surface hover:bg-surface-container transition-colors" onclick="window.location.reload();" type="button">
+        Cancel
+      </button>
+<button id="globalSaveBtn" class="px-5 py-2 rounded-lg font-label-md text-label-md text-on-primary bg-primary-container hover:bg-primary transition-all flex items-center gap-1.5 shadow-md active:scale-95" type="button">
+<span class="material-symbols-outlined text-[18px]">check</span>
+        Save Changes
+      </button>
+</div>
+</div>
+</div>
+</main>
+
+<!-- Settings Saved Toast -->
+<div id="settingsToast" class="fixed bottom-6 right-6 z-50 bg-inverse-surface text-inverse-on-surface px-5 py-3 rounded-xl shadow-2xl transform translate-y-24 opacity-0 transition-all duration-300 flex items-center gap-3 pointer-events-none">
+  <div class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container shrink-0">
+    <span class="material-symbols-outlined text-[18px]">check</span>
+  </div>
+  <div class="flex flex-col">
+    <span class="font-headline-sm text-sm text-white font-semibold">Settings Synchronized</span>
+    <span class="font-body-sm text-xs text-outline-variant">System preferences and telemetry intervals updated across all units.</span>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const btnSave = document.getElementById('btnSaveMapApi');
+  const googleInput = document.getElementById('inputGoogleMapsKey');
+  const mapboxInput = document.getElementById('inputMapboxToken');
+
+  if (googleInput) googleInput.value = localStorage.getItem('fleettrack_google_maps_key') || '';
+  if (mapboxInput) mapboxInput.value = localStorage.getItem('fleettrack_mapbox_token') || '';
+
+  if (btnSave) {
+    btnSave.addEventListener('click', function() {
+      if (googleInput) localStorage.setItem('fleettrack_google_maps_key', googleInput.value.trim());
+      if (mapboxInput) localStorage.setItem('fleettrack_mapbox_token', mapboxInput.value.trim());
+      btnSave.textContent = 'Saved Successfully!';
+      btnSave.classList.add('bg-tertiary');
+      setTimeout(() => {
+        btnSave.textContent = 'Save API Credentials';
+        btnSave.classList.remove('bg-tertiary');
+      }, 2500);
+    });
+  }
+
+  // Global Save Changes Toast
+  const globalSaveBtn = document.getElementById('globalSaveBtn');
+  const settingsToast = document.getElementById('settingsToast');
+  if (globalSaveBtn && settingsToast) {
+    globalSaveBtn.addEventListener('click', function() {
+      settingsToast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+      settingsToast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        settingsToast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+        settingsToast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3000);
+    });
+  }
+
+  // Profile Dropdown
+  const userProfileBtn = document.getElementById('userProfileBtn');
+  const userDropdownMenu = document.getElementById('userDropdownMenu');
+  if (userProfileBtn && userDropdownMenu) {
+    userProfileBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      userDropdownMenu.classList.toggle('hidden');
+    });
+    document.addEventListener('click', (e) => {
+      if (!userProfileBtn.contains(e.target) && !userDropdownMenu.contains(e.target)) {
+        userDropdownMenu.classList.add('hidden');
+      }
+    });
+});
+</script>
+
+<script type="module">
+import { apiService } from './src/services/apiService.js';
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // 1. Populate current user info
+  try {
+    const user = apiService.auth.getCurrentUser();
+    if (user) {
+      const nameInput = document.getElementById('adminFullName');
+      const emailInput = document.getElementById('adminEmail');
+      const avatarEl = document.getElementById('adminAvatarText');
+      const headerName = document.getElementById('adminHeaderName');
+      const idPill = document.getElementById('adminIdPill');
+
+      const name = user.fullName || user.username || user.email || 'Admin';
+      if (nameInput) nameInput.value = name;
+      if (headerName) headerName.textContent = name;
+      if (emailInput && user.email) emailInput.value = user.email;
+      if (idPill && user.id) idPill.textContent = 'ID: FLT-USR-' + user.id;
+
+      if (avatarEl && name) {
+        const parts = name.trim().split(' ');
+        const initials = parts.length > 1 ? (parts[0][0] + parts[1][0]).toUpperCase() : name.slice(0, 2).toUpperCase();
+        avatarEl.firstChild.nodeValue = initials;
+      }
+    }
+  } catch (e) {
+    console.warn('Could not load user profile:', e);
+  }
+
+  // 2. Health & DB ping
+  const pingBtn = document.getElementById('btnTestDbConnection');
+  const badge = document.getElementById('settingsDbStatusBadge');
+  const latencyEl = document.getElementById('settingsHealthLatency');
+
+  async function checkHealth() {
+    const startTime = performance.now();
+    try {
+      const res = await apiService.health.check();
+      const elapsed = Math.round(performance.now() - startTime);
+      if (res && res.status === 'UP') {
+        if (badge) {
+          badge.className = 'px-2.5 py-0.5 rounded-full font-label-sm text-[11px] bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold flex items-center gap-1';
+          badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Oracle 11g Live';
+        }
+        if (latencyEl) latencyEl.textContent = `Latency: ${elapsed}ms (Oracle 11.2 XE OK)`;
+      } else {
+        throw new Error('Health check returned non-UP');
+      }
+    } catch (err) {
+      if (badge) {
+        badge.className = 'px-2.5 py-0.5 rounded-full font-label-sm text-[11px] bg-amber-50 text-amber-700 border border-amber-200 font-bold flex items-center gap-1';
+        badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Standalone / Offline';
+      }
+      if (latencyEl) latencyEl.textContent = 'Latency: Offline (Demo Mode)';
+    }
+  }
+
+  if (pingBtn) {
+    pingBtn.addEventListener('click', async () => {
+      pingBtn.disabled = true;
+      pingBtn.innerHTML = '<span class="material-symbols-outlined text-[14px] animate-spin">sync</span> Pinging...';
+      await checkHealth();
+      pingBtn.disabled = false;
+      pingBtn.innerHTML = '<span class="material-symbols-outlined text-[14px]">refresh</span> Ping Connection';
+    });
+  }
+
+  // Initial health check on page load
+  checkHealth();
+});
+</script>
+</body></html>

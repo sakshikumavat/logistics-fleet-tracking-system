@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot - LogisticsBackendApplication",
+      "request": "launch",
+      "mainClass": "com.logistics.fleet.LogisticsBackendApplication",
+      "projectName": "logistics-backend"
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Frontend - Chrome (FleetTrack)",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/frontend"
+    },
+    {
+      "type": "msedge",
+      "request": "launch",
+      "name": "Frontend - Edge (FleetTrack)",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/frontend"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Full Stack (Spring Boot + Chrome)",
+      "configurations": [
+        "Spring Boot - LogisticsBackendApplication",
+        "Frontend - Chrome (FleetTrack)"
+      ],
+      "stopAll": true
+    }
+  ]
+}
