@@ -202,7 +202,9 @@ export const apiService = {
     update: (id, data) => apiService.put(`/vehicles/${id}`, data),
     delete: (id) => apiService.del(`/vehicles/${id}`),
     recordLocation: (id, latitude, longitude) => apiService.post(`/vehicles/${id}/locations`, { latitude, longitude }),
-    getLatestLocation: (id) => apiService.get(`/vehicles/${id}/locations/latest`)
+    getLatestLocation: (id) => apiService.get(`/vehicles/${id}/locations/latest`),
+    getLocationHistory: (id) => apiService.get(`/vehicles/${id}/locations`),
+    getAllLatestLocations: () => apiService.get('/vehicles/locations/latest')
   },
 
   // 5. Drivers CRUD
@@ -222,6 +224,9 @@ export const apiService = {
     update: (id, data) => apiService.put(`/shipments/${id}`, data),
     updateStatus: (id, status, remarks) => apiService.patch(`/shipments/${id}/status`, { status, remarks }),
     getHistory: (id) => apiService.get(`/shipments/${id}/history`),
+    confirmDelivery: (id, receiverName, proofReference, notes) => 
+      apiService.post(`/shipments/${id}/confirm-delivery`, { receiverName, proofReference, notes }),
+    getDeliveryConfirmation: (id) => apiService.get(`/shipments/${id}/delivery-confirmation`),
     delete: (id) => apiService.del(`/shipments/${id}`)
   },
 
@@ -247,6 +252,11 @@ export const apiService = {
   maintenance: {
     getAll: () => apiService.get('/maintenance'),
     getByVehicle: (vehicleId) => apiService.get(`/maintenance/vehicle/${vehicleId}`)
+  },
+
+  // 10. Audit Logs
+  audit: {
+    getAll: () => apiService.get('/audit-logs')
   }
 };
 

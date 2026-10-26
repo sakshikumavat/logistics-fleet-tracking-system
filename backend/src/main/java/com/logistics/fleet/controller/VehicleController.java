@@ -49,6 +49,12 @@ public class VehicleController {
         service.deleteVehicle(id);
     }
 
+    // Get latest locations for all vehicles
+    @GetMapping("/locations/latest")
+    public List<java.util.Map<String, Object>> getAllLatestLocations() {
+        return service.getAllLatestLocations();
+    }
+
     // Record vehicle location
     @PostMapping("/{id}/locations")
     @ResponseStatus(HttpStatus.CREATED)
@@ -64,5 +70,11 @@ public class VehicleController {
     @GetMapping("/{id}/locations/latest")
     public java.util.Map<String, Object> getLatestLocation(@PathVariable Long id) {
         return service.getLatestLocation(id);
+    }
+
+    // Get location history in chronological order
+    @GetMapping({"/{id}/locations", "/{id}/locations/history"})
+    public List<java.util.Map<String, Object>> getLocationHistory(@PathVariable Long id) {
+        return service.getLocationHistory(id);
     }
 }

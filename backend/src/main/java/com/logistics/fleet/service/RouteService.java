@@ -29,8 +29,9 @@ public class RouteService {
 
     // Create route
     public Route createRoute(Route route) {
-        if (route.getRouteId() == null) {
-            throw new IllegalArgumentException("Route ID is required");
+        if (route.getRouteId() == null || route.getRouteId() == 0L) {
+            Long maxId = routeRepository.findMaxRouteId();
+            route.setRouteId((maxId != null ? maxId : 0L) + 1L);
         }
 
         if (route.getAssignmentId() == null) {

@@ -260,7 +260,15 @@
         <!-- Registration Fields Form -->
         <form id="signup-form" onsubmit="event.preventDefault(); handleRegistration();" class="p-6 sm:p-8 space-y-6">
           
-          <!-- Identity Fields: Row 1 (Name & Email) -->
+          <!-- Alert Notifications (Error & Success) -->
+          <div id="signupAlertError" class="hidden p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-center gap-2.5">
+            <i class="ph-bold ph-warning-circle text-rose-600 text-lg shrink-0"></i>
+            <span id="signupAlertErrorText" class="font-semibold">Registration failed.</span>
+          </div>
+          <div id="signupAlertSuccess" class="hidden p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-2.5">
+            <i class="ph-bold ph-check-circle text-emerald-600 text-lg shrink-0"></i>
+            <span id="signupAlertSuccessText" class="font-bold">Account created successfully! Connecting to portal...</span>
+          </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <!-- Full Name -->
             <div class="space-y-1.5">
@@ -525,19 +533,73 @@
   <script type="module">
     import { apiService } from './src/services/apiService.js';
 
+    function showSignupError(msg) {
+      const errBox = document.getElementById('signupAlertError');
+      const errText = document.getElementById('signupAlertErrorText');
+      const succBox = document.getElementById('signupAlertSuccess');
+      if (succBox) succBox.classList.add('hidden');
+      if (errBox && errText) {
+        errText.textContent = msg;
+        errBox.classList.remove('hidden');
+        errBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    function showSignupSuccess(msg) {
+      const errBox = document.getElementById('signupAlertError');
+      const succBox = document.getElementById('signupAlertSuccess');
+      const succText = document.getElementById('signupAlertSuccessText');
+      if (errBox) errBox.classList.add('hidden');
+      if (succBox && succText) {
+        succText.textContent = msg;
+        succBox.classList.remove('hidden');
+      }
+    }
+
     window.handleRegistration = async function() {
       const submitBtn = document.getElementById('submitBtn');
       const fullName = document.getElementById('fullName') ? document.getElementById('fullName').value.trim() : '';
       const email = document.getElementById('workEmail') ? document.getElementById('workEmail').value.trim() : '';
       const password = document.getElementById('accountPassword') ? document.getElementById('accountPassword').value : '';
+      const confirmPassword = document.getElementById('confirmPassword') ? document.getElementById('confirmPassword').value : '';
+      const termsChecked = document.getElementById('terms')?.checked;
       const isOperator = document.getElementById('tab-operator')?.classList.contains('active');
-      const role = isOperator ? 'DRIVER' : 'ADMIN';
+      
+      // Safe default role: DISPATCHER or DRIVER for operators. Never allow ADMIN escalation.
+      const role = isOperator ? 'DRIVER' : 'DISPATCHER';
 
-      if (!fullName || !email || !password) {
-        alert('Please fill in all required fields.');
+      if (!fullName) {
+        showSignupError('Full name is required.');
         return;
       }
 
+      if (!email) {
+        showSignupError('Work email is required.');
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showSignupError('Please enter a valid work email address (e.g., name@company.com).');
+        return;
+      }
+
+      if (!password || password.length < 6) {
+        showSignupError('Password must be at least 6 characters long.');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        showSignupError('Passwords do not match. Please re-enter your confirmation password.');
+        return;
+      }
+
+      if (!termsChecked) {
+        showSignupError('Please agree to the Terms of Service and Privacy Policy to proceed.');
+        return;
+      }
+
+      const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.innerHTML = `
@@ -550,21 +612,23 @@
       }
 
       try {
-        await apiService.auth.signup({ fullName, email, password, role });
-        localStorage.setItem('fleettrack_logged_in', 'true');
-        window.location.href = 'index.html';
+        const res = await apiService.auth.signup({ fullName, email, password, role });
+        showSignupSuccess('Account registered successfully! Redirecting to operations portal...');
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1200);
       } catch (err) {
         console.warn('Signup error:', err);
-        // Fallback gracefully if backend offline
-        if (err.message && err.message.includes('Failed to fetch')) {
-          localStorage.setItem('fleettrack_logged_in', 'true');
-          window.location.href = 'index.html';
-        } else {
-          alert('Registration Error: ' + (err.message || 'Could not complete registration.'));
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = 'Complete Registration & Launch Console';
-          }
+        let errorMsg = 'Could not complete registration. Please check your details.';
+        if (err.status === 409 || (err.message && err.message.toLowerCase().includes('already exists'))) {
+          errorMsg = 'An account with this email already exists. Please sign in or use another email.';
+        } else if (err.message) {
+          errorMsg = err.message;
+        }
+        showSignupError(errorMsg);
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnHtml || '<span>Create FleetTrack Account</span><i class="ph-bold ph-arrow-right text-lg"></i>';
         }
       }
     };

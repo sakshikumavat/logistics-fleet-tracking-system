@@ -63,7 +63,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/api/auth/**", "/api/health", "/error").permitAll()
                 .requestMatchers("/api/dashboard/**", "/api/tracking/**", "/api/reports/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/vehicles/**", "/api/drivers/**", "/api/shipments/**", "/api/fuel/**", "/api/maintenance/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/vehicles/**", "/api/drivers/**", "/api/shipments/**", "/api/fuel/**", "/api/maintenance/**", "/api/assignments/**", "/api/routes/**", "/api/delivery-confirmations/**", "/api/audit-logs/**").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form.disable())

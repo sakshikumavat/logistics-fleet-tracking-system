@@ -179,6 +179,12 @@ public class VehicleService {
         if (latitude == null || longitude == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Latitude and Longitude are required");
         }
+        if (latitude < -90.0 || latitude > 90.0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Latitude must be between -90 and 90 degrees");
+        }
+        if (longitude < -180.0 || longitude > 180.0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Longitude must be between -180 and 180 degrees");
+        }
         Long nextLocId = jdbcTemplate.queryForObject(
             "SELECT NVL(MAX(LOCATION_ID), 0) + 1 FROM VEHICLE_LOCATIONS", Long.class);
         jdbcTemplate.update(
@@ -207,5 +213,28 @@ public class VehicleService {
             return Map.of("vehicleId", vehicleId, "message", "No telemetry data recorded yet for this vehicle");
         }
         return list.get(0);
+    }
+
+    // Get location history (chronological order)
+    public List<Map<String, Object>> getLocationHistory(Long vehicleId) {
+        getVehicleById(vehicleId); // verify vehicle exists
+        return jdbcTemplate.queryForList(
+            "SELECT LOCATION_ID, VEHICLE_ID, LATITUDE, LONGITUDE, RECORDED_AT " +
+            "FROM VEHICLE_LOCATIONS WHERE VEHICLE_ID = ? ORDER BY RECORDED_AT ASC",
+            vehicleId
+        );
+    }
+
+    // Get latest locations for all vehicles
+    public List<Map<String, Object>> getAllLatestLocations() {
+        return jdbcTemplate.queryForList(
+            "SELECT vl.LOCATION_ID, vl.VEHICLE_ID, v.REGISTRATION_NO, v.VEHICLE_NAME, v.VEHICLE_STATUS, " +
+            "vl.LATITUDE, vl.LONGITUDE, vl.RECORDED_AT " +
+            "FROM VEHICLE_LOCATIONS vl " +
+            "INNER JOIN VEHICLES v ON vl.VEHICLE_ID = v.VEHICLE_ID " +
+            "WHERE vl.LOCATION_ID IN ( " +
+            "    SELECT MAX(LOCATION_ID) FROM VEHICLE_LOCATIONS GROUP BY VEHICLE_ID " +
+            ") ORDER BY vl.VEHICLE_ID"
+        );
     }
 }

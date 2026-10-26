@@ -55,7 +55,36 @@ public class AuthService {
 
     @Transactional
     public LoginResponse signup(SignupRequest request) {
+        if (request == null) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Registration data is required");
+        }
+
+        if (request.getFullName() == null || request.getFullName().trim().isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Full name is required");
+        }
+
+        if (request.getEmail() == null || request.getEmail().trim().isBlank()) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Email is required");
+        }
+
         String email = request.getEmail().trim().toLowerCase();
+        if (!email.matches("^[A-Za-z0-9+_.-]+@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})$")) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Invalid email format");
+        }
+
+        if (request.getPassword() == null || request.getPassword().length() < 6) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Password must be at least 6 characters");
+        }
 
         if (repository.existsByEmail(email)) {
             throw new ResponseStatusException(
@@ -66,12 +95,22 @@ public class AuthService {
         Long maxId = repository.findMaxUserId();
         Long newId = (maxId != null ? maxId : 0L) + 1L;
 
+        // Security requirement: Assign safe default role on public signup.
+        // Never allow users to escalate privileges to ADMIN or MANAGER via request JSON.
+        String assignedRole = "DISPATCHER";
+        if (request.getRole() != null) {
+            String requested = request.getRole().trim().toUpperCase();
+            if ("DRIVER".equals(requested)) {
+                assignedRole = "DRIVER";
+            }
+        }
+
         AppUser user = new AppUser();
         user.setUserId(newId);
         user.setFullName(request.getFullName().trim());
         user.setEmail(email);
         user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
-        user.setRole(request.getRole() != null && !request.getRole().isBlank() ? request.getRole() : "DISPATCHER");
+        user.setRole(assignedRole);
         user.setActive(1);
         user.setCreatedAt(LocalDateTime.now());
 

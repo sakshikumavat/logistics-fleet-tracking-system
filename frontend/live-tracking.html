@@ -238,26 +238,26 @@
 </div>
 <div class="grid grid-cols-3 gap-2 py-2 bg-surface-container rounded-lg px-3">
 <div class="flex flex-col text-center">
-<span class="font-label-sm text-label-sm text-secondary">Speed</span>
-<span id="cardSpeed" class="font-headline-sm text-headline-sm text-on-surface font-bold mt-0.5">62 <span class="text-body-sm font-normal text-outline">km/h</span></span>
+<span class="font-label-sm text-label-sm text-secondary">Vehicle ID</span>
+<span id="cardVehicleId" class="font-headline-sm text-headline-sm text-on-surface font-bold mt-0.5">#101</span>
 </div>
 <div class="flex flex-col text-center">
-<span class="font-label-sm text-label-sm text-secondary">Fuel Level</span>
-<span id="cardFuel" class="font-headline-sm text-headline-sm text-primary font-bold mt-0.5">84%</span>
+<span class="font-label-sm text-label-sm text-secondary">Telematics Coordinates</span>
+<span id="cardCoords" class="font-label-sm text-[11px] text-primary font-bold mt-1 font-mono truncate">18.7537, 73.4063</span>
 </div>
 <div class="flex flex-col text-center">
-<span class="font-label-sm text-label-sm text-secondary">Cargo Temp</span>
-<span id="cardTemp" class="font-headline-sm text-headline-sm text-tertiary font-bold mt-0.5">4°C</span>
+<span class="font-label-sm text-label-sm text-secondary">History Trail</span>
+<span id="cardHistoryCount" class="font-headline-sm text-headline-sm text-tertiary font-bold mt-0.5">0 pts</span>
 </div>
 </div>
 <div class="flex items-center gap-space-sm pt-1">
-<button class="flex-1 h-10 bg-primary text-on-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-1.5 shadow-sm hover:bg-primary-container transition-all" type="button">
-<span class="material-symbols-outlined text-[18px]">route</span>
-<span class="">View Route Details</span>
+<button id="btnSendTestGps" class="flex-1 h-10 bg-primary text-on-primary font-label-md text-label-md rounded-lg flex items-center justify-center gap-1.5 shadow-sm hover:bg-primary-container transition-all" type="button">
+<span class="material-symbols-outlined text-[18px]">add_location_alt</span>
+<span class="">Post GPS Ping (Oracle)</span>
 </button>
-<button class="h-10 px-3 bg-surface-container text-on-surface font-label-md text-label-md rounded-lg flex items-center gap-1.5 hover:bg-surface-container-high transition-colors" type="button">
-<span class="material-symbols-outlined text-[18px] text-primary">phone_in_talk</span>
-<span class="">Contact</span>
+<button id="btnFitVehicleBounds" class="h-10 px-3 bg-surface-container text-on-surface font-label-md text-label-md rounded-lg flex items-center gap-1.5 hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary">filter_center_focus</span>
+<span class="">Focus</span>
 </button>
 </div>
 </div>
@@ -281,83 +281,17 @@
 <div class="flex items-center justify-between">
 <div class="flex items-center gap-2">
 <span class="material-symbols-outlined text-primary text-[20px]">share_location</span>
-<span class="font-headline-sm text-headline-sm text-on-surface">Active Corridor Fleet</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Live Oracle Fleet</span>
 </div>
-<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Sorted: Nearest</span>
+<span id="fleetLiveCounter" class="font-label-sm text-label-sm text-on-surface-variant font-medium">Loading fleet...</span>
 </div>
-<div class="flex flex-col gap-space-sm divide-y-0">
-<div data-vehicle-plate="MH12AB1234" class="vehicle-fleet-card p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-2 cursor-pointer transition-all hover:bg-surface-container ring-2 ring-primary/40">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-primary-container"></span>
-<span class="font-label-md text-label-md text-on-surface font-bold">MH12AB1234</span>
-<span class="font-label-sm text-label-sm text-outline">Freight-42</span>
-</div>
-<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-primary-container text-on-primary">On Route</span>
-</div>
-<div class="flex items-center justify-between text-secondary">
-<span class="font-body-sm text-body-sm truncate max-w-[170px]">Ramesh Patel • Pune Tollway</span>
-<span class="font-label-md text-label-md text-on-surface font-semibold">62 km/h</span>
-</div>
-<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden">
-<div class="bg-primary-container h-full rounded-full" style="width: 68%;"></div>
-</div>
-</div>
-<div data-vehicle-plate="MH14DE5678" class="vehicle-fleet-card p-space-sm rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors flex flex-col gap-2 cursor-pointer shadow-xs">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-tertiary-container"></span>
-<span class="font-label-md text-label-md text-on-surface font-bold">MH14DE5678</span>
-<span class="font-label-sm text-label-sm text-outline">Tanker-09</span>
-</div>
-<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-surface-container-high text-tertiary font-semibold">Stopped</span>
-</div>
-<div class="flex items-center justify-between text-secondary">
-<span class="font-body-sm text-body-sm truncate max-w-[170px]">Amit Shinde • Nashik Depot 2</span>
-<span class="font-label-md text-label-md text-on-surface font-semibold">0 km/h</span>
-</div>
-<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden">
-<div class="bg-tertiary-container h-full rounded-full" style="width: 100%;"></div>
-</div>
-</div>
-<div data-vehicle-plate="MH04FK9012" class="vehicle-fleet-card p-space-sm rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors flex flex-col gap-2 cursor-pointer shadow-xs">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-primary-container"></span>
-<span class="font-label-md text-label-md text-on-surface font-bold">MH04FK9012</span>
-<span class="font-label-sm text-label-sm text-outline">Express-03</span>
-</div>
-<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-primary-container text-on-primary">On Route</span>
-</div>
-<div class="flex items-center justify-between text-secondary">
-<span class="font-body-sm text-body-sm truncate max-w-[170px]">Vikram Rao • Thane Creek Bridge</span>
-<span class="font-label-md text-label-md text-on-surface font-semibold">74 km/h</span>
-</div>
-<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden">
-<div class="bg-primary-container h-full rounded-full" style="width: 44%;"></div>
-</div>
-</div>
-<div data-vehicle-plate="MH20XY3341" class="vehicle-fleet-card p-space-sm rounded-lg bg-surface-container-lowest hover:bg-surface-container-low transition-colors flex flex-col gap-2 cursor-pointer shadow-xs">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-2">
-<span class="w-2 h-2 rounded-full bg-error"></span>
-<span class="font-label-md text-label-md text-on-surface font-bold">MH20XY3341</span>
-<span class="font-label-sm text-label-sm text-outline">ColdChain-11</span>
-</div>
-<span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-semibold">Delayed</span>
-</div>
-<div class="flex items-center justify-between text-secondary">
-<span class="font-body-sm text-body-sm truncate max-w-[170px]">Sunil K. • Kasara Ghat Congestion</span>
-<span class="font-label-md text-label-md text-error font-semibold">12 km/h</span>
-</div>
-<div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden">
-<div class="bg-error h-full rounded-full" style="width: 25%;"></div>
-</div>
-</div>
+<div id="fleetSidebarList" class="flex flex-col gap-space-sm divide-y-0 max-h-[460px] overflow-y-auto">
+  <!-- Dynamic Real Vehicles Injected Here from Oracle Database -->
+  <div class="p-4 text-center text-xs text-slate-400">Loading vehicles from database...</div>
 </div>
 <div class="pt-space-xs flex items-center justify-between">
-<span class="font-label-sm text-label-sm text-outline">Displaying 4 of 26 live units</span>
-<a class="font-label-md text-label-md text-primary hover:text-primary-container font-semibold flex items-center gap-1" href="#">
+<span id="fleetDisplayFooter" class="font-label-sm text-label-sm text-outline">Live Telematics from Oracle</span>
+<a class="font-label-md text-label-md text-primary hover:text-primary-container font-semibold flex items-center gap-1" href="fleet.html">
 <span class="">Full Fleet Matrix</span>
 <span class="material-symbols-outlined text-[16px]">chevron_right</span>
 </a>
@@ -383,124 +317,49 @@
 </div></main></div>
 
 
-<script data-purpose="leaflet-interactive-map-engine">
-document.addEventListener('DOMContentLoaded', function() {
+<script type="module">
+import { apiService } from './src/services/apiService.js';
+
+document.addEventListener('DOMContentLoaded', async () => {
   if (typeof L === 'undefined') {
     console.error('Leaflet library failed to load.');
     return;
   }
 
-  // Fleet Telemetry Database
-  const fleetDatabase = {
-    'MH12AB1234': {
-      plate: 'MH12AB1234',
-      status: 'On Route',
-      statusColor: 'bg-primary-container text-on-primary',
-      desc: 'Heavy Freight Vol-IV • Consignment #CN-89412',
-      driver: 'Ramesh Patel',
-      time: '10:45 AM (Live)',
-      waypoint: 'Near Pune Highway Tollway (KM 42)',
-      destination: 'Mumbai Container Port (Terminal B)',
-      speed: '62',
-      fuel: '84%',
-      temp: '4°C',
-      coords: [18.7537, 73.4063],
-      color: '#2563eb',
-      icon: 'local_shipping',
-      isPulsing: true
-    },
-    'MH14DE5678': {
-      plate: 'MH14DE5678',
-      status: 'Stopped',
-      statusColor: 'bg-surface-container-high text-tertiary',
-      desc: 'Chemical Tanker-09 • Consignment #CN-89304',
-      driver: 'Amit Shinde',
-      time: '10:42 AM (Idle)',
-      waypoint: 'Nashik Depot 2 (Bay 4)',
-      destination: 'Chakan Auto Hub',
-      speed: '0',
-      fuel: '92%',
-      temp: 'Ambient',
-      coords: [19.9975, 73.7898],
-      color: '#007d55',
-      icon: 'local_shipping',
-      isPulsing: false
-    },
-    'MH04FK9012': {
-      plate: 'MH04FK9012',
-      status: 'On Route',
-      statusColor: 'bg-primary-container text-on-primary',
-      desc: 'Express-03 • Consignment #CN-89551',
-      driver: 'Vikram Rao',
-      time: '10:44 AM (Live)',
-      waypoint: 'Thane Creek Bridge (KM 18)',
-      destination: 'Pune Industrial Area',
-      speed: '74',
-      fuel: '68%',
-      temp: '-2°C',
-      coords: [19.0330, 73.0297],
-      color: '#004ac6',
-      icon: 'local_shipping',
-      isPulsing: true
-    },
-    'MH20XY3341': {
-      plate: 'MH20XY3341',
-      status: 'Delayed',
-      statusColor: 'bg-error-container text-on-error-container',
-      desc: 'ColdChain-11 • Consignment #CN-89218',
-      driver: 'Sunil K.',
-      time: '10:40 AM (Alert)',
-      waypoint: 'Kasara Ghat Congestion',
-      destination: 'Bhiwandi Warehousing',
-      speed: '12',
-      fuel: '51%',
-      temp: '-18°C',
-      coords: [19.7042, 73.4831],
-      color: '#ba1a1a',
-      icon: 'warning',
-      isPulsing: true
-    }
-  };
+  // 1. Initialize Leaflet Map
+  const mapContainer = document.getElementById('liveFleetMap');
+  if (!mapContainer) return;
 
-  // Initialize Map
   const map = L.map('liveFleetMap', {
-    center: [19.10, 73.40],
+    center: [18.90, 73.50],
     zoom: 9,
     zoomControl: false,
     attributionControl: false
   });
 
-  // Working Map Tile API Providers (100% Free, Reliable, No Watermarks)
-  // 1. OpenStreetMap High-Resolution Standard Map API
+  // Base Map Tile Layers
   const osmStandardLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '© OpenStreetMap contributors'
   });
 
-  // 2. Esri World Street Map API (Clean Corporate Cartography)
   const esriStreetLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: 19,
     attribution: '© Esri & Contributors'
   });
 
-  // 3. Esri High-Resolution Satellite Map API
   const esriSatelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: 18,
     attribution: '© Esri World Imagery'
   });
 
-  // 4. Esri Dark Gray Canvas Map API (Traffic & Night Telemetry)
   const esriDarkLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: 16,
     attribution: '© Esri Dark Canvas'
   });
 
-  // Check saved Map API provider preference or use Esri Street as default
-  const savedProvider = localStorage.getItem('fleettrack_map_api') || 'esri_street';
-  let currentLayer = esriStreetLayer;
-  if (savedProvider === 'osm') currentLayer = osmStandardLayer;
-  else if (savedProvider === 'satellite') currentLayer = esriSatelliteLayer;
-  else if (savedProvider === 'traffic') currentLayer = esriDarkLayer;
+  // Default to OpenStreetMap Standard Layer
+  let currentLayer = osmStandardLayer;
   currentLayer.addTo(map);
 
   // Layer Switchers
@@ -509,7 +368,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const btnTraffic = document.getElementById('btnTrafficLayer');
 
   function setLayer(layer, activeBtn) {
-    map.removeLayer(currentLayer);
+    if (currentLayer) map.removeLayer(currentLayer);
     layer.addTo(map);
     currentLayer = layer;
 
@@ -523,56 +382,30 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   if (btnSatellite) btnSatellite.addEventListener('click', () => setLayer(esriSatelliteLayer, btnSatellite));
-  if (btnTerrain) btnTerrain.addEventListener('click', () => setLayer(esriStreetLayer, btnTerrain));
+  if (btnTerrain) btnTerrain.addEventListener('click', () => setLayer(osmStandardLayer, btnTerrain));
   if (btnTraffic) btnTraffic.addEventListener('click', () => setLayer(esriDarkLayer, btnTraffic));
 
-  // Map Routes (Western Highway Corridor Pune - Mumbai)
-  const puneMumbaiCorridor = [
-    [18.5204, 73.8567], // Pune Origin Depot
-    [18.6322, 73.7431], // Dehu Road
-    [18.7214, 73.6823], // Talegaon Toll
-    [18.7537, 73.4063], // Lonavala / Khandala Ghat
-    [18.7842, 73.3441], // Khopoli
-    [18.8924, 73.1782], // Khalapur Toll
-    [18.9894, 73.1175], // Panvel Expressway Junction
-    [19.0330, 73.0297], // Vashi / Thane Creek
-    [18.9496, 72.9510]  // Mumbai Container Port JNPT
-  ];
+  // Map Controls (Zoom / Recenter)
+  const btnZoomIn = document.getElementById('btnZoomIn');
+  const btnZoomOut = document.getElementById('btnZoomOut');
+  const btnReCenter = document.getElementById('btnReCenterView');
+  const btnFitBounds = document.getElementById('btnFitVehicleBounds');
+  const btnTargetGps = document.getElementById('btnTargetGps');
+  const btnSendTestGps = document.getElementById('btnSendTestGps');
 
-  const nashikCorridor = [
-    [19.9975, 73.7898], // Nashik MIDC
-    [19.7042, 73.4831], // Kasara Ghat Pass
-    [19.4522, 73.3211], // Asangaon
-    [19.2403, 73.1305], // Kalyan
-    [19.0330, 73.0297]  // Thane Junction
-  ];
+  if (btnZoomIn) btnZoomIn.addEventListener('click', () => map.zoomIn());
+  if (btnZoomOut) btnZoomOut.addEventListener('click', () => map.zoomOut());
 
-  // Route Polylines
-  L.polyline(puneMumbaiCorridor, {
-    color: '#004ac6',
-    weight: 7,
-    opacity: 0.35,
-    lineCap: 'round',
-    lineJoin: 'round'
-  }).addTo(map);
+  // 2. State Management for Real Oracle Vehicles & Locations
+  let vehiclesList = [];
+  let latestLocationsMap = {}; // vehicleId -> latest location row
+  const vehicleMarkers = {}; // vehicleId -> Leaflet marker
+  let activeVehicleId = null;
+  let activeHistoryPolyline = null;
+  const activeHistoryMarkers = [];
+  let refreshTimer = null;
 
-  L.polyline(puneMumbaiCorridor, {
-    color: '#2563eb',
-    weight: 3.5,
-    opacity: 0.95,
-    dashArray: '8, 6',
-    className: 'animated-route-line',
-    lineCap: 'round'
-  }).addTo(map);
-
-  L.polyline(nashikCorridor, {
-    color: '#94a3b8',
-    weight: 2.5,
-    opacity: 0.8,
-    dashArray: '4, 4'
-  }).addTo(map);
-
-  // Hub Waypoint Markers
+  // Hub Waypoint Markers for Regional Context
   function createHubMarker(lat, lng, code, name, color) {
     const hubIcon = L.divIcon({
       className: '',
@@ -592,84 +425,184 @@ document.addEventListener('DOMContentLoaded', function() {
   createHubMarker(18.9496, 72.9510, 'MB', 'Mumbai JNPT Port', '#0f172a');
   createHubMarker(19.9975, 73.7898, 'NK', 'Nashik MIDC Hub', '#475569');
 
-  // Vehicle Markers
-  const markers = {};
+  // Format Helper for Timestamps
+  function formatTimestamp(raw) {
+    if (!raw) return 'Live Telematics';
+    try {
+      const d = new Date(raw);
+      if (!isNaN(d.getTime())) {
+        return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      }
+    } catch (e) {}
+    return String(raw).replace('T', ' ').substring(0, 19);
+  }
 
-  Object.values(fleetDatabase).forEach(veh => {
-    const isLead = veh.plate === 'MH12AB1234';
-    const markerHtml = `
-      <div class="custom-vehicle-marker" id="marker-${veh.plate}">
-        ${veh.isPulsing ? `<span class="marker-pulse" style="background-color: ${veh.color}; opacity: 0.45;"></span>` : ''}
-        <div class="marker-core" style="background-color: ${veh.color}; ${isLead ? 'width:34px;height:34px;' : ''}">
-          <span class="material-symbols-outlined" style="font-size: ${isLead ? '20px' : '16px'};">${veh.icon}</span>
+  // 3. Render Vehicle Markers from Database
+  function renderVehicleMarkers() {
+    // Clear previous markers
+    Object.values(vehicleMarkers).forEach(m => map.removeLayer(m));
+    for (const key in vehicleMarkers) delete vehicleMarkers[key];
+
+    const boundsCoords = [];
+
+    vehiclesList.forEach(veh => {
+      const loc = latestLocationsMap[veh.vehicleId];
+      if (!loc || loc.LATITUDE == null || loc.LONGITUDE == null) return;
+
+      const lat = parseFloat(loc.LATITUDE);
+      const lng = parseFloat(loc.LONGITUDE);
+      if (isNaN(lat) || isNaN(lng)) return;
+
+      boundsCoords.push([lat, lng]);
+
+      const isSelected = (veh.vehicleId === activeVehicleId);
+      const statusColor = veh.vehicleStatus === 'ON_ROUTE' ? '#2563eb' : (veh.vehicleStatus === 'RENTED' ? '#0284c7' : (veh.vehicleStatus === 'MAINTENANCE' ? '#e11d48' : '#059669'));
+
+      const markerHtml = `
+        <div class="custom-vehicle-marker" id="marker-v-${veh.vehicleId}">
+          ${isSelected ? `<span class="marker-pulse" style="background-color: ${statusColor}; opacity: 0.5;"></span>` : ''}
+          <div class="marker-core" style="background-color: ${statusColor}; ${isSelected ? 'transform: scale(1.2); box-shadow: 0 0 14px rgba(37,99,235,0.7);' : ''}">
+            <span class="material-symbols-outlined" style="font-size: 16px;">local_shipping</span>
+          </div>
+          <div class="marker-label">${veh.registrationNo || ('ID #' + veh.vehicleId)}</div>
         </div>
-        <div class="marker-label">${veh.plate}</div>
-      </div>
-    `;
+      `;
 
-    const customIcon = L.divIcon({
-      className: '',
-      html: markerHtml,
-      iconSize: [40, 40],
-      iconAnchor: [20, 20]
+      const customIcon = L.divIcon({
+        className: '',
+        html: markerHtml,
+        iconSize: [40, 40],
+        iconAnchor: [20, 20]
+      });
+
+      const marker = L.marker([lat, lng], { icon: customIcon }).addTo(map);
+
+      const popupHtml = `
+        <div class="p-3 bg-white text-slate-800" style="min-width: 210px;">
+          <div class="flex items-center justify-between pb-1.5 border-b border-slate-100">
+            <span class="font-bold text-xs text-slate-900 font-mono">${veh.registrationNo || 'Vehicle'}</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700">${veh.vehicleStatus || 'ACTIVE'}</span>
+          </div>
+          <div class="mt-2 text-[11px] space-y-1">
+            <div><strong class="text-slate-500 font-medium">Vehicle ID:</strong> #${veh.vehicleId}</div>
+            <div><strong class="text-slate-500 font-medium">Model:</strong> ${veh.vehicleName || 'Commercial Truck'}</div>
+            <div><strong class="text-slate-500 font-medium">Type:</strong> ${veh.vehicleType || 'HEAVY_DUTY'}</div>
+            <div><strong class="text-slate-500 font-medium">GPS Coordinates:</strong> <span class="font-mono text-blue-600 font-semibold">${lat.toFixed(4)}, ${lng.toFixed(4)}</span></div>
+            <div><strong class="text-slate-500 font-medium">Recorded:</strong> ${formatTimestamp(loc.RECORDED_AT)}</div>
+          </div>
+        </div>
+      `;
+      marker.bindPopup(popupHtml);
+
+      marker.on('click', () => {
+        selectVehicle(veh.vehicleId);
+      });
+
+      vehicleMarkers[veh.vehicleId] = marker;
     });
 
-    const marker = L.marker(veh.coords, { icon: customIcon }).addTo(map);
-    
-    // Popup
-    const popupHtml = `
-      <div class="p-3 bg-white text-slate-800" style="min-width: 200px;">
-        <div class="flex items-center justify-between pb-1.5 border-b border-slate-100">
-          <span class="font-bold text-xs text-slate-900 font-mono">${veh.plate}</span>
-          <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full ${veh.statusColor}">${veh.status}</span>
-        </div>
-        <div class="mt-2 text-[11px] space-y-1">
-          <div><strong class="text-slate-500 font-medium">Driver:</strong> ${veh.driver}</div>
-          <div><strong class="text-slate-500 font-medium">Speed:</strong> <span class="font-bold text-slate-900">${veh.speed} km/h</span></div>
-          <div><strong class="text-slate-500 font-medium">Location:</strong> ${veh.waypoint}</div>
-        </div>
-      </div>
-    `;
-    marker.bindPopup(popupHtml);
+    return boundsCoords;
+  }
 
-    marker.on('click', () => selectVehicle(veh.plate));
-    markers[veh.plate] = marker;
-  });
+  // 4. Render Sidebar Fleet List from Real Oracle Vehicles
+  function renderSidebarList() {
+    const listContainer = document.getElementById('fleetSidebarList');
+    if (!listContainer) return;
 
-  // Update floating vehicle card UI
-  function selectVehicle(plate) {
-    const veh = fleetDatabase[plate];
+    if (vehiclesList.length === 0) {
+      listContainer.innerHTML = '<div class="p-4 text-center text-xs text-slate-500">No vehicles found in Oracle database.</div>';
+      return;
+    }
+
+    listContainer.innerHTML = vehiclesList.map(veh => {
+      const isSelected = (veh.vehicleId === activeVehicleId);
+      const loc = latestLocationsMap[veh.vehicleId];
+      const hasGps = loc && loc.LATITUDE != null && loc.LONGITUDE != null;
+      const statusClass = veh.vehicleStatus === 'ON_ROUTE' 
+        ? 'bg-primary-container text-on-primary' 
+        : (veh.vehicleStatus === 'RENTED' ? 'bg-sky-100 text-sky-700' : (veh.vehicleStatus === 'MAINTENANCE' ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'));
+      const dotColor = veh.vehicleStatus === 'ON_ROUTE' ? 'bg-blue-600' : (veh.vehicleStatus === 'RENTED' ? 'bg-sky-500' : (veh.vehicleStatus === 'MAINTENANCE' ? 'bg-rose-500' : 'bg-emerald-500'));
+
+      return `
+        <div data-vehicle-id="${veh.vehicleId}" class="vehicle-fleet-card p-space-sm rounded-lg ${isSelected ? 'bg-surface-container-low ring-2 ring-primary/40' : 'bg-surface-container-lowest hover:bg-surface-container-low'} flex flex-col gap-2 cursor-pointer transition-all shadow-xs">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full ${dotColor}"></span>
+              <span class="font-label-md text-label-md text-on-surface font-bold font-mono">${veh.registrationNo}</span>
+              <span class="font-label-sm text-label-sm text-outline">#${veh.vehicleId}</span>
+            </div>
+            <span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full font-semibold ${statusClass}">${veh.vehicleStatus}</span>
+          </div>
+          <div class="flex items-center justify-between text-secondary text-xs">
+            <span class="font-body-sm text-body-sm truncate max-w-[180px]">${veh.vehicleName}</span>
+            <span class="font-mono text-[11px] font-semibold text-primary">${hasGps ? `${parseFloat(loc.LATITUDE).toFixed(3)}, ${parseFloat(loc.LONGITUDE).toFixed(3)}` : 'No GPS'}</span>
+          </div>
+          <div class="w-full bg-surface-container rounded-full h-1.5 overflow-hidden">
+            <div class="${dotColor} h-full rounded-full" style="width: ${hasGps ? '85%' : '15%'};"></div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Bind Click Events
+    listContainer.querySelectorAll('.vehicle-fleet-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = Number(card.getAttribute('data-vehicle-id'));
+        if (id) selectVehicle(id);
+      });
+    });
+
+    const liveCounter = document.getElementById('fleetLiveCounter');
+    if (liveCounter) {
+      const gpsCount = Object.keys(latestLocationsMap).length;
+      liveCounter.textContent = `${vehiclesList.length} Vehicles (${gpsCount} GPS Active)`;
+    }
+  }
+
+  // 5. Select Vehicle and Display Location History Polyline
+  async function selectVehicle(vehicleId, panTo = true) {
+    activeVehicleId = vehicleId;
+    const veh = vehiclesList.find(v => v.vehicleId === vehicleId);
     if (!veh) return;
 
-    // Update Card Values
+    // Update Floating Card Elements
     const cardPlate = document.getElementById('cardPlate');
+    const cardVehicleId = document.getElementById('cardVehicleId');
     const cardStatusBadge = document.getElementById('cardStatusBadge');
     const cardSubdesc = document.getElementById('cardSubdesc');
-    const cardDriver = document.getElementById('cardDriver');
     const cardPing = document.getElementById('cardPing');
+    const cardCoords = document.getElementById('cardCoords');
+    const cardHistoryCount = document.getElementById('cardHistoryCount');
     const cardWaypoint = document.getElementById('cardWaypoint');
     const cardDestination = document.getElementById('cardDestination');
-    const cardSpeed = document.getElementById('cardSpeed');
-    const cardFuel = document.getElementById('cardFuel');
-    const cardTemp = document.getElementById('cardTemp');
 
-    if (cardPlate) cardPlate.textContent = veh.plate;
+    if (cardPlate) cardPlate.textContent = veh.registrationNo || ('ID #' + veh.vehicleId);
+    if (cardVehicleId) cardVehicleId.textContent = '#' + veh.vehicleId;
     if (cardStatusBadge) {
-      cardStatusBadge.textContent = veh.status;
-      cardStatusBadge.className = `font-label-sm text-label-sm px-2.5 py-0.5 rounded-full font-semibold ${veh.statusColor}`;
+      cardStatusBadge.textContent = veh.vehicleStatus || 'AVAILABLE';
+      cardStatusBadge.className = `font-label-sm text-label-sm px-2.5 py-0.5 rounded-full font-semibold ${veh.vehicleStatus === 'ON_ROUTE' ? 'bg-primary-container text-on-primary' : (veh.vehicleStatus === 'MAINTENANCE' ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700')}`;
     }
-    if (cardSubdesc) cardSubdesc.textContent = veh.desc;
-    if (cardDriver) cardDriver.textContent = veh.driver;
-    if (cardPing) cardPing.textContent = veh.time;
-    if (cardWaypoint) cardWaypoint.textContent = veh.waypoint;
-    if (cardDestination) cardDestination.textContent = veh.destination;
-    if (cardSpeed) cardSpeed.innerHTML = `${veh.speed} <span class="text-body-sm font-normal text-outline">km/h</span>`;
-    if (cardFuel) cardFuel.textContent = veh.fuel;
-    if (cardTemp) cardTemp.textContent = veh.temp;
+    if (cardSubdesc) cardSubdesc.textContent = `${veh.vehicleName} • ${veh.vehicleType} • ₹${veh.dailyRate || 5000}/day`;
+
+    const loc = latestLocationsMap[veh.vehicleId];
+    if (loc && loc.LATITUDE != null && loc.LONGITUDE != null) {
+      const lat = parseFloat(loc.LATITUDE);
+      const lng = parseFloat(loc.LONGITUDE);
+      if (cardCoords) cardCoords.textContent = `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+      if (cardPing) cardPing.textContent = formatTimestamp(loc.RECORDED_AT);
+      if (cardWaypoint) cardWaypoint.textContent = `Latest Fix: ${lat.toFixed(4)}°N, ${lng.toFixed(4)}°E (Location ID: ${loc.LOCATION_ID})`;
+      if (cardDestination) cardDestination.textContent = veh.vehicleStatus === 'ON_ROUTE' ? 'Corridor Transit Delivery' : 'Depot Staging Area';
+    } else {
+      if (cardCoords) cardCoords.textContent = 'No GPS Fix Recorded';
+      if (cardPing) cardPing.textContent = 'No telemetry in Oracle yet';
+      if (cardWaypoint) cardWaypoint.textContent = 'Waiting for initial GPS ping from vehicle hardware/sim';
+      if (cardDestination) cardDestination.textContent = 'Depot Hub';
+    }
 
     // Highlight active card in sidebar
     document.querySelectorAll('.vehicle-fleet-card').forEach(card => {
-      if (card.getAttribute('data-vehicle-plate') === plate) {
+      const cardId = Number(card.getAttribute('data-vehicle-id'));
+      if (cardId === vehicleId) {
         card.classList.add('bg-surface-container-low', 'ring-2', 'ring-primary/40');
         card.classList.remove('bg-surface-container-lowest');
       } else {
@@ -678,51 +611,257 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    // Fly to position
-    map.flyTo(veh.coords, 12, { animate: true, duration: 1.2 });
-    if (markers[plate]) {
-      markers[plate].openPopup();
+    // Re-render markers so pulsing ring highlights selected vehicle
+    renderVehicleMarkers();
+
+    // 6. Fetch Location History from Backend and Render Polyline
+    try {
+      // Clear previous history layers
+      if (activeHistoryPolyline) {
+        map.removeLayer(activeHistoryPolyline);
+        activeHistoryPolyline = null;
+      }
+      activeHistoryMarkers.forEach(m => map.removeLayer(m));
+      activeHistoryMarkers.length = 0;
+
+      const historyData = await apiService.vehicles.getLocationHistory(vehicleId);
+
+      if (cardHistoryCount) {
+        cardHistoryCount.textContent = `${(historyData && historyData.length) || 0} pts`;
+      }
+
+      if (historyData && historyData.length > 0) {
+        // Points are in chronological order from backend (ORDER BY RECORDED_AT ASC)
+        const polyCoords = [];
+
+        historyData.forEach((pt, idx) => {
+          const pLat = parseFloat(pt.LATITUDE);
+          const pLng = parseFloat(pt.LONGITUDE);
+          if (!isNaN(pLat) && !isNaN(pLng)) {
+            polyCoords.push([pLat, pLng]);
+
+            // Add small waypoint circle for intermediate breadcrumbs
+            const isLatest = (idx === historyData.length - 1);
+            if (!isLatest) {
+              const dot = L.circleMarker([pLat, pLng], {
+                radius: 4.5,
+                fillColor: '#3b82f6',
+                color: '#ffffff',
+                weight: 1.5,
+                opacity: 0.9,
+                fillOpacity: 0.8
+              }).addTo(map);
+
+              dot.bindPopup(`
+                <div class="text-xs p-1">
+                  <strong>Waypoint #${idx + 1}</strong> (ID: ${pt.LOCATION_ID})<br/>
+                  ${pLat.toFixed(4)}, ${pLng.toFixed(4)}<br/>
+                  <span class="text-slate-400 text-[10px]">${formatTimestamp(pt.RECORDED_AT)}</span>
+                </div>
+              `);
+              activeHistoryMarkers.push(dot);
+            }
+          }
+        });
+
+        // Render Connecting Polyline
+        if (polyCoords.length >= 2) {
+          activeHistoryPolyline = L.polyline(polyCoords, {
+            color: '#2563eb',
+            weight: 4,
+            opacity: 0.85,
+            dashArray: '6, 6',
+            lineCap: 'round',
+            lineJoin: 'round'
+          }).addTo(map);
+        }
+
+        // Fit map bounds to history trail
+        if (panTo && polyCoords.length > 0) {
+          if (polyCoords.length >= 2) {
+            map.fitBounds(L.latLngBounds(polyCoords), { padding: [60, 60], maxZoom: 14 });
+          } else {
+            map.setView(polyCoords[0], 12);
+          }
+        }
+      } else if (loc && loc.LATITUDE != null && loc.LONGITUDE != null && panTo) {
+        map.setView([parseFloat(loc.LATITUDE), parseFloat(loc.LONGITUDE)], 12);
+      }
+    } catch (e) {
+      console.warn('Failed to load location history for vehicle:', e);
+    }
+
+    if (vehicleMarkers[vehicleId]) {
+      vehicleMarkers[vehicleId].openPopup();
     }
   }
-  window.selectVehicleByPlate = selectVehicle;
+  window.selectVehicleByPlate = (plate) => {
+    const v = vehiclesList.find(x => (x.registrationNo || '').toUpperCase() === (plate || '').toUpperCase());
+    if (v) selectVehicle(v.vehicleId);
+  };
 
-  // Sidebar Fleet List Click Bindings
-  document.querySelectorAll('.vehicle-fleet-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const plate = card.getAttribute('data-vehicle-plate');
-      selectVehicle(plate);
+  // 7. Post GPS Telemetry Location Update directly to Oracle
+  async function postNewLocationUpdate() {
+    if (!activeVehicleId) {
+      if (vehiclesList.length > 0) activeVehicleId = vehiclesList[0].vehicleId;
+      else {
+        alert('No vehicle available to record location.');
+        return;
+      }
+    }
+
+    const veh = vehiclesList.find(v => v.vehicleId === activeVehicleId);
+    const loc = latestLocationsMap[activeVehicleId];
+    const currentLat = (loc && loc.LATITUDE) ? parseFloat(loc.LATITUDE) : 18.7537;
+    const currentLng = (loc && loc.LONGITUDE) ? parseFloat(loc.LONGITUDE) : 73.4063;
+
+    // Small jitter simulating forward highway progress
+    const nextLat = Number((currentLat + (Math.random() * 0.02 - 0.005)).toFixed(6));
+    const nextLng = Number((currentLng + (Math.random() * 0.02 - 0.005)).toFixed(6));
+
+    const promptVal = prompt(
+      `Record New GPS Location into Oracle VEHICLE_LOCATIONS for [${veh ? veh.registrationNo : activeVehicleId}]:\n` +
+      `Enter Latitude and Longitude separated by comma (-90..90, -180..180):`,
+      `${nextLat}, ${nextLng}`
+    );
+
+    if (!promptVal) return;
+    const parts = promptVal.split(',').map(s => s.trim());
+    if (parts.length < 2) {
+      alert('Invalid coordinates. Please enter latitude, longitude.');
+      return;
+    }
+
+    const lat = parseFloat(parts[0]);
+    const lng = parseFloat(parts[1]);
+
+    if (isNaN(lat) || isNaN(lng) || lat < -90 || lat > 90 || lng < -180 || lng > 180) {
+      alert('Coordinates out of range. Latitude must be -90..90, Longitude -180..180.');
+      return;
+    }
+
+    try {
+      const res = await apiService.vehicles.recordLocation(activeVehicleId, lat, lng);
+      alert(`Location recorded in Oracle! Location ID: ${res.locationId}\nCoordinates: ${lat}, ${lng}`);
+      await refreshData(false);
+      selectVehicle(activeVehicleId, true);
+    } catch (err) {
+      alert(`Failed to save location: ${err.message || 'Error'}`);
+    }
+  }
+
+  if (btnSendTestGps) {
+    btnSendTestGps.addEventListener('click', postNewLocationUpdate);
+  }
+
+  if (btnTargetGps) {
+    btnTargetGps.addEventListener('click', () => {
+      if (activeVehicleId) selectVehicle(activeVehicleId, true);
+      else if (vehiclesList.length > 0) selectVehicle(vehiclesList[0].vehicleId, true);
     });
-  });
+  }
 
-  // Map Controls
-  const btnZoomIn = document.getElementById('btnZoomIn');
-  const btnZoomOut = document.getElementById('btnZoomOut');
-  const btnTargetGps = document.getElementById('btnTargetGps');
-  const btnReCenter = document.getElementById('btnReCenterView');
-  const inputSearch = document.getElementById('inputVehicleSearch');
-
-  if (btnZoomIn) btnZoomIn.addEventListener('click', () => map.zoomIn());
-  if (btnZoomOut) btnZoomOut.addEventListener('click', () => map.zoomOut());
-  if (btnTargetGps) btnTargetGps.addEventListener('click', () => selectVehicle('MH12AB1234'));
+  if (btnFitBounds) {
+    btnFitBounds.addEventListener('click', () => {
+      if (activeVehicleId) selectVehicle(activeVehicleId, true);
+    });
+  }
 
   if (btnReCenter) {
     btnReCenter.addEventListener('click', () => {
-      const bounds = L.latLngBounds(Object.values(fleetDatabase).map(v => v.coords));
-      map.fitBounds(bounds, { padding: [60, 60] });
-    });
-  }
-
-  if (inputSearch) {
-    inputSearch.addEventListener('input', (e) => {
-      const val = e.target.value.trim().toUpperCase();
-      const matched = Object.keys(fleetDatabase).find(plate => plate.includes(val));
-      if (matched && val.length >= 4) {
-        selectVehicle(matched);
+      const boundsCoords = Object.values(latestLocationsMap)
+        .filter(l => l && l.LATITUDE != null && l.LONGITUDE != null)
+        .map(l => [parseFloat(l.LATITUDE), parseFloat(l.LONGITUDE)]);
+      if (boundsCoords.length > 0) {
+        map.fitBounds(L.latLngBounds(boundsCoords), { padding: [60, 60] });
+      } else {
+        map.setView([18.90, 73.50], 9);
       }
     });
   }
 
-  // User dropdown toggle
+  // 8. Refresh & Initial Data Load
+  async function refreshData(isInitial = false) {
+    try {
+      const [vehiclesRes, locationsRes] = await Promise.all([
+        apiService.vehicles.getAll(),
+        apiService.vehicles.getAllLatestLocations().catch(() => [])
+      ]);
+
+      vehiclesList = Array.isArray(vehiclesRes) ? vehiclesRes : [];
+      latestLocationsMap = {};
+
+      if (Array.isArray(locationsRes)) {
+        locationsRes.forEach(loc => {
+          if (loc && loc.VEHICLE_ID != null) {
+            latestLocationsMap[Number(loc.VEHICLE_ID)] = loc;
+          }
+        });
+      }
+
+      // Render markers and sidebar list
+      const boundsCoords = renderVehicleMarkers();
+      renderSidebarList();
+
+      if (isInitial && vehiclesList.length > 0) {
+        // Auto-select first vehicle with GPS or first vehicle in fleet
+        const firstWithGps = vehiclesList.find(v => latestLocationsMap[v.vehicleId]) || vehiclesList[0];
+        selectVehicle(firstWithGps.vehicleId, true);
+
+        if (boundsCoords && boundsCoords.length > 0) {
+          map.fitBounds(L.latLngBounds(boundsCoords), { padding: [60, 60] });
+        }
+      }
+    } catch (err) {
+      console.warn('Error loading telematics data from Oracle:', err);
+    }
+  }
+
+  // Initial Load
+  await refreshData(true);
+
+  // Resize fix for container layout
+  setTimeout(() => map.invalidateSize(), 300);
+
+  // 9. Sensible Polling Interval (every 15s) with Component Unmount Cleanup
+  refreshTimer = setInterval(() => {
+    refreshData(false);
+  }, 15000);
+
+  window.addEventListener('beforeunload', () => {
+    if (refreshTimer) {
+      clearInterval(refreshTimer);
+      refreshTimer = null;
+    }
+  });
+
+  // URL Tracking Param auto-focus
+  const urlParams = new URLSearchParams(window.location.search);
+  const trackParam = urlParams.get('tracking') || urlParams.get('shipment') || urlParams.get('plate');
+  if (trackParam) {
+    const searchInput = document.getElementById('inputVehicleSearch');
+    if (searchInput) searchInput.value = trackParam;
+    const vMatch = vehiclesList.find(v => (v.registrationNo || '').toLowerCase() === trackParam.toLowerCase());
+    if (vMatch) selectVehicle(vMatch.vehicleId, true);
+  }
+
+  // Search Input filter
+  const searchInput = document.getElementById('inputVehicleSearch');
+  if (searchInput) {
+    searchInput.addEventListener('input', (e) => {
+      const val = e.target.value.trim().toUpperCase();
+      if (!val) {
+        renderSidebarList();
+        return;
+      }
+      const matched = vehiclesList.find(v => (v.registrationNo || '').toUpperCase().includes(val) || String(v.vehicleId) === val);
+      if (matched) {
+        selectVehicle(matched.vehicleId, true);
+      }
+    });
+  }
+
+  // User Dropdown toggle
   const userBtnLive = document.getElementById('userProfileBtnLive');
   const userDropdownLive = document.getElementById('userProfileDropdownLive');
   if (userBtnLive && userDropdownLive) {
@@ -732,111 +871,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     document.addEventListener('click', () => {
       userDropdownLive.classList.add('hidden');
-    });
-  }
-
-  // Live Telematics Heartbeat Simulation & Real Road Animation
-  let step = 0;
-  setInterval(() => {
-    step = (step + 1) % puneMumbaiCorridor.length;
-    
-    // Smoothly animate lead vehicle along highway waypoints
-    const lead = fleetDatabase['MH12AB1234'];
-    const leadMarker = markers['MH12AB1234'];
-    if (lead && leadMarker) {
-      const nextCoord = puneMumbaiCorridor[step];
-      lead.coords = nextCoord;
-      leadMarker.setLatLng(nextCoord);
-
-      const variance = Math.floor(Math.random() * 6) - 3;
-      lead.speed = (64 + variance).toString();
-
-      const waypointNames = [
-        'Pune Origin Depot (KM 0)',
-        'Near Dehu Road Bypass (KM 18)',
-        'Approaching Talegaon Toll (KM 34)',
-        'Lonavala Khandala Ghat (KM 65)',
-        'Khopoli Industrial Corridor (KM 82)',
-        'Khalapur Toll Plaza (KM 98)',
-        'Panvel Expressway Interchange (KM 124)',
-        'Thane Creek Overpass (KM 138)',
-        'Mumbai Container Port JNPT Gate (KM 152)'
-      ];
-      lead.waypoint = waypointNames[step] || 'Western Expressway Corridor';
-
-      if (document.getElementById('cardPlate')?.textContent === 'MH12AB1234') {
-        const cardSpeed = document.getElementById('cardSpeed');
-        const cardWaypoint = document.getElementById('cardWaypoint');
-        if (cardSpeed) cardSpeed.innerHTML = `${lead.speed} <span class="text-body-sm font-normal text-outline">km/h</span>`;
-        if (cardWaypoint) cardWaypoint.textContent = lead.waypoint;
-      }
-    }
-  }, 2800);
-
-  // Resize fix
-  setTimeout(() => map.invalidateSize(), 300);
-});
-</script>
-
-<script type="module">
-import { apiService } from './src/services/apiService.js';
-
-document.addEventListener('DOMContentLoaded', async () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const trackParam = urlParams.get('tracking') || urlParams.get('shipment') || urlParams.get('plate');
-  
-  if (trackParam) {
-    const searchInput = document.getElementById('inputVehicleSearch');
-    if (searchInput) searchInput.value = trackParam;
-    
-    // Check if plate directly matches in UI
-    const upper = trackParam.toUpperCase();
-    if (typeof window.selectVehicleByPlate === 'function') {
-      window.selectVehicleByPlate(upper);
-    }
-
-    try {
-      const res = await apiService.tracking.track(trackParam);
-      if (res && res.shipment) {
-        const shp = res.shipment;
-        const plate = shp.REGISTRATION_NO || shp.VEHICLE_NAME;
-        if (plate && typeof window.selectVehicleByPlate === 'function') {
-          window.selectVehicleByPlate(plate);
-        }
-        const cardSubdesc = document.getElementById('cardSubdesc');
-        const cardStatusBadge = document.getElementById('cardStatusBadge');
-        const cardPlate = document.getElementById('cardPlate');
-        if (cardPlate && (shp.TRACKING_NUMBER || plate)) {
-          cardPlate.textContent = shp.TRACKING_NUMBER || plate;
-        }
-        if (cardSubdesc) cardSubdesc.textContent = `${shp.PICKUP_ADDRESS || ''} → ${shp.DELIVERY_ADDRESS || ''} (${shp.CUSTOMER_NAME || 'Consignee'})`;
-        if (cardStatusBadge) cardStatusBadge.textContent = shp.STATUS || 'IN_TRANSIT';
-      }
-    } catch (e) {
-      console.warn('Backend tracking query returned offline/fallback:', e);
-    }
-  }
-
-  // Handle Search Input Enter key
-  const searchInput = document.getElementById('inputVehicleSearch');
-  if (searchInput) {
-    searchInput.addEventListener('keydown', async (e) => {
-      if (e.key === 'Enter') {
-        const query = searchInput.value.trim();
-        if (!query) return;
-        try {
-          const res = await apiService.tracking.track(query);
-          if (res && res.shipment) {
-            const shp = res.shipment;
-            const plate = shp.REGISTRATION_NO || shp.VEHICLE_NAME;
-            if (plate && typeof window.selectVehicleByPlate === 'function') {
-              window.selectVehicleByPlate(plate);
-            }
-          }
-        } catch (err) {
-          console.warn('Tracking query failed:', err);
-        }
-      }
     });
   }
 });

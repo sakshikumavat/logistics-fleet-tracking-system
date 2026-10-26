@@ -32,8 +32,9 @@ public class RouteStopService {
     }
 
     public RouteStop createStop(RouteStop stop) {
-        if (stop.getStopId() == null) {
-            throw new IllegalArgumentException("Stop ID is required");
+        if (stop.getStopId() == null || stop.getStopId() == 0L) {
+            Long maxId = routeStopRepository.findMaxStopId();
+            stop.setStopId((maxId != null ? maxId : 0L) + 1L);
         }
         if (stop.getRouteId() == null) {
             throw new IllegalArgumentException("Route ID is required");
